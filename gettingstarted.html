@@ -58,14 +58,352 @@
     </div>
 
 	<div class="container">
-	  	<div class="page-header">
-			<h1><img src="./img/warning.png"></img><i> Available Soon!</i></h1>
+		<div class="page-header">
+			<h1>Getting Started</h1>
 		</div>
+		<h3>Starting MSL Server</h3>
+		<p>First you need to have node.js installed, go to <a href="http://nodejs.org" target="_blank">nodejs.org</a> for more about node.js
+		<br>Once you have node installed, your can download our MSL Server from npm to launch your app locally!
+		<br>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			<h3 class="panel-title">Local install of MSL Server npm package</h3>
+			</div>
+			<div class="panel-body">
+					<br><b>Use the following command to install MSL Server</b>
+		<div>
+      		<pre class="prettyprint"><code>npm install msl-server</code></pre>
+		</div>
+		<br>After the install, you can now launch the server by using the command below
+		<div>
+      		<pre class="prettyprint"><code>./node_modules/msl-server/bin/msl [options]</code></pre>
+		</div>
+		</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			<h3 class="panel-title">Global install of MSL Server npm package</h3>
+			</div>
+			<div class="panel-body">
+					<br><b>Use the following command to install MSL Server globally</b>
+		<div>
+      		<pre class="prettyprint"><code>npm install -g msl-server</code></pre>
+		</div>
+		<br>After the install, you can now launch the server by using the command below
+		<div>
+      		<pre class="prettyprint"><code>./msl [options]</code></pre>
+		</div>
+		</div>
+		</div>		
+		
+				<div class="panel panel-default">
+			<div class="panel-heading">
+			<h3 class="panel-title">Availabe options for MSL Server</h3>
+			</div>
+			<div class="panel-body">
+		<br><b>--port</b>  =>  specify the port that server will be listening on local host, default is 8000.
+		<br><b>--basedir</b>  =>  specify the root directory(absolute path) of the app you want to launch locally, default is the directory where you run the command.
+		<br><b>--debug</b>  =>  specify whether to output log in console or not, default is false.
+		<br>
+		<br><b>An example how the options work</b>
+		<div>
+      		<pre class="prettyprint"><code>./node_modules/msl-server/bin/msl --port=8000 --basedir=/user/approot/ --debug=true</code></pre>
+		</div>
+		</div>
+		</div>
+		<b><i>*To validate whether your app is running, open up your favorite browser and navigate to http://localhost:8000/&lt;YOUR_FILE&gt;</i></b>
+		<br>
+		</p>
+		<h3>Choosing Client</h3>
+		<p>Next, you will have to install the bindings that will be used to set up the requests to expect and the responses required for your application to run.</p>
+	  	
+	  	<div class="panel-group" id="accordion">
+		  <div class="panel panel-default">
+			<div class="panel-heading">
+			  <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+				  JavaScript Client
+				</a>
+			  </h4>
+			</div>
+			<div id="collapseOne" class="panel-collapse collapse in">
+			  <div class="panel-body">
+				You can use the JavaScript client if you want to execute your JS tests on a browser.
+			  </div>
+			</div>
+		  </div>
+		  <div class="panel panel-default">
+			<div class="panel-heading">
+			  <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+				  NodeJS Client
+				</a>
+			  </h4>
+			</div>
+			<div id="collapseTwo" class="panel-collapse collapse">
+			  <div class="panel-body">
+				You can use the NodeJS client if you want to execute your JS tests on NodeJS.
+			  </div>
+			</div>
+		  </div>
+		  <div class="panel panel-default">
+			<div class="panel-heading">
+			  <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+				  Java Client
+				</a>
+			  </h4>
+			</div>
+			<div id="collapseThree" class="panel-collapse collapse">
+			  <div class="panel-body">
+					To start things off, you will need to create a new Java project in any IDE and get the necessary libraries. If you create a maven project, then you will just need to include the following dependencies:
+	<p><br>
+      	<b>POM Snippet:</b>
+      	<div>
+      		<pre class="prettyprint">
+<code>   &lt;dependency&gt;
+      &lt;groupId&gt;org.finra.msl&lt;/groupId&gt;
+      &lt;artifactId&gt;msl-client-java&lt;/artifactId&gt;
+      &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+   &lt;/dependency&gt;
+   &lt;dependency&gt;
+      &lt;groupId&gt;org.finra.jtaf&lt;/groupId&gt;
+      &lt;artifactId&gt;jtaf-extwebdriver&lt;/artifactId&gt;
+      &lt;version&gt;1.3&lt;/version&gt;
+   &lt;/dependency&gt;</code></pre></div>
+      </p>
+					These will get you the Java client API and the ExtWebDriver that will be used in this example to interact with the elements on the page. Along with these libraries, you should also include JUnit 4 which can be
+					done as shown <a href="https://github.com/junit-team/junit/wiki/Download-and-Install">here</a>.<br>
+					<br>Using the sample app that is on the github page, this example will test some of the core functionality - setting up a mock response using both plain text and a template, getting intercepted
+					HTTP requests for both POST and GET requests, and unregistering a mock when it is no longer needed.<br>
+<br><pre class="prettyprint">
+<code>package org.finra.msl.client;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.finra.jtaf.ewd.ExtWebDriver;
+import org.finra.jtaf.ewd.session.SessionManager;
+import org.finra.jtaf.ewd.widget.element.Element;
+import org.finra.jtaf.ewd.widget.element.InteractiveElement;
+import org.finra.msl.client.MockAPI;
+import org.finra.msl.client.MockAPI.XHR;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+/**
+ * Tests for msl-client-java and msl-server
+ */
+public class MockAPITest {
+    public static ExtWebDriver ewd;
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // Get a new ExtWebDriver session
+        ewd = SessionManager.getInstance().getNewSession();
+    }
+
+    @Before
+    public void openApp() {
+        // Open the test application
+        ewd.open("http://localhost:8001/index.html");
+    }
+
+    @Test
+    public void testTextResponse() throws Exception {
+        // Create object for autocomplete element
+        InteractiveElement autocomplete = new InteractiveElement(".//*[@id=\"autocomplete\"]");
+
+        // Set up the object that contains our response configuration
+        Map<String, Object> configurations = new HashMap<String, Object>();
+        configurations.put("requestPath", "/services/getlanguages");
+        configurations.put("responseText", "{\"label\":\"Java\"},{\"label\":\"Perl\"}");
+        configurations.put("contentType", "application/json");
+        configurations.put("eval",
+                "function (req,responseText) { return '[' + responseText + ']'; }");
+        configurations.put("statusCode", "200");
+        configurations.put("delayTime", "0");
+
+        // Setting up the mock response using the configuration
+        MockAPI.setMockRespond("localhost", 8001, configurations);
+
+        // Triggering the event
+        autocomplete.type("J");
+
+        Element dropdown = new Element(".//ul[contains(@class, \"ui-autocomplete\")]");
+        dropdown.waitForVisible();
+
+        // Getting all of the options from the dropdown menu to be validated
+        List<WebElement> elements = ewd.findElements(By
+                .xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
+
+        // Verify that the options are from the mocked response
+        Assert.assertEquals("Java", elements.get(0).getText());
+        Assert.assertEquals("Perl", elements.get(1).getText());
+    }
+
+    @Test
+    public void testTemplateResponse() throws Exception {
+        MockAPI.registerTemplate("localhost", 8001,
+                "[{\"label\":\"{{param1}}\"},{\"label\":\"{{param2}}\"}]", "example");
+
+        InteractiveElement autocomplete = new InteractiveElement(".//*[@id=\"autocomplete\"]");
+
+        Map<String, Object> configurations = new HashMap<String, Object>();
+        configurations.put("requestPath", "/services/getlanguages");
+        configurations.put("contentType", "application/json");
+        configurations.put("statusCode", "200");
+        configurations.put("delayTime", "0");
+
+        Map<String, String> keyValue = new HashMap<String, String>();
+        keyValue.put("param1", "German");
+        keyValue.put("param2", "English");
+        configurations.put("keyValues", keyValue);
+        configurations.put("id", "example");
+
+        // Setting up the mock response using the configuration
+        MockAPI.setMockRespond("localhost", 8001, configurations);
+
+        // Triggering the event
+        autocomplete.type("J");
+
+        Element dropdown = new Element(".//ul[contains(@class, \"ui-autocomplete\")]");
+        dropdown.waitForVisible();
+
+        // Getting all of the options from the dropdown menu to be validated
+        List<WebElement> elements = ewd.findElements(By
+                .xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
+
+        // Verify that the options are from the mocked response
+        Assert.assertEquals("German", elements.get(0).getText());
+        Assert.assertEquals("English", elements.get(1).getText());
+    }
+
+    @Test
+    public void testGetIntercept() throws Exception {
+        MockAPI.setInterceptXHR("localhost", 8001, "/services/getservice");
+
+        InteractiveElement input = new InteractiveElement(".//*[@id=\"getInput\"]");
+        input.type("GET Example");
+
+        InteractiveElement button = new InteractiveElement(".//*[@id=\"getRequest\"]");
+        button.click();
+
+        // Due to WebDriver operating too quickly sometimes, it is held up so
+        // that the web-server has enough time to intercept
+        Thread.sleep(5);
+
+        // Get the HTTP requests that have been intercepted
+        XHR[] interceptedXHR = MockAPI.getInterceptedXHR("localhost", 8001, "/services/getservice");
+
+        // Verify that the intercepted HTTP request is the one we are looking
+        // for by checking its content
+        Assert.assertEquals("GET", interceptedXHR[0].getMethodType());
+        Assert.assertEquals("/services/getservice?term=GET+Example", interceptedXHR[0].getUrl());
+        Assert.assertEquals("GET Example", interceptedXHR[0].getQueryString().get("term"));
+    }
+
+    @Test
+    public void testPostIntercept() throws Exception {
+        // Setting
+        MockAPI.setInterceptXHR("localhost", 8001, "/services/postservice");
+
+        InteractiveElement input = new InteractiveElement(".//*[@id=\"output-box\"]");
+        input.type("POST Example");
+
+        InteractiveElement button = new InteractiveElement(".//*[@id=\"postRequest\"]");
+        button.click();
+
+        // Due to WebDriver operating too quickly sometimes, it is held up so
+        // that the web-server has enough time to intercept
+        Thread.sleep(5);
+
+        // Get the HTTP requests that have been intercepted
+        XHR[] interceptedXHR = MockAPI
+                .getInterceptedXHR("localhost", 8001, "/services/postservice");
+
+        // Verify that the intercepted HTTP request is the one we are looking
+        // for by checking its content
+        Assert.assertEquals("POST", interceptedXHR[0].getMethodType());
+        Assert.assertEquals("/services/postservice", interceptedXHR[0].getUrl());
+        Assert.assertTrue(interceptedXHR[0].getBody().contains("timestamp="));
+        Assert.assertTrue(interceptedXHR[0].getBody().contains("text=POST+Example"));
+    }
+
+    @Test
+    public void testUnRegisterMock() throws Exception {
+
+        // Create object for autocomplete element
+        InteractiveElement autocomplete = new InteractiveElement(".//*[@id=\"autocomplete\"]");
+
+        // Set up the object that contains our response configuration
+        Map<String, Object> configurations = new HashMap<String, Object>();
+        configurations.put("requestPath", "/services/getlanguages");
+        configurations.put("responseText", "[{\"label\":\"Java\"},{\"label\":\"Perl\"}]");
+        configurations.put("contentType", "application/json");
+        configurations.put("statusCode", "200");
+        configurations.put("delayTime", "0");
+
+        // Set up the response using the configuration that was just created
+        MockAPI.setMockRespond("localhost", 8001, configurations);
+
+        // Type into the autocomplete to trigger the event
+        autocomplete.type("J");
+
+        Element dropdown = new Element(".//ul[contains(@class, \"ui-autocomplete\")]");
+        dropdown.waitForVisible();
+
+        List<WebElement> elements = ewd.findElements(By
+                .xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
+
+        autocomplete.getWebElement().clear();
+
+        // Verify the dropdown elements
+        Assert.assertEquals("Java", elements.get(0).getText());
+        Assert.assertEquals("Perl", elements.get(1).getText());
+
+        // Unregister this request so web-server.js no longer responds to it
+        MockAPI.unRegisterMock("localhost", 8001, "/services/getlanguages");
+
+        // Trigger event again
+        autocomplete.type("J");
+
+        // Verify that the dropdown no longer appears now that there
+        // is no response
+        Assert.assertEquals(false, !dropdown.isElementPresent());
+
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        ewd.close();
+    }
+}
+</code>
+</pre>
+			<br>For this to work, you must first start up web-server.js using the port 8001 and, if you want to see what it is doing, you can turn on debug mode as is shown in the example above. 
+			Once the server is up and running, you should be able to execute the test to see web-server.js in action using HtmlUnit.<br>
+
+			<br>If you would like to have the test execute against your favorite browser or change any other ExtWebDriver options,
+			you will need to include a properties file as shown in the <a href="http://finraos.github.io/JTAF-ExtWebDriver/clientproperties.html">Client Properties</a> page.
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  	
 	  	
 	  <hr>
 	  
 	 	<footer>
-    		<p>MSL project is released under <a href="http://www.apache.org/licenses/LICENSE-2.0"><b>Apache License 2.0</b></a></p>
+    		<p>MSL project is released under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank"><b>Apache License 2.0</b></a></p>
 	    	<p>&copy; Copyright 2014 MSL Contributors</p>
     	</footer>
     </div><!-- /container -->
