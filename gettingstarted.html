@@ -174,7 +174,7 @@
       &lt;version&gt;1.3&lt;/version&gt;
    &lt;/dependency&gt;</code></pre></div>
       </p>
-					These will get you the Java client API and the ExtWebDriver that will be used in this example to interact with the elements on the page. Along with these libraries, you should also include JUnit 4 which can be
+					These will get you the Java client API and the <a href="http://finraos.github.io/JTAF-ExtWebDriver">ExtWebDriver</a> that will be used in this example to interact with the elements on the page. Along with these libraries, you should also include JUnit 4 which can be
 					done as shown <a href="https://github.com/junit-team/junit/wiki/Download-and-Install">here</a>.<br>
 					<br>Using the sample app that is on the github page, this example will test some of the core functionality - setting up a mock response using both plain text and a template, getting intercepted
 					HTTP requests for both POST and GET requests, and unregistering a mock when it is no longer needed.<br>
@@ -389,8 +389,8 @@ public class MockAPITest {
 }
 </code>
 </pre>
-			<br>For this to work, you must first start up web-server.js using the port 8001 and, if you want to see what it is doing, you can turn on debug mode as is shown in the example above. 
-			Once the server is up and running, you should be able to execute the test to see web-server.js in action using HtmlUnit.<br>
+			<br>For this to work, you must first start up MSL Server on port 8001(as described above) and, if you want to see what it is doing, you can turn on debug mode as is shown in the example above. 
+			Once the server is up and running, you should be able to execute the test to see MSL Server in action using HtmlUnit.<br>
 
 			<br>If you would like to have the test execute against your favorite browser or change any other ExtWebDriver options,
 			you will need to include a properties file as shown in the <a href="http://finraos.github.io/JTAF-ExtWebDriver/clientproperties.html">Client Properties</a> page.
