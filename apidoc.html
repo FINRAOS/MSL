@@ -66,6 +66,7 @@
 			</ul>
 			<div id="my-tab-content" class="tab-content">
 				<div class="tab-pane active" id="js">
+					<p style="color: grey">Leverage this API in your HTML by adding mockapi.js using a $lt;script&gt; tag</p>
 					<h3>setMockRespond(server, port, body)</h3>
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br>
@@ -118,6 +119,7 @@
 					</p>
 				</div>
 				<div class="tab-pane" id="node">
+					<p style="color: grey">Leverage this API in your Node script via requiring mockapi.js using require</p>
 					<h3>setMockRespond(server, port, body)</h3>
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br>
@@ -170,6 +172,7 @@
 					</p>
 				</div>
 				<div class="tab-pane" id="java">
+					<p style="color: grey">Leverage this API via adding dependency to msl-client-java package and using MockAPI static class</p>
 					<h3>public static String setMockRespond(String server, int port, Map<String, Object> configurations)</h3>
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br>
