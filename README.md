@@ -20,7 +20,7 @@ Building
 =========
 Our project is built automatically on [Travis-CI](https://travis-ci.org/FINRAOS/MSL) for all pull requests and merge requests.
 
-To build the Java client, please uses Maven. You can download Maven [here](http://maven.apache.org/download.cgi).
+To build the Java client, please use Maven. You can download Maven [here](http://maven.apache.org/download.cgi).
 ```sh
 # Clone MSL git repo
 git clone git://github.com/FINRAOS/MSL.git
