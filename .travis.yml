@@ -1,0 +1,9 @@
+language: java
+node_js:
+  - "0.10”
+before_script:
+install:
+script: scripts/e2e-run.sh
+branches:
+  only:
+  - master
