@@ -70,7 +70,7 @@
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br><b>server</b> => url of web-server.js running on node
 					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>body</b> => Json object that contains the requstPath, contentType, responseText, delayTime, headers, function.
+					<br><b>body</b> => JSON object containing mock configuration. Possible configurations are "requestPath", "contentType", "statusCode", "responseText", "id", "keyValues", "delayTime", "headers", "function".
 					</p>
 					<br>
 					<h3>registerTemplate(server, port, template, id)</h3>
@@ -112,7 +112,7 @@
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br><b>server</b> => url of web-server.js running on node
 					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>body</b> => Json object that contains the requstPath, contentType, responseText, delayTime, headers, function.
+					<br><b>body</b> => JSON object containing mock configuration. Possible configurations are "requestPath", "contentType", "statusCode", "responseText", "id", "keyValues", "delayTime", "headers", "function".
 					</p>
 					<br>
 					<h3>registerTemplate(server, port, template, id)</h3>
@@ -154,7 +154,7 @@
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br><b>String server</b> => url of web-server.js running on node
 					<br><b>int port</b> => port number of web-server.js running on node
-					<br><b>Map<String, Object> configurations</b> => Map that contains the requstPath, contentType, responseText, delayTime, headers, function.
+					<br><b>Map<String, Object> configurations</b> => Map containing mock configuration. Possible configurations are "requestPath", "contentType", "statusCode", "responseText", "id", "keyValues", "delayTime", "headers", "function".
 					</p>
 					<br>
 					<h3>public static String registerTemplate(String server, int port, String template, String id)</h3>
