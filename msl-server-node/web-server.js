@@ -18,7 +18,7 @@
 
 
 var express = require('express');
-var mustache = require('Mustache');
+var mustache = require('mustache');
 var minimist = require('minimist');
 
 var fs = require('fs');
