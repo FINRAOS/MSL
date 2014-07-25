@@ -18,11 +18,11 @@ If you have any questions or discussion topics, please post them on [Google Grou
 
 Building
 =========
-Coming soon - Travis-CI builds
+Coming soon (Travis-CI builds)
 
 To build the Java client, please uses Maven. You can download Maven [here](http://maven.apache.org/download.cgi).
 ```sh
-# Clone ExtWebDriver git repo
+# Clone MSL git repo
 git clone git://github.com/FINRAOS/MSL.git
 cd msl-client-java
 
@@ -32,7 +32,7 @@ mvn package
 
 Running Tests
 ==============
-Execute E2E tests by running e2e-run.sh.  This will install msl-server, start sample app, build client, run unit tests.
+Execute E2E tests by running [e2e-run.sh](https://github.com/FINRAOS/MSL/blob/CM/e2e-run.sh).  This will install msl-server, start sample app, build client, run unit tests.
 
 License Type
 =============
