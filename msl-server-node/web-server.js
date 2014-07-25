@@ -25,7 +25,6 @@ var fs = require('fs');
 var url = require('url');
 var util = require('util');
 var argv1 = minimist(process.argv.slice(2));
-var argv2 = minimist(process.argv.slice(2));
 
 var localApp = express();
 var DEFAULT_PORT = 8000;
@@ -36,19 +35,18 @@ var debug= false;
 
 var main = function(argv) {
   var port = Number(argv1.port) || DEFAULT_PORT;
-  debug = Boolean(argv2.debug) || false;
-
+  debug = (argv1.debug === 'true');
   localApp.listen(port);
   record(["MSL launched from here: ", localAppDir].
-  join(" "),2);
-  record(["MSL started on port:", port].join(" "),2)
+  join(" "),1);
+  record(["MSL start on port:", port].join(" "),1)
 };
 
 
 var record=function(message, severity){
 	if(debug){
-		util.puts(message)
-	}else if(severity>1 && !debug){
+		util.puts(message);
+	}else if(severity>0 && !debug){
 		util.puts(message);
 	}
 }
@@ -67,11 +65,12 @@ var localAppMockAPI = function(req, res, next) {
 			if(post.id == undefined || post.responseText == undefined)
 			{
 				registerMock(post);
-	            record("Mock body registered for: " + body.requestPath);
+	            record("Mock body registered for: " + body.requestPath,0);
 				res.writeHead(200, {'Content-Type': 'application/json'});
 				res.write('{"status":"success","message":"mock body registered"}');
 				return res.end();
 			}else{
+				record("Provided both template ID and response text",1);
 				res.writeHead(500, {'Content-Type': 'application/json'});
 				res.write('{"status":"failed","message":"Provided both template ID and response text"}');
 				return res.end();
@@ -87,7 +86,7 @@ var localAppMockAPI = function(req, res, next) {
       req.on('end', function () {
           var post = body;
 		  registerInterceptXHR(post);
-		  record("Intercept registered for: " + body.requestPath);
+		  record("Intercept registered for: " + body.requestPath,0);
           res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
           res.write('{"status":"success","message":"intercept XHR registered"}');
       
@@ -106,7 +105,7 @@ var localAppMockAPI = function(req, res, next) {
 		res.write(JSON.stringify(getInterceptedXHR(post)));
 		delete interceptXHRMap[post.requestPath];
       
-		record("Sent intercepted XHR for: " + post.requestPath);
+		record("Sent intercepted XHR for: " + post.requestPath,0);
         return res.end();
       });
 	  
@@ -120,7 +119,7 @@ var localAppMockAPI = function(req, res, next) {
       req.on('end', function () {
           var post = body;
 	      setIgnore(post.requestPath)
-          record("Set ignored flag for: " + body.requestPath);
+          record("Set ignored flag for: " + body.requestPath,0);
 
       });
   
@@ -134,7 +133,7 @@ var localAppMockAPI = function(req, res, next) {
       req.on('end', function () {
           var post = body;
           unregisterMock(post.requestPath)
-          record("Unregisters path for: " + post.requestPath);
+          record("Unregisters path for: " + post.requestPath,0);
 
       });
       return res.end();
@@ -142,7 +141,7 @@ var localAppMockAPI = function(req, res, next) {
 	  var body = {};
       req.on('data', function (data) {
 	      body = JSON.parse(String(data));
-		  record("Registered template for: " + body.id);
+		  record("Registered template for: " + body.id,0);
 
       });
       req.on('end', function () {
@@ -195,7 +194,7 @@ var localAppMockAPI = function(req, res, next) {
 				res.write(output);
 			}
 
-		  record("Responded with mock for: " + mockReqRespMapKey);
+		  record("Responded with mock for: " + mockReqRespMapKey,0);
 
 		}else{
 	  
@@ -215,10 +214,9 @@ var localAppMockAPI = function(req, res, next) {
 			res.write(responseObj["responseText"]);
 		  }
 		  
-		  // comment out by KCH, should keep the registered response in memory unless user specifically want to delete it. Use unregisterMock(path).
-		  // delete mockReqRespMap[mockReqRespMapKey];
+		  
 
-		  record("Responded with mock for: " + mockReqRespMapKey);
+		  record("Responded with mock for: " + mockReqRespMapKey,0);
 	  }
       return res.end();
   }else if(isInterceptXHR(req)) {
@@ -239,7 +237,7 @@ var localAppMockAPI = function(req, res, next) {
       res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
       res.write('{"status":"success","message":"XHR intercepted"}');
       
-      record("Intercepted XHR for: " + req.url);
+      record("Intercepted XHR for: " + req.url,0);
       return res.end();
    }else {
       console.log('looking for files?   ', req.url);
@@ -284,7 +282,6 @@ function unregisterMock(mapKey) {
 /**
  * Registers the mock into mockReqRespMap
  *
- * @param req => contains the mock api call (request query string contains request path, fake status code, fake content type)
  * @param post => contains the fake response body
  */
 function registerMock(post) {
@@ -316,8 +313,7 @@ function registerMock(post) {
  */
 function registerTemplate(post) {
     templateMap[post.id] = post.template;
-	record("Template id: " + post.id);
-    record("Register template: " + post.template);
+    record("Registered template: " + post.template,0);
 
 }
 
@@ -428,7 +424,7 @@ function isInterceptXHR(req) {
  * 
  */
 function setIgnore(params) {
-	ignoredParams += ','+params;
+	ignoredParams += params;
 }
 
 /**
