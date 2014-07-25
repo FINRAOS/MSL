@@ -98,7 +98,7 @@
 					<br><b>server</b> => url of web-server.js running on node
 					<br><b>port</b> => port number of web-server.js running on node
 					<br><b>params</b> => parameters that will be ignored in the app URL, type is string.
-					<br>For example,if we set ignore paramB, URL http://aa.bb.com/result?paramA=123&paramB=456 will be treated as http://aa.bb.com/result?paramA=123
+					<br>For example,if we set ignore paramB, URL http://aa.bb.com/result?paramA=123&amp;paramB=456 will be treated as http://aa.bb.com/result?paramA=123
 					</p>
 					<h3>unRegisterMock(server, port, requestPath)</h3>
 					<p>Method to delete registered mock response.
