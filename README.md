@@ -32,7 +32,11 @@ mvn package
 
 Running Tests
 ==============
-Execute E2E tests by running [e2e-run.sh](https://github.com/FINRAOS/MSL/blob/CM/e2e-run.sh).  This will install msl-server, start sample app, build client, run unit tests.
+After you checkout the code, execute E2E tests by running [e2e-run.sh](https://github.com/FINRAOS/MSL/blob/CM/e2e-run.sh) from the root folder.  This script will:
+1. Install msl-server
+2. Start sample app using msl-server
+3. Build client
+4. Run unit tests
 
 License Type
 =============
