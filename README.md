@@ -18,7 +18,7 @@ If you have any questions or discussion topics, please post them on [Google Grou
 
 Building
 =========
-Coming soon (Travis-CI builds)
+Our project is built automatically on [Travis-CI](https://travis-ci.org/FINRAOS/MSL) for all pull requests and merge requests.
 
 To build the Java client, please uses Maven. You can download Maven [here](http://maven.apache.org/download.cgi).
 ```sh
