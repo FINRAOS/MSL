@@ -52,7 +52,9 @@ msl --basedir=/approot --port=8001 --debug=true
 
 Using MSL Clients
 ==================
-Installing Node client:
+**Node Client**
+
+Install Node client:
 ```bash
 npm install msl-client
 ```
@@ -60,6 +62,25 @@ Use Node client in scripts
 ```js
 var msl = require('msl-client');
 ```
+
+**Browser Client**
+
+Download [mockapi-browser.js](https://github.com/FINRAOS/MSL/blob/master/msl-client-browser/mockapi-browser.js)
+```html
+<script src="myscripts.js"></script>
+```
+
+**Java Client**
+
+Include 'msl-client-java' as maven dependency
+```xml
+<dependency>
+  <groupId>org.finra.msl</groupId>
+  <artifactId>msl-client-java</artifactId>
+  <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
 
 Building
 =========
