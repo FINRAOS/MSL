@@ -16,7 +16,7 @@ We encourage contribution from the open source community to help make MSL better
 
 If you have any questions or discussion topics, please post them on [Google Groups](https://groups.google.com/forum/#!forum/msl_os).
 
-Starting MSL Server
+Installing MSL Server
 ======================
 Local install
 ```bash
@@ -28,7 +28,7 @@ Global install
 npm install -g msl-server
 ```
 
-Installing MSL Server
+Starting MSL Server
 =====================
 If you installed it locally:
 ```bash
