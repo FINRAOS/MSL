@@ -16,6 +16,51 @@ We encourage contribution from the open source community to help make MSL better
 
 If you have any questions or discussion topics, please post them on [Google Groups](https://groups.google.com/forum/#!forum/msl_os).
 
+Starting MSL Server
+======================
+Local install
+```bash
+npm install msl-server
+```
+
+Global install
+```bash
+npm install -g msl-server
+```
+
+Installing MSL Server
+=====================
+If you installed it locally:
+```bash
+./node_modules/msl-server/bin/msl [options]
+```
+
+If you installed it globally:
+```bash
+msl [options]
+```
+
+Options for MSL Server:
+* --port => specify the port that server will be listening on local host, default is 8000.
+* --basedir => specify the root directory(absolute path) of the app you want to launch locally, default is the directory where you run the command.
+* --debug => specify whether to output log in console or not, default is false.
+
+Example:
+```bash
+msl --basedir=/approot --port=8001 --debug=true
+```
+
+Using MSL Clients
+==================
+Installing Node client:
+```bash
+npm install msl-client
+```
+Use Node client in scripts
+```js
+var msl = require('msl-client');
+```
+
 Building
 =========
 Our project is built automatically on [Travis-CI](https://travis-ci.org/FINRAOS/MSL) for all pull requests and merge requests.
