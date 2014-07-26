@@ -60,66 +60,12 @@
     	
     	<div id="content">
 			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-				<li class="active"><a href="#js" data-toggle="tab">Browser Client</a></li>
-				<li><a href="#node" data-toggle="tab">NodeJS Client</a></li>
+				<li class="active"><a href="#node" data-toggle="tab">Node Client</a></li>
+				<li><a href="#js" data-toggle="tab">Browser Client</a></li>
 				<li><a href="#java" data-toggle="tab">Java Client</a></li>
 			</ul>
 			<div id="my-tab-content" class="tab-content">
-				<div class="tab-pane active" id="js">
-					<br>
-					<h4 style="color: grey">Leverage this API in your HTML by adding mockapi.js using a <b style="color: #0F2879">&lt;script&gt;</b> tag</h4>
-					<h3>setMockRespond(server, port, body)</h3>
-					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
-					<br>
-					<br><b>server</b> => url of web-server.js running on node
-					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>body</b> => JSON object containing mock configuration. Possible configurations are "requestPath", "contentType", "statusCode", "responseText", "id", "keyValues", "delayTime", "headers", "function".
-					</p>
-					<br>
-					<h3>registerTemplate(server, port, template, id)</h3>
-					<p>Method to register a template to be used when mocking responses. Once registered, pass the same id used to register the template along with a map containing the key-value pairs that are to be replaced.
-					<br>
-					<br><b>server</b> => url of web-server.js running on node
-					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>template</b> => a template in the form of a string or JSONObject that is to be used for responses
-					<br><b>id</b> => the id to be used as a key for the template which is used when setting a fake response
-					</p>
-					<br>
-					<h3>setInterceptXHR(server, port, requestPath)</h3>
-					<p>Method to register intercept XHR. Once you register, whenever server receives a request matching the registered requestPath, it will intercept and store for later retrieval.
-					<br>
-					<br><b>server</b> => url of web-server.js running on node
-					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>requestPath</b> => path which you want to intercept.
-					</p>
-					<br>
-					<h3>getInterceptedXHR(server, port, requestPath, callback)</h3>
-					<p>Method to retrieve intercepted XHRs. Use in conjunction with setInterceptXHR().
-					<br>
-					<br><b>server</b> => url of web-server.js running on node
-					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>requestPath</b> => path which you have intercepted.
-					<br><b>callback</b> => method to call to validate. responseText will be provided to callback
-					</p>
-					<br>
-					<h3>setParamIgnored(server, port, params)</h3>
-					<br>
-					<p>Method to set up parameters that will be ignored in the URL.
-					<br><b>server</b> => url of web-server.js running on node
-					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>params</b> => parameters that will be ignored in the app URL, type is string.
-					<br>For example,if we set ignore paramB, URL http://aa.bb.com/result?paramA=123&amp;paramB=456 will be treated as http://aa.bb.com/result?paramA=123
-					</p>
-					<br>
-					<h3>unRegisterMock(server, port, requestPath)</h3>
-					<p>Method to delete registered mock response.
-					<br>
-					<br><b>server</b> => url of web-server.js running on node
-					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>requestPath</b> => mock response path that needs to be deleted, if empty then delete all the registered mock responses.
-					</p>
-				</div>
-				<div class="tab-pane" id="node">
+				<div class="tab-pane active" id="node">
 					<br>
 					<h4 style="color: grey">Leverage this API in your Node script via requiring 'msl-client' using <b style="color: #0F2879">require</b></h4>
 					<h3>setMockRespond(server, port, body)</h3>
@@ -173,9 +119,63 @@
 					<br><b>requestPath</b> => mock response path that needs to be deleted, if empty then delete all the registered mock responses.
 					</p>
 				</div>
+				<div class="tab-pane" id="js">
+					<br>
+					<h4 style="color: grey">Leverage this API in your HTML by adding 'mockapi-browser.js' using a <b style="color: #0F2879">&lt;script&gt;</b> tag</h4>
+					<h3>setMockRespond(server, port, body)</h3>
+					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
+					<br>
+					<br><b>server</b> => url of web-server.js running on node
+					<br><b>port</b> => port number of web-server.js running on node
+					<br><b>body</b> => JSON object containing mock configuration. Possible configurations are "requestPath", "contentType", "statusCode", "responseText", "id", "keyValues", "delayTime", "headers", "function".
+					</p>
+					<br>
+					<h3>registerTemplate(server, port, template, id)</h3>
+					<p>Method to register a template to be used when mocking responses. Once registered, pass the same id used to register the template along with a map containing the key-value pairs that are to be replaced.
+					<br>
+					<br><b>server</b> => url of web-server.js running on node
+					<br><b>port</b> => port number of web-server.js running on node
+					<br><b>template</b> => a template in the form of a string or JSONObject that is to be used for responses
+					<br><b>id</b> => the id to be used as a key for the template which is used when setting a fake response
+					</p>
+					<br>
+					<h3>setInterceptXHR(server, port, requestPath)</h3>
+					<p>Method to register intercept XHR. Once you register, whenever server receives a request matching the registered requestPath, it will intercept and store for later retrieval.
+					<br>
+					<br><b>server</b> => url of web-server.js running on node
+					<br><b>port</b> => port number of web-server.js running on node
+					<br><b>requestPath</b> => path which you want to intercept.
+					</p>
+					<br>
+					<h3>getInterceptedXHR(server, port, requestPath, callback)</h3>
+					<p>Method to retrieve intercepted XHRs. Use in conjunction with setInterceptXHR().
+					<br>
+					<br><b>server</b> => url of web-server.js running on node
+					<br><b>port</b> => port number of web-server.js running on node
+					<br><b>requestPath</b> => path which you have intercepted.
+					<br><b>callback</b> => method to call to validate. responseText will be provided to callback
+					</p>
+					<br>
+					<h3>setParamIgnored(server, port, params)</h3>
+					<br>
+					<p>Method to set up parameters that will be ignored in the URL.
+					<br><b>server</b> => url of web-server.js running on node
+					<br><b>port</b> => port number of web-server.js running on node
+					<br><b>params</b> => parameters that will be ignored in the app URL, type is string.
+					<br>For example,if we set ignore paramB, URL http://aa.bb.com/result?paramA=123&amp;paramB=456 will be treated as http://aa.bb.com/result?paramA=123
+					</p>
+					<br>
+					<h3>unRegisterMock(server, port, requestPath)</h3>
+					<p>Method to delete registered mock response.
+					<br>
+					<br><b>server</b> => url of web-server.js running on node
+					<br><b>port</b> => port number of web-server.js running on node
+					<br><b>requestPath</b> => mock response path that needs to be deleted, if empty then delete all the registered mock responses.
+					</p>
+				</div>
 				<div class="tab-pane" id="java">
 					<br>
-					<h4 style="color: grey">Leverage this API via adding dependency to msl-client-java package and using <b style="color: #0F2879">MockAPI static class</b></h4>
+					<h4 style="color: grey">Leverage this API via adding dependency to 'msl-client-java' package and using <b style="color: #0F2879">MockAPI static class</b></h4>
 					<h3>public static String setMockRespond(String server, int port, Map<String, Object> configurations)</h3>
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br>
