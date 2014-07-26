@@ -72,7 +72,7 @@ Download [mockapi-browser.js](https://github.com/FINRAOS/MSL/blob/master/msl-cli
 
 **Java Client**
 
-Include 'msl-client-java' as maven dependency
+Include 'msl-client-java' as maven dependency ([snapshot version](https://oss.sonatype.org/content/repositories/snapshots/org/finra/msl/msl-client-java/1.0-SNAPSHOT/) available in Sonatype)
 ```xml
 <dependency>
   <groupId>org.finra.msl</groupId>
