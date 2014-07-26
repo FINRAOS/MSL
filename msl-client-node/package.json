@@ -18,11 +18,12 @@
   "Chien-Hung Kuo <kaidanransha@gmail.com>",
   "Jake Sheppard <jshep409@gmail.com>"
   ],
+  "main": "mockapi.js",
   "bin": {},
   "engines": {
     "node": "~0.10"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "readmeFilename": "Readme.md",
   "license": "Apache 2.0"
 }
