@@ -63,7 +63,7 @@
 		</div>
 		<h3>Starting MSL Server</h3>
 		<p>First you need to have Node.JS installed, go to <a href="http://nodejs.org" target="_blank">nodejs.org</a> for more about Node.JS
-		<br>Once you have Node installed, your can download our MSL Server from npm to launch your app locally!
+		<br>Once you have Node installed, your can download our <a href="https://www.npmjs.org/package/msl-server">MSL Server</a> from npm to launch your app locally!
 		<br>
 
 		<div class="panel panel-default">
@@ -128,9 +128,19 @@
 				</a>
 			  </h4>
 			</div>
-			<div id="collapseOne" class="panel-collapse collapse">
+			<div id="collapseOne" class="panel-collapse collapse in">
 			  <div class="panel-body">
-				You can use the Node client if you want to execute your JS tests on a browser <b>(Documentation coming soon!)</b>
+				To use the Node client, first install <a href="https://www.npmjs.org/package/msl-client">MSL Client</a> from your working directory using npm
+				<div>
+      				<pre class="prettyprint"><code>npm install msl-client</code></pre>
+				</div>
+				<br>
+				After installing, you can now use it within your Node script by requiring 'msl-client'
+				<div>
+      				<pre class="prettyprint"><code>var msl = require('msl-client');</code></pre>
+				</div>
+				<br>
+				<b>(Full documentation with example coming soon!)</b>
 			  </div>
 			</div>
 		  </div>
@@ -138,13 +148,19 @@
 			<div class="panel-heading">
 			  <h4 class="panel-title">
 				<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-				  JavaScript Client
+				  Browser Client
 				</a>
 			  </h4>
 			</div>
 			<div id="collapseTwo" class="panel-collapse collapse">
 			  <div class="panel-body">
-				You can use the JavaScript client if you want to execute your JS tests on NodeJS <b>(Documentation coming soon!)</b>
+				Browser client can be used when you want to execute your test script on the browser (for instance mocha, jasmine tests).
+				<br><br>To use this client, simply add <a href="https://github.com/FINRAOS/MSL/blob/master/msl-client-browser/mockapi-browser.js">mockapi-browser.js</a> to your HTML.
+				<div>
+      				<pre class="prettyprint"><code>&lt;script src="mockapi-brower.js"&gt;</code></pre>
+				</div>
+				<br>
+				<b>(Full documentation with example coming soon!)</b>
 			  </div>
 			</div>
 		  </div>
@@ -157,7 +173,7 @@
 				</a>
 			  </h4>
 			</div>
-			<div id="collapseThree" class="panel-collapse collapse in">
+			<div id="collapseThree" class="panel-collapse collapse">
 			  <div class="panel-body">
 					To start things off, you will need to create a new Java project in any IDE and get the necessary libraries. If you create a maven project, then you will just need to include the following dependencies:
 	<p><br>
