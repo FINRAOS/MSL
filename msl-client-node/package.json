@@ -1,6 +1,6 @@
 {
   "name": "msl-client",
-  "description": "Service Layer Mocking",
+  "description": "Client for MSL (Mock Service Layer)",
   "homepage": "http://finraos.github.io/MSL",
   "repository": {
     "type": "git",
@@ -24,6 +24,6 @@
     "node": "~0.10"
   },
   "version": "1.0.2",
-  "readmeFilename": "Readme.md",
+  "readmeFilename": "README.md",
   "license": "Apache 2.0"
 }
