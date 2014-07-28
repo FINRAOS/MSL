@@ -65,7 +65,7 @@ var msl = require('msl-client');
 
 **Browser Client**
 
-Download [mockapi-browser.js](https://github.com/FINRAOS/MSL/blob/master/msl-client-browser/mockapi-browser.js)
+Download [mockapi-browser.js](https://github.com/FINRAOS/MSL/blob/master/msl-client-browser/mockapi-browser.js) (will be hosted on cndjs soon)
 ```html
 <script src="mockapi-browser.js"></script>
 ```
