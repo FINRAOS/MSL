@@ -1,27 +1,34 @@
 {
   "name": "msl-client-browser",
+  "filename": "mockapi-browser.js",
   "description": "Browser Client for MSL (Mock Service Layer)",
+  "version": "1.0.0",
   "homepage": "http://finraos.github.io/MSL",
-  "repository": {
+  "keywords": [
+  ],
+  "contributors": [
+    {
+      "name": "Daniel Koo"
+    },
+    {
+      "name": "Bryan Robbins"
+    },
+    {
+      "name": "Chien-Hung Kuo"
+    },
+    {
+      "name": "Jake Sheppard"
+    }
+  ],
+  "repositories": [{
     "type": "git",
     "url": "git://github.com/FINRAOS/MSL.git"
-  },
-  "dependencies": {
-	},
-  "devDependencies": {
-	"msl-server": "~1.0.1"
-	},
-  "author": [
-  "Daniel Koo <danieljamin.koo@gmail.com>",
-  "Bryan Robbins <bryantrobbins@gmail.com>",
-  "Chien-Hung Kuo <kaidanransha@gmail.com>",
-  "Jake Sheppard <jshep409@gmail.com>"
-  ],
-  "main": "mockapi-browser.js",
-  "bin": {},
-  "engines": {
-    "node": "~0.10"
-  },
-  "version": "1.0.0",
-  "license": "Apache 2.0"
+  }],
+  "bugs": "https://github.com/FINRAOS/MSL/issues",
+  "licenses": [
+    {
+      "type": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
 }
