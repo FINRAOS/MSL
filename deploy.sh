@@ -12,8 +12,7 @@ if [ $TRAVIS_PULL_REQUEST == 'false' ]; then
   npm install msl-server-node
   ./node_modules/msl-server/bin/msl --basedir=./msl-sample-app --port=8001 --debug=true &
   cd msl-client-java
-  mvn clean deploy --settings target/CM/settings.xml 
-  kill -9 $!
+  mvn clean deploy --settings target/CM/settings.xml
 else
   echo "Pull request, executing E2E script..."
   ./scripts/e2e-run.sh
