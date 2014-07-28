@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.finra.msl</groupId>
 	<artifactId>msl-client-java</artifactId>
@@ -15,6 +14,12 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+	<scm>
+    	<connection>scm:git:https://github.com/FINRAOS/MSL.git</connection>
+    	<developerConnection>scm:git:https://github.com/FINRAOS/MSL.git</developerConnection>
+    	<url>https://github.com/FINRAOS/MSL.git</url>
+  	 	<tag>HEAD</tag>
+  	</scm>
 	<developers>
 		<developer>
 			<id>kood1</id>
