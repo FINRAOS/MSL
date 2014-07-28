@@ -1,0 +1,29 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <!-- Based on example from
+        http://blog.xeiam.com/2013/05/configure-travis-ci-to-deploy-snapshots.html
+        -->
+ <!-- This will tell our build server how to deploy. The user/pass is encrypted in
+        travis.yml using key associated with travis CI user. The Maven pom distr
+        management needs to refer to this server ID.
+        -->
+
+  <localRepository/>
+  <interactiveMode/>
+  <usePluginRegistry/>
+  <offline/>
+  <pluginGroups/>
+  <servers>
+    <server>
+      <id>sonatype-nexus-snapshots</id>
+      <username>${env.CI_DEPLOY_USERNAME}</username>
+      <password>${env.CI_DEPLOY_PASSWORD}</password>
+    </server>
+  </servers>
+  <mirrors/>
+  <proxies/>
+  <profiles/>
+  <activeProfiles/>
+</settings>
