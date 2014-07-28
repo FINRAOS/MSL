@@ -103,7 +103,7 @@ After you checkout the code, execute E2E tests by running [scripts/e2e-run.sh](h
 1. Install msl-server
 2. Start sample app using msl-server
 3. Build client
-4. Run unit tests
+4. Run unit/integration tests
 
 License Type
 =============
