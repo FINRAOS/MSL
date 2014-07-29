@@ -174,7 +174,6 @@
 					<mavenExecutorId>forked-path</mavenExecutorId>
 					<useReleaseProfile>false</useReleaseProfile>
 					<arguments>${arguments} -Psonatype-oss-release</arguments>
-                    <pomFileName>msl-client-java/pom.xml</pomFileName>
 				</configuration>
 			</plugin>
 		</plugins>
