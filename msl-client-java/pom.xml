@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.finra.msl</groupId>
 	<artifactId>msl-client-java</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>MSL Java Client</name>
 	<description>Java client for communicating with msl-server</description>
