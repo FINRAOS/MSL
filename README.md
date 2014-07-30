@@ -79,7 +79,7 @@ Include 'msl-client-java' as maven dependency ([snapshot version](https://oss.so
 <dependency>
   <groupId>org.finra.msl</groupId>
   <artifactId>msl-client-java</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 
