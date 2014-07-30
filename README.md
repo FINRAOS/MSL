@@ -8,7 +8,8 @@ Here is the link to [getting started](http://finraos.github.io/MSL/gettingstarte
 Releases
 ========
 We will be having monthly scheduled releases.
->Release 1.0 - Scheduled for end of July
+>[Release 1.0](https://github.com/FINRAOS/MSL/releases/tag/msl-client-java-1.0.0) has been released! - 07/29/2014
+>Release 1.1 - Scheduled for August
 
 Contributing
 =============
