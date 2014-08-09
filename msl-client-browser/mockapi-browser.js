@@ -102,7 +102,7 @@ setInterceptXHR = function(server, port, requestPath)
  *                              xhr will have url obj, method type, and body
  *
  **/
-getInterceptedXHR = function(server, port, requestPath)
+getInterceptedXHR = function(server, port, requestPath, callback)
 {
     var xmlHttp = null;
     xmlHttp = new XMLHttpRequest();
@@ -114,7 +114,7 @@ getInterceptedXHR = function(server, port, requestPath)
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status==200) {
-            return JSON.parse(xmlHttp.responseText);
+            callback(xmlHttp.responseText);
         }
     }
 
