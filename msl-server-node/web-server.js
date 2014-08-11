@@ -167,9 +167,13 @@ var localAppMockAPI = function(req, res, next) {
       }
 
       var mockReqRespMapKey = req._parsedUrl.pathname
-      if (mockReqRespMapKey.indexOf("?")>=0)
-          mockReqRespMapKey = reparsePath(mockReqRespMapKey);
       var responseObj = mockReqRespMap[mockReqRespMapKey];
+      if(responseObj == undefined) {
+	mockReqRespMapKey = req.url;
+	responseObj = mockReqRespMap[req.url];
+      }
+      if (mockReqRespMapKey.indexOf("?")>=0)
+      mockReqRespMapKey = reparsePath(mockReqRespMapKey);
 	  if(responseObj["id"] !== undefined)
 		{
 			var template = templateMap[responseObj["id"] ];
@@ -197,12 +201,7 @@ var localAppMockAPI = function(req, res, next) {
 		  record("Responded with mock for: " + mockReqRespMapKey,0);
 
 		}else{
-	  
-		  if(responseObj == undefined) {
-			mockReqRespMapKey = req.url;
-			responseObj = mockReqRespMap[req.url];
-		  }
-
+	 
 		  res.writeHead(responseObj["statusCode"], responseObj["header"]);
 
 		  if (responseObj["delayTime"]>0)
