@@ -49,7 +49,7 @@ Options for MSL Server:
 
 Example:
 ```bash
-msl --basedir=./approot --port=8001 --debug=true
+msl --basedir=./msl-sample-app --port=8001 --debug=true
 ```
 
 Using MSL Clients
