@@ -2,7 +2,7 @@ describe('Example suite', function() {
 
     beforeEach(function(done) {
         // Load app inside iframe
-        $('#app').attr('src', 'http://localhost:8001/index.html');
+        $('#app').attr('src', 'http://localhost:8001/msl-sample-app/index.html');
 
         setTimeout(function() {
             done();
@@ -180,7 +180,7 @@ describe('Example suite', function() {
             expect($('#app').contents().find('#autocomplete').val()).toBe('Candy');
 
             // Reload Page
-            $('#app').attr('src', 'http://localhost:8001/index.html');
+            $('#app').attr('src', 'http://localhost:8001/msl-sample-app/index.html');
 
             setTimeout(function() {
                 done();
