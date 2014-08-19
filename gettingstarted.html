@@ -718,7 +718,7 @@ public class MockAPITest {
 	
 	beforeEach(function(done) {
 		// Load app inside iframe
-		$('#app').attr('src','http://localhost:8001/index.html');
+		$('#app').attr('src','http://localhost:8001/msl-sample-app/index.html');
     
 		
 		setTimeout(function() {done();}, 100);
@@ -888,7 +888,7 @@ public class MockAPITest {
 		expect($('#app').contents().find('#autocomplete').val()).toBe('Candy');
         
 		// Reload Page
-		$('#app').attr('src','http://localhost:8001/index.html');
+		$('#app').attr('src','http://localhost:8001/msl-sample-app/index.html');
 		
 		setTimeout(function() {done();}, 1500);
 		}, 500);
