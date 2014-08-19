@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Jasmine Spec Runner v2.0.0</title>
+
+  <link rel="shortcut icon" type="image/png" href="jasmine-standalone-2.0.0/lib/jasmine-2.0.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="jasmine-standalone-2.0.0/lib/jasmine-2.0.0/jasmine.css">
+
+  <script type="text/javascript" src="jasmine-standalone-2.0.0/lib/jasmine-2.0.0/jasmine.js"></script>
+  <script type="text/javascript" src="jasmine-standalone-2.0.0/lib/jasmine-2.0.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="jasmine-standalone-2.0.0/lib/jasmine-2.0.0/boot.js"></script>
+  
+  <!-- include msl browser client -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.1/mockapi-browser.min.js"></script>
+
+  <!-- include jquery library and spec files here-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type="text/javascript" src="spec/MSLTestSpec.js"></script>
+
+</head>
+
+<body>
+  <!-- Iframe for running the application-->
+  <div id="aut">
+    <iframe id="app" style="width:100%; height:800px; border:0;" src=""></iframe>
+  </div>
+</body>
+</html>
