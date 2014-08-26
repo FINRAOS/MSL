@@ -1,5 +1,9 @@
 describe('Example suite', function() {
 
+	var callbackFunc = function (req, responseText) {
+		return '[' + responseText + ']';
+	}
+	
     beforeEach(function(done) {
         // Load app inside iframe
         $('#app').attr('src', 'http://localhost:8001/msl-sample-app/index.html');
@@ -38,6 +42,40 @@ describe('Example suite', function() {
             }, 100);
         }, 500);
     });
+	
+	
+	it('Test for register and get mock response using function', function(done) {
+        // Use msl-client to set mock response
+        var mockResponse = {};
+        mockResponse.requestPath = "/services/getlanguages";
+        mockResponse.responseText = "{\"label\":\"apache\"},{\"label\":\"apple\"}";
+		mockResponse.eval = callbackFunc;
+        mockResponse.statusCode = 200;
+        mockResponse.delayTime = 0;
+        setMockRespond("localhost", 8001, mockResponse);
+
+        // Type into first input field which triggers a REST call to return a JSON response
+        $('#app').contents().find('#autocomplete').val('a');
+        frames[0].window.eval("$('#autocomplete').keydown()");
+
+        setTimeout(function() {
+            // Validate the drop down is display correctly with mock response
+            expect(frames[0].window.eval("$('ul li:nth-of-type(1)').text()")).toBe('apache');
+            expect(frames[0].window.eval("$('ul li:nth-of-type(2)').text()")).toBe('apple');
+
+            // Click on the Second item from the drop down
+            $('#app').contents().find('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
+
+            // Validate that correct item was selected
+            expect($('#app').contents().find('#autocomplete').val()).toBe('apple');
+
+            setTimeout(function() {
+                done();
+            }, 100);
+        }, 500);
+    });
+	
+	
 
     it('Test setup mock response with template', function(done) {
 
@@ -101,7 +139,7 @@ describe('Example suite', function() {
 
     it('Test XHR intercept, Post method', function(done) {
         // Use msl-client to register intercept
-        setInterceptXHR('localhost', 8001, '/services/getservice');
+        setInterceptXHR('localhost', 8001, '/services/postservice');
 
         // Type into second input field and click GET button which triggers a GET request
         $('#app').contents().find('#output-box').val('testPost');
@@ -111,10 +149,12 @@ describe('Example suite', function() {
         }, 500);
         setTimeout(function() {
             // Retrieve intercepted XHR and validate correct GET request was made by the app
-            getInterceptedXHR('localhost', 8001, '/services/getservice', function(resp) {
+            getInterceptedXHR('localhost', 8001, '/services/postservice', function(resp) {
                 var intrReq = JSON.parse(resp).xhr_1;
-                expect(intrReq.xhr.url).toBe('/services/getservice?term=testPost');
-                expect(intrReq.xhr.method).toBe('POST');
+				var regex = new RegExp("timestamp=\\d*&text=testPost");
+				expect(intrReq.xhr.url).toBe('/services/postservice');
+				expect(regex.test(body.post)).toBe(true);
+				expect(body.xhr.method).toBe('POST');
             }, 500);
         });
     });
