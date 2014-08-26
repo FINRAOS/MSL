@@ -191,13 +191,17 @@ public class MockAPITest {
 
         // Unregister this request so web-server.js no longer responds to it
         MockAPI.unRegisterMock("localhost", 8001, "/services/getlanguages");
+        
+        InteractiveElement button = new InteractiveElement(".//*[@id=\"postRequest\"]");
+        button.click();
 
+        autocomplete.getWebElement().clear();
         // Trigger event again
         autocomplete.type("J");
 
         // Verify that the dropdown no longer appears now that there
         // is no response
-        Assert.assertEquals(false, !dropdown.isElementPresent());
+        Assert.assertEquals(false, dropdown.isElementVisible());
 
     }
     

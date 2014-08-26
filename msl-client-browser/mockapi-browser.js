@@ -34,7 +34,12 @@ setMockRespond = function(server, port, body)
 {
     var xmlHttp = null;
     xmlHttp = new XMLHttpRequest();
-
+	
+	if(body['eval'] !== undefined && typeof body['eval'] === 'function')
+	{
+		body['eval'] = body['eval'].toString();
+	}
+	
     xmlHttp.open( "POST", "http://" + server + ":" + port + "/mock/fakerespond", true );
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
     xmlHttp.send(JSON.stringify(body));

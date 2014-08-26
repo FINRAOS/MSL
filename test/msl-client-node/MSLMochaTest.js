@@ -28,7 +28,7 @@ describe('Running Selenium tests', function() {
 
     beforeEach(function(done) {
         // Navigate to the URL for each test and wait for the autocomplete to be present
-        client.get('http://localhost:8001/slam-sample-app/index.html');
+        client.get('http://localhost:8001/msl-sample-app/index.html');
         var element = client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]"));
         element.getText().then(function() {
             done();
@@ -79,6 +79,45 @@ describe('Running Selenium tests', function() {
             done();
         });
     });
+	
+	
+	it('Uses an actual function to format response', function (done) {
+		// Set up the object that contains our response configuration
+		var configurations = {};
+		configurations.requestPath = "/services/getlanguages";
+		configurations.responseText = "{\"label\":\"Turbo Pascal\"},{\"label\":\"C#\"}";
+		configurations.contentType = "application/json";
+		configurations.eval = callbackFunc;
+		configurations.statusCode = 200;
+		configurations.delayTime = 0;
+
+		// Setting up the mock response using the configuration
+		msl.setMockRespond("localhost", 8001, configurations);
+
+		// Triggering the event
+		var autocomplete = client.findElement(webdriver.By.xpath(".//*[@id=\"autocomplete\"]"));
+		client.executeScript("$('#autocomplete').val('J')");
+		client.executeScript("$('#autocomplete').keydown()");
+
+		//Wait for the dropdown elements to appear
+		client.wait(function () {
+			return client.isElementPresent(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[1]"));
+		}, 500);
+
+		//Get the elements from the dropdown to check the values
+		var optionOne = client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[1]"));
+		var optionTwo = client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[2]"));
+
+		// Verify that the options are from the mocked response
+		optionOne.getText().then(function (title) {
+			assert.equal("Turbo Pascal", title);
+		});
+		optionTwo.getText().then(function (title) {
+			assert.equal("C#", title);
+			done();
+		});
+	});
+
 
     it('The dropdown should appear and contain the template data', function(done) {
 
