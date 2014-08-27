@@ -206,7 +206,7 @@ describe('Running Selenium tests', function () {
 	beforeEach(function (done) {
 		// Navigate to the URL for each test and wait for the autocomplete to be present
 		client.get('http://localhost:8001/msl-sample-app/index.html');
-		var element = client.findElement(webdriver.By.xpath(".//ul[contains(@class, "ui-autocomplete")]"));
+		var element = client.findElement(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]'));
 		element.getText().then(function () {
 			done();
 		});
