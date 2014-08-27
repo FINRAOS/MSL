@@ -728,7 +728,7 @@ public class MockAPITest {
 		// Use msl-client to set mock response
 		var mockResponse={};
 		mockResponse.requestPath = "/services/getlanguages";
-		mockResponse.responseText = "[{\"label\":\"apache\"},{\"label\":\"apple\"}]";
+		mockResponse.responseText = '[{"label":"apache"},{"label":"apple"}]';
 		mockResponse.statusCode = 200;
 		mockResponse.delayTime = 0;
 		setMockRespond("localhost", 8001, mockResponse);
@@ -757,7 +757,7 @@ public class MockAPITest {
 	
 		// Registering the template that will be used for the response
 		registerTemplate("localhost", 8001,
-			"[{\"label\":\"{{param1}}\"},{\"label\":\"{{param2}}\"}]", "example");
+			'[{"label":"{{param1}}"},{"label":"{{param2}}"}]', "example");
 		// Set up the object that contains our response configuration
 		var configurations = {};
 		configurations.requestPath = "/services/getlanguages";
@@ -832,7 +832,7 @@ public class MockAPITest {
 		// Use msl-client to set mock response
 		var mockResponse={};
 		mockResponse.requestPath = "/services/getlanguages";
-		mockResponse.responseText = "[{\"label\":\"apache\"},{\"label\":\"apple\"}]";
+		mockResponse.responseText = '[{"label":"apache"},{"label":"apple"}]';
 		mockResponse.statusCode = 200;
 		mockResponse.delayTime = 3000;
 		setMockRespond("localhost", 8001, mockResponse);
@@ -867,7 +867,7 @@ public class MockAPITest {
 		// Use msl-client to set mock response
 		var mockResponse={};
 		mockResponse.requestPath = "/services/getlanguages";
-		mockResponse.responseText = "[{\"label\":\"Ice Cream\"},{\"label\":\"Candy\"}]";
+		mockResponse.responseText = '[{"label":"Ice Cream"},{"label":"Candy"}]';
 		mockResponse.statusCode = 200;
 		mockResponse.delayTime = 0;
 		console.log("mockResponse",mockResponse);
