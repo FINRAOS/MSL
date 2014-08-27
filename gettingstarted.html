@@ -206,7 +206,7 @@ describe('Running Selenium tests', function () {
 	beforeEach(function (done) {
 		// Navigate to the URL for each test and wait for the autocomplete to be present
 		client.get('http://localhost:8001/msl-sample-app/index.html');
-		var element = client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]"));
+		var element = client.findElement(webdriver.By.xpath(".//ul[contains(@class, "ui-autocomplete")]"));
 		element.getText().then(function () {
 			done();
 		});
@@ -224,7 +224,7 @@ describe('Running Selenium tests', function () {
 		// Set up the object that contains our response configuration
 		var configurations = {};
 		configurations.requestPath = "/services/getlanguages";
-		configurations.responseText = "{\"label\":\"Java\"},{\"label\":\"Perl\"}";
+		configurations.responseText = '{"label":"Java"},{"label":"Perl"}';
 		configurations.contentType = "application/json";
 		configurations.eval = callbackFunc.toString();
 		configurations.statusCode = 200;
@@ -234,18 +234,18 @@ describe('Running Selenium tests', function () {
 		msl.setMockRespond("localhost", 8001, configurations);
 
 		// Triggering the event
-		var autocomplete = client.findElement(webdriver.By.xpath(".//*[@id=\"autocomplete\"]"));
+		var autocomplete = client.findElement(webdriver.By.xpath('.//*[@id="autocomplete"]'));
 		client.executeScript("$('#autocomplete').val('J')");
 		client.executeScript("$('#autocomplete').keydown()");
 
 		// Wait for the dropdown elements to appear
 		client.wait(function () {
-			return client.isElementPresent(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[1]"));
+			return client.isElementPresent(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[1]'));
 		}, 500);
 
 		// Get the elements from the dropdown to check the values
-		var optionOne = client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[1]"));
-		var optionTwo = client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[2]"));
+		var optionOne = client.findElement(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[1]'));
+		var optionTwo = client.findElement(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[2]'));
 
 		// Verify that the options are from the mocked response
 		optionOne.getText().then(function (title) {
@@ -260,8 +260,8 @@ describe('Running Selenium tests', function () {
 	it('The dropdown should appear and contain the template data', function (done) {
 
 		// Registering the template that will be used for the response
-		msl.registerTemplate("localhost", 8001,
-			"[{\"label\":\"{{param1}}\"},{\"label\":\"{{param2}}\"}]", "example");
+		msl.registerTemplate('localhost', 8001,
+			'[{"label":"{{param1}}"},{"label":"{{param2}}"}]', 'example');
 		// Set up the object that contains our response configuration
 		var configurations = {};
 		configurations.requestPath = "/services/getlanguages";
@@ -278,18 +278,18 @@ describe('Running Selenium tests', function () {
 		msl.setMockRespond("localhost", 8001, configurations);
 
 		// Triggering the event
-		var autocomplete = client.findElement(webdriver.By.xpath(".//*[@id=\"autocomplete\"]"));
+		var autocomplete = client.findElement(webdriver.By.xpath('.//*[@id="autocomplete"]'));
 		client.executeScript("$('#autocomplete').val('JA')");
 		client.executeScript("$('#autocomplete').keydown()");
 
 		// Wait for the dropdown elements to appear
 		client.wait(function () {
-			return client.isElementPresent(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[1]"));
+			return client.isElementPresent(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[1]'));
 		}, 500);
 
 		// Get the elements from the dropdown to check the values
-		var optionOne = client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[1]"));
-		var optionTwo = client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[2]"));
+		var optionOne = client.findElement(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[1]'));
+		var optionTwo = client.findElement(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[2]'));
 
 		// Verify that the options are from the mocked response
 		optionOne.getText().then(function (title) {
@@ -359,7 +359,7 @@ describe('Running Selenium tests', function () {
 		// Set up the object that contains our response configuration
 		var configurations = {};
 		configurations.requestPath = "/services/getlanguages";
-		configurations.responseText = "[{\"label\":\"French\"},{\"label\":\"Spanish\"}]";
+		configurations.responseText = '[{"label":"French"},{"label":"Spanish"}]';
 		configurations.contentType = "application/json";
 		configurations.statusCode = 200;
 		configurations.delayTime = 0;
@@ -368,17 +368,17 @@ describe('Running Selenium tests', function () {
 		msl.setMockRespond("localhost", 8001, configurations);
 
 		// Triggering the event
-		var autocomplete = client.findElement(webdriver.By.xpath(".//*[@id=\"autocomplete\"]"));
+		var autocomplete = client.findElement(webdriver.By.xpath('.//*[@id="autocomplete"]'));
 		client.executeScript("$('#autocomplete').val('JA')");
 		client.executeScript("$('#autocomplete').keydown()");
 
 		// Wait for the dropdown to appear
 		client.wait(function () {
-			return client.isElementPresent(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[1]"));
+			return client.isElementPresent(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[1]'));
 		}, 5000);
 
 		// Getting the first element from the list
-		var optionOne = client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[1]"));
+		var optionOne = client.findElement(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[1]'));
 
 		// Verify that the options are from the mocked response and then unregistering that mock
 		optionOne.getText().then(function (title) {
@@ -394,7 +394,7 @@ describe('Running Selenium tests', function () {
 		client.executeScript("$('#autocomplete').keydown()");
 
 		// Validating that the first element is now no longer present
-		client.findElement(webdriver.By.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li[1]")).
+		client.findElement(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[1]')).
 		then(function (element) {
 			element.isDisplayed().then(function (displayed) {
 				assert.equal(false, displayed);
