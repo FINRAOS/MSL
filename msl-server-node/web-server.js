@@ -288,7 +288,7 @@ function registerMock(post) {
 
     var responseObj = {};
     responseObj["statusCode"] = parseInt(post.statusCode)||200;
-    responseObj["header"] = post.header||"{'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'}";
+    responseObj["header"] = post.header||{'Content-Type': post.contentType||'application/json','Access-Control-Allow-Origin':'*'};
 	responseObj["contentType"] = post.contentType||"application/json";
     responseObj["responseText"] = post.responseText||"This is a fake response";
 	responseObj["id"] = post.id;
