@@ -90,7 +90,7 @@ public class MockAPI {
      *            => url of web-server.js running on node
      * @param port
      *            => port number of web-server.js running on node
-     * @param options
+     * @param configurations
      *            => the JSONObject that contains all of the options (content
      *            type, requestPath, etc)
      * @return
@@ -107,6 +107,12 @@ public class MockAPI {
         if(configurations.keySet().contains("keyValues")){
            if(configurations.get("keyValues") != null && configurations.get("keyValues") instanceof Map){
                configurations.put("keyValues", new JSONObject((Map<String, Object>)configurations.get("keyValues")));
+           }
+        }
+
+        if(configurations.keySet().contains("header")){
+           if(configurations.get("header") != null && configurations.get("header") instanceof Map){
+               configurations.put("header", new JSONObject((Map<String, Object>)configurations.get("header")));
            }
         }
         
