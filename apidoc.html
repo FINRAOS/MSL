@@ -86,14 +86,14 @@
     	
     	<div id="content">
 			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-				<li class="active"><a href="#node" data-toggle="tab">Node Client</a></li>
+				<li class="active"><a href="#js" data-toggle="tab">Browser Client</a></li>
 				<li><a href="#java" data-toggle="tab">Java Client</a></li>
-				<li><a href="#js" data-toggle="tab">Browser Client</a></li>
+				<li><a href="#node" data-toggle="tab">Node Client</a></li>
 			</ul>
 			<div id="my-tab-content" class="tab-content">
-				<div class="tab-pane active" id="node">
+				<div class="tab-pane" id="js">
 					<br>
-					<h4 style="color: grey">Leverage this API in your Node script via requiring 'msl-client' using <b style="color: #0F2879">require</b></h4>
+					<h4 style="color: grey">Leverage this API in your HTML by adding 'mockapi-browser.js' using a <b style="color: #0F2879">&lt;script&gt;</b> tag</h4>
 					<h3>setMockRespond(server, port, body)</h3>
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br>
@@ -129,8 +129,8 @@
 					</p>
 					<br>
 					<h3>setParamIgnored(server, port, params)</h3>
-					<p>Method to set up parameters that will be ignored in the URL.
 					<br>
+					<p>Method to set up parameters that will be ignored in the URL.
 					<br><b>server</b> => url of web-server.js running on node
 					<br><b>port</b> => port number of web-server.js running on node
 					<br><b>params</b> => parameters that will be ignored in the app URL, type is string.
@@ -208,9 +208,9 @@
 					</p>					
 				</div>
 				
-				<div class="tab-pane" id="js">
+				<div class="tab-pane active" id="node">
 					<br>
-					<h4 style="color: grey">Leverage this API in your HTML by adding 'mockapi-browser.js' using a <b style="color: #0F2879">&lt;script&gt;</b> tag</h4>
+					<h4 style="color: grey">Leverage this API in your Node script via requiring 'msl-client' using <b style="color: #0F2879">require</b></h4>
 					<h3>setMockRespond(server, port, body)</h3>
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br>
@@ -246,8 +246,8 @@
 					</p>
 					<br>
 					<h3>setParamIgnored(server, port, params)</h3>
-					<br>
 					<p>Method to set up parameters that will be ignored in the URL.
+					<br>
 					<br><b>server</b> => url of web-server.js running on node
 					<br><b>port</b> => port number of web-server.js running on node
 					<br><b>params</b> => parameters that will be ignored in the app URL, type is string.
