@@ -94,12 +94,12 @@
 				<div class="tab-pane active" id="js">
 					<br>
 					<h4 style="color: grey">Leverage this API in your HTML by adding 'mockapi-browser.js' using a <b style="color: #0F2879">&lt;script&gt;</b> tag</h4>
-					<h3>setMockRespond(server, port, body)</h3>
+					<h3>setMockRespond(server, port, configurations)</h3>
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br>
 					<br><b>server</b> => url of web-server.js running on node
 					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>body</b> => JSON object containing mock configuration. Possible configurations are "requestPath", "contentType", "statusCode", "responseText", "id", "keyValues", "delayTime", "header", and "eval".
+					<br><b>configurations</b> => JSON object containing mock configuration. Possible configurations are "requestPath", "contentType", "statusCode", "responseText", "id", "keyValues", "delayTime", "header", and "eval".
 					</p>
 					<br>
 					<h3>registerTemplate(server, port, template, id)</h3>
@@ -211,12 +211,12 @@
 				<div class="tab-pane" id="node">
 					<br>
 					<h4 style="color: grey">Leverage this API in your Node script via requiring 'msl-client' using <b style="color: #0F2879">require</b></h4>
-					<h3>setMockRespond(server, port, body)</h3>
+					<h3>setMockRespond(server, port, configurations)</h3>
 					<p>POST request to register mock response. Once you register, whenever server receives a request matching the registered requestPath, it will respond with a fake response
 					<br>
 					<br><b>server</b> => url of web-server.js running on node
 					<br><b>port</b> => port number of web-server.js running on node
-					<br><b>body</b> => JSON object containing mock configuration. Possible configurations are "requestPath", "contentType", "statusCode", "responseText", "id", "keyValues", "delayTime", "header", and "eval".
+					<br><b>configurations</b> => JSON object containing mock configuration. Possible configurations are "requestPath", "contentType", "statusCode", "responseText", "id", "keyValues", "delayTime", "header", and "eval".
 					</p>
 					<br>
 					<h3>registerTemplate(server, port, template, id)</h3>
