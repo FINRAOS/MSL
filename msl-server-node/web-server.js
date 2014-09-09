@@ -138,13 +138,15 @@ var localAppMockAPI = function(req, res, next) {
       });
       return res.end();
   }else if(req.path == '/mock/template') {	  
-	  var body = {};
+	  
+	  var str = '';
       req.on('data', function (data) {
-	      body = JSON.parse(String(data));
-		  record("Registered template for: " + body.id,0);
-
+		  str+=data;
       });
       req.on('end', function () {
+		  var body = {};
+		  body = JSON.parse(String(str));
+		  record("Registered template for: " + body.id,0);
           var post = body;
     	  registerTemplate(post);
           res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
