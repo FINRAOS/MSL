@@ -232,4 +232,20 @@ describe('Example suite', function() {
             expect($('#app').contents().find('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
         }, 1500);
     });
+
+    it('Test mocking POST ajax success', function(done) {
+      // Use msl-client to set mock response
+      setMockRespond('localhost', 8001, {"requestPath":"/services/postservice", "responseText":'{"outputBoxValue":"hello"}'});
+
+      // Type hellomsl on text area and click POST button
+      $('#app').contents().find('#output-box').val('hellomsl');
+      $('#app').contents().find('#postRequest').click();
+
+      setTimeout(function() {
+        // Validate that postResult span is populated with the text 'hello' which was the success call from the ajax call
+        expect($('#app').contents().find('#postResult').text()).toBe('hello');
+        done();
+      }, 500);
+    });
+
 });
