@@ -24,7 +24,12 @@
 			url: "http://localhost:8001/services/postservice",
 			type: 'POST',
 			data: {'timestamp': $.now(), 'text': $("#output-box").val()},
-			dataType : "json"
+			success: function(data) {
+                                $("#postResult").text(data.outputBoxValue);     
+                        },
+                        error: function (request, status, error) {
+                                alert(error);
+                        }
 		});
 	});
 	
@@ -96,6 +101,7 @@
     <textarea id="output-box" type="text"></textarea>
     <br/>
     <input type="submit" value="POST" id="postRequest">
+    <span id="postResult"></span>
 </div>
 
 
