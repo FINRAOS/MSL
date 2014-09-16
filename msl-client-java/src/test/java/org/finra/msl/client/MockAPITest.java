@@ -253,6 +253,7 @@ public class MockAPITest {
 		MockAPI.setMockRespond("localhost", 8001, config);
 		
 		Element result = new Element("//textarea[@id=\"postResultLong\"]");
+		result.waitForText();
 		Assert.assertEquals("Midnight Rain", result.getText());
 		
 	}
