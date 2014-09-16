@@ -33,6 +33,23 @@
 		});
 	});
 	
+	$.ajax({
+		url: "http://localhost:8001/services/getBooks",
+		type: 'POST',
+		dataType: "xml",
+		success: function(data) {
+							
+							$(data).find("book").each(function()  {
+							if($(this).attr("id")=='bk89')
+								$("#postResultLong").append($(this).find("title").text() + "<br />");
+							});
+							  
+					},
+					error: function (request, status, error) {
+							alert(error);
+					}
+	});
+	
   });
   
   
@@ -103,7 +120,10 @@
     <input type="submit" value="POST" id="postRequest">
     <span id="postResult"></span>
 </div>
-
+<div id="post-long-div" class="functions">
+	<h2 class="demoHeaders">Long Response Example</h2>
+    <textarea id="postResultLong"></textarea>
+</div>
 
 </body>
 </html>
