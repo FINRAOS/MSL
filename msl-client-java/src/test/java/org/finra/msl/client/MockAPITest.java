@@ -38,7 +38,7 @@ public class MockAPITest {
 		ewd.open("http://localhost:8001/index.html");
 	}
 
-	@Test
+/*	@Test
 	public void testTextResponse() throws Exception {
 		// Create object for autocomplete element
 		InteractiveElement autocomplete = new InteractiveElement(
@@ -219,7 +219,7 @@ public class MockAPITest {
 		// is no response
 		Assert.assertEquals(false, !dropdown.isElementPresent());
 
-	}
+	}*/
 
 	@Test
 	public void testLongResponse() throws Exception {
@@ -253,7 +253,7 @@ public class MockAPITest {
 		MockAPI.setMockRespond("localhost", 8001, config);
 		
 		Element result = new Element("//textarea[@id=\"postResultLong\"]");
-		result.waitForText();
+		Thread.sleep(6000);
 		Assert.assertEquals("Midnight Rain", result.getText());
 		
 	}
