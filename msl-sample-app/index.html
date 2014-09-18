@@ -33,21 +33,18 @@
 		});
 	});
 	
-	$.ajax({
-		url: "http://localhost:8001/services/getBooks",
-		type: 'POST',
-		dataType: "xml",
-		success: function(data) {
-							
-							$(data).find("book").each(function()  {
-							if($(this).attr("id")=='bk89')
-								$("#postResultLong").append($(this).find("title").text() + "<br />");
-							});
-							  
-					},
-					error: function (request, status, error) {
-							alert(error);
-					}
+	$("#postLongRequest").click(function(){
+		$.ajax({
+			url: "http://localhost:8001/services/getBooks",
+			type: 'POST',
+			dataType: 'xml',
+			success: function(data) {
+						$("#postResultLong").text($(data).find("book[id='bk895']").find("title").text());
+						},
+						error: function (request, status, error) {
+								alert(error);
+						}
+		});
 	});
 	
   });
@@ -101,7 +98,6 @@
 
 <body>
 <h1>THIS IS THE <span style="color:green">MSL</span> SAMPLE TESTING APP</h1>
-
 <div>
 	<h2 class="demoHeaders">Mock Respond Example</h2>
     <span><input id="autocomplete" title="type &quot;a&quot;">
@@ -122,7 +118,8 @@
 </div>
 <div id="post-long-div" class="functions">
 	<h2 class="demoHeaders">Long Response Example</h2>
-    <textarea id="postResultLong"></textarea>
+	<input type="submit" value="POST" id="postLongRequest">
+    <span id="postResultLong"></span>
 </div>
 
 </body>
