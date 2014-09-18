@@ -24,6 +24,7 @@ import org.openqa.selenium.WebElement;
  * Tests for msl-client-java and msl-server
  */
 public class MockAPITest {
+
 	public static ExtWebDriver ewd;
 
 	@BeforeClass
@@ -39,41 +40,38 @@ public class MockAPITest {
 	}
 
 	@Test
-	public void testTextResponse() throws Exception {
-		// Create object for autocomplete element
-		InteractiveElement autocomplete = new InteractiveElement(
-				".//*[@id=\"autocomplete\"]");
+    public void testTextResponse() throws Exception {
+        // Create object for autocomplete element
+        InteractiveElement autocomplete = new InteractiveElement(".//*[@id=\"autocomplete\"]");
 
-		// Set up the object that contains our response configuration
-		Map<String, Object> configurations = new HashMap<String, Object>();
-		configurations.put("requestPath", "/services/getlanguages");
-		configurations.put("responseText",
-				"{\"label\":\"Java\"},{\"label\":\"Perl\"}");
-		configurations.put("contentType", "application/json");
-		configurations
-				.put("eval",
-						"function (req,responseText) { return '[' + responseText + ']'; }");
-		configurations.put("statusCode", "200");
-		configurations.put("delayTime", "0");
+        // Set up the object that contains our response configuration
+        Map<String, Object> configurations = new HashMap<String, Object>();
+        configurations.put("requestPath", "/services/getlanguages");
+        configurations.put("responseText", "{\"label\":\"Java\"},{\"label\":\"Perl\"}");
+        configurations.put("contentType", "application/json");
+        configurations.put("eval",
+                "function (req,responseText) { return '[' + responseText + ']'; }");
+        configurations.put("statusCode", "200");
+        configurations.put("delayTime", "0");
 
-		// Setting up the mock response using the configuration
-		MockAPI.setMockRespond("localhost", 8001, configurations);
+        // Setting up the mock response using the configuration
+        MockAPI.setMockRespond("localhost", 8001, configurations);
 
-		// Triggering the event
-		autocomplete.type("J");
+        // Triggering the event
+        autocomplete.type("J");
 
-		Element dropdown = new Element(
-				".//ul[contains(@class, \"ui-autocomplete\")]");
-		dropdown.waitForVisible();
+        Element dropdown = new Element(".//ul[contains(@class, \"ui-autocomplete\")]");
+        dropdown.waitForVisible();
 
-		// Getting all of the options from the dropdown menu to be validated
-		List<WebElement> elements = ewd.findElements(By
-				.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
+        // Getting all of the options from the dropdown menu to be validated
+        List<WebElement> elements = ewd.findElements(By
+                .xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
 
-		// Verify that the options are from the mocked response
-		Assert.assertEquals("Java", elements.get(0).getText());
-		Assert.assertEquals("Perl", elements.get(1).getText());
-	}
+        // Verify that the options are from the mocked response
+        Assert.assertEquals("Java", elements.get(0).getText());
+        Assert.assertEquals("Perl", elements.get(1).getText());
+    }
+
 
 	@Test
 	public void testTemplateResponse() throws Exception {
@@ -265,4 +263,5 @@ public class MockAPITest {
 	public static void tearDown() {
 		ewd.close();
 	}
+
 }

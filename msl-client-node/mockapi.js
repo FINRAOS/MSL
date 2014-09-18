@@ -1,21 +1,21 @@
 /*
  * (C) Copyright 2014 Mock Service Layer Contributors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
  */
 
-var XMLHttpRequest = require("xhr2");
+var XMLHttpRequest = require('xhr2');
 
 /**
  **
@@ -36,8 +36,13 @@ exports.setMockRespond = function(server, port, body)
 {
     var xmlHttp = null;
     xmlHttp = new XMLHttpRequest();
-
-    xmlHttp.open( "POST", "http://" + server + ":" + port + "/mock/fakerespond", true );
+	
+	if(body['eval'] !== undefined && typeof body['eval'] === 'function')
+	{
+		body['eval'] = body['eval'].toString();
+	}
+	
+    xmlHttp.open( 'POST', 'http://' + server + ':' + port + '/mock/fakerespond', true );
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
     xmlHttp.send(JSON.stringify(body));
 }
@@ -62,7 +67,7 @@ exports.registerTemplate = function(server, port, template, id)
     body.template= template;
     body.id = id;
 	
-    xmlHttp.open( "POST", "http://" + server + ":" + port + "/mock/template", true );
+    xmlHttp.open( 'POST', 'http://' + server + ':' + port + '/mock/template', true );
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
 
     xmlHttp.send(JSON.stringify(body));
@@ -85,7 +90,7 @@ exports.setInterceptXHR = function(server, port, requestPath)
 	var body = {};
     body.requestPath= requestPath;
 
-    xmlHttp.open( "POST", "http://" + server + ":" + port + "/mock/interceptxhr", true );
+    xmlHttp.open( 'POST', 'http://' + server + ':' + port + '/mock/interceptxhr', true );
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
 
     xmlHttp.send(JSON.stringify(body));
@@ -112,7 +117,7 @@ exports.getInterceptedXHR = function(server, port, requestPath, callback)
 	var body = {};
     body.requestPath= requestPath;
 
-    xmlHttp.open( "POST", "http://" + server + ":" + port + "/mock/getinterceptedxhr", true );
+    xmlHttp.open( 'POST', 'http://' + server + ':' + port + '/mock/getinterceptedxhr', true );
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status==200) {
@@ -139,7 +144,7 @@ exports.setParamIgnored = function(server, port, params)
 	var body = {};
     body.requestPath= params;
 	
-    xmlHttp.open( "POST", "http://" + server + ":" + port + "/setIgnoreFlag", true );
+    xmlHttp.open( 'POST', 'http://' + server + ':' + port + '/setIgnoreFlag', true );
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
     xmlHttp.send(JSON.stringify(body));
 }
@@ -159,7 +164,7 @@ exports.unRegisterMock = function(server, port, requestPath)
 	var body = {};
     body.requestPath= requestPath;
 
-    xmlHttp.open( "POST", "http://" + server + ":" + port + "/unregisterMock", true );
+    xmlHttp.open( 'POST', 'http://' + server + ':' + port + '/unregisterMock', true );
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
     xmlHttp.send(JSON.stringify(body));
 }
