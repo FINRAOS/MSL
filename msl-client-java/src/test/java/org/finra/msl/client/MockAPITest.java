@@ -1,5 +1,7 @@
 package org.finra.msl.client;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,21 +24,22 @@ import org.openqa.selenium.WebElement;
  * Tests for msl-client-java and msl-server
  */
 public class MockAPITest {
-    public static ExtWebDriver ewd;
 
-    @BeforeClass
-    public static void setUp() throws Exception {
-        // Get a new ExtWebDriver session
-        ewd = SessionManager.getInstance().getNewSession();
-    }
+	public static ExtWebDriver ewd;
 
-    @Before
-    public void openApp() {
-        // Open the test application
-        ewd.open("http://localhost:8001/index.html");
-    }
+	@BeforeClass
+	public static void setUp() throws Exception {
+		// Get a new ExtWebDriver session
+		ewd = SessionManager.getInstance().getNewSession();
+	}
 
-    @Test
+	@Before
+	public void openApp() {
+		// Open the test application
+		ewd.open("http://localhost:8001/index.html");
+	}
+
+	@Test
     public void testTextResponse() throws Exception {
         // Create object for autocomplete element
         InteractiveElement autocomplete = new InteractiveElement(".//*[@id=\"autocomplete\"]");
@@ -69,145 +72,196 @@ public class MockAPITest {
         Assert.assertEquals("Perl", elements.get(1).getText());
     }
 
-    @Test
-    public void testTemplateResponse() throws Exception {
-        MockAPI.registerTemplate("localhost", 8001,
-                "[{\"label\":\"{{param1}}\"},{\"label\":\"{{param2}}\"}]", "example");
 
-        InteractiveElement autocomplete = new InteractiveElement(".//*[@id=\"autocomplete\"]");
+	@Test
+	public void testTemplateResponse() throws Exception {
+		MockAPI.registerTemplate("localhost", 8001,
+				"[{\"label\":\"{{param1}}\"},{\"label\":\"{{param2}}\"}]",
+				"example");
 
-        Map<String, Object> configurations = new HashMap<String, Object>();
-        configurations.put("requestPath", "/services/getlanguages");
-        configurations.put("contentType", "application/json");
-        configurations.put("statusCode", "200");
-        configurations.put("delayTime", "0");
+		InteractiveElement autocomplete = new InteractiveElement(
+				".//*[@id=\"autocomplete\"]");
 
-        Map<String, String> keyValue = new HashMap<String, String>();
-        keyValue.put("param1", "German");
-        keyValue.put("param2", "English");
-        configurations.put("keyValues", keyValue);
-        configurations.put("id", "example");
+		Map<String, Object> configurations = new HashMap<String, Object>();
+		configurations.put("requestPath", "/services/getlanguages");
+		configurations.put("contentType", "application/json");
+		configurations.put("statusCode", "200");
+		configurations.put("delayTime", "0");
 
-        // Setting up the mock response using the configuration
-        MockAPI.setMockRespond("localhost", 8001, configurations);
+		Map<String, String> keyValue = new HashMap<String, String>();
+		keyValue.put("param1", "German");
+		keyValue.put("param2", "English");
+		configurations.put("keyValues", keyValue);
+		configurations.put("id", "example");
 
-        // Triggering the event
-        autocomplete.type("J");
+		// Setting up the mock response using the configuration
+		MockAPI.setMockRespond("localhost", 8001, configurations);
 
-        Element dropdown = new Element(".//ul[contains(@class, \"ui-autocomplete\")]");
-        dropdown.waitForVisible();
+		// Triggering the event
+		autocomplete.type("J");
 
-        // Getting all of the options from the dropdown menu to be validated
-        List<WebElement> elements = ewd.findElements(By
-                .xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
+		Element dropdown = new Element(
+				".//ul[contains(@class, \"ui-autocomplete\")]");
+		dropdown.waitForVisible();
 
-        // Verify that the options are from the mocked response
-        Assert.assertEquals("German", elements.get(0).getText());
-        Assert.assertEquals("English", elements.get(1).getText());
-    }
+		// Getting all of the options from the dropdown menu to be validated
+		List<WebElement> elements = ewd.findElements(By
+				.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
 
-    @Test
-    public void testGetIntercept() throws Exception {
-        MockAPI.setInterceptXHR("localhost", 8001, "/services/getservice");
+		// Verify that the options are from the mocked response
+		Assert.assertEquals("German", elements.get(0).getText());
+		Assert.assertEquals("English", elements.get(1).getText());
+	}
 
-        InteractiveElement input = new InteractiveElement(".//*[@id=\"getInput\"]");
-        input.type("GET Example");
+	@Test
+	public void testGetIntercept() throws Exception {
+		MockAPI.setInterceptXHR("localhost", 8001, "/services/getservice");
 
-        InteractiveElement button = new InteractiveElement(".//*[@id=\"getRequest\"]");
-        button.click();
+		InteractiveElement input = new InteractiveElement(
+				".//*[@id=\"getInput\"]");
+		input.type("GET Example");
 
-        // Due to WebDriver operating too quickly sometimes, it is held up so
-        // that the web-server has enough time to intercept
-        Thread.sleep(5);
+		InteractiveElement button = new InteractiveElement(
+				".//*[@id=\"getRequest\"]");
+		button.click();
 
-        // Get the HTTP requests that have been intercepted
-        XHR[] interceptedXHR = MockAPI.getInterceptedXHR("localhost", 8001, "/services/getservice");
+		// Due to WebDriver operating too quickly sometimes, it is held up so
+		// that the web-server has enough time to intercept
+		Thread.sleep(5);
 
-        // Verify that the intercepted HTTP request is the one we are looking
-        // for by checking its content
-        Assert.assertEquals("GET", interceptedXHR[0].getMethodType());
-        Assert.assertEquals("/services/getservice?term=GET+Example", interceptedXHR[0].getUrl());
-        Assert.assertEquals("GET Example", interceptedXHR[0].getQueryString().get("term"));
-    }
+		// Get the HTTP requests that have been intercepted
+		XHR[] interceptedXHR = MockAPI.getInterceptedXHR("localhost", 8001,
+				"/services/getservice");
 
-    @Test
-    public void testPostIntercept() throws Exception {
-        // Setting
-        MockAPI.setInterceptXHR("localhost", 8001, "/services/postservice");
+		// Verify that the intercepted HTTP request is the one we are looking
+		// for by checking its content
+		Assert.assertEquals("GET", interceptedXHR[0].getMethodType());
+		Assert.assertEquals("/services/getservice?term=GET+Example",
+				interceptedXHR[0].getUrl());
+		Assert.assertEquals("GET Example", interceptedXHR[0].getQueryString()
+				.get("term"));
+	}
 
-        InteractiveElement input = new InteractiveElement(".//*[@id=\"output-box\"]");
-        input.type("POST Example");
+	@Test
+	public void testPostIntercept() throws Exception {
+		// Setting
+		MockAPI.setInterceptXHR("localhost", 8001, "/services/postservice");
 
-        InteractiveElement button = new InteractiveElement(".//*[@id=\"postRequest\"]");
-        button.click();
+		InteractiveElement input = new InteractiveElement(
+				".//*[@id=\"output-box\"]");
+		input.type("POST Example");
 
-        // Due to WebDriver operating too quickly sometimes, it is held up so
-        // that the web-server has enough time to intercept
-        Thread.sleep(5);
+		InteractiveElement button = new InteractiveElement(
+				".//*[@id=\"postRequest\"]");
+		button.click();
 
-        // Get the HTTP requests that have been intercepted
-        XHR[] interceptedXHR = MockAPI
-                .getInterceptedXHR("localhost", 8001, "/services/postservice");
+		// Due to WebDriver operating too quickly sometimes, it is held up so
+		// that the web-server has enough time to intercept
+		Thread.sleep(5);
 
-        // Verify that the intercepted HTTP request is the one we are looking
-        // for by checking its content
-        Assert.assertEquals("POST", interceptedXHR[0].getMethodType());
-        Assert.assertEquals("/services/postservice", interceptedXHR[0].getUrl());
-        Assert.assertTrue(interceptedXHR[0].getBody().contains("timestamp="));
-        Assert.assertTrue(interceptedXHR[0].getBody().contains("text=POST+Example"));
-    }
+		// Get the HTTP requests that have been intercepted
+		XHR[] interceptedXHR = MockAPI.getInterceptedXHR("localhost", 8001,
+				"/services/postservice");
 
-    @Test
-    public void testUnRegisterMock() throws Exception {
+		// Verify that the intercepted HTTP request is the one we are looking
+		// for by checking its content
+		Assert.assertEquals("POST", interceptedXHR[0].getMethodType());
+		Assert.assertEquals("/services/postservice", interceptedXHR[0].getUrl());
+		Assert.assertTrue(interceptedXHR[0].getBody().contains("timestamp="));
+		Assert.assertTrue(interceptedXHR[0].getBody().contains(
+				"text=POST+Example"));
+	}
 
-        // Create object for autocomplete element
-        InteractiveElement autocomplete = new InteractiveElement(".//*[@id=\"autocomplete\"]");
+	@Test
+	public void testUnRegisterMock() throws Exception {
 
-        // Set up the object that contains our response configuration
-        Map<String, Object> configurations = new HashMap<String, Object>();
-        configurations.put("requestPath", "/services/getlanguages");
-        configurations.put("responseText", "[{\"label\":\"Java\"},{\"label\":\"Perl\"}]");
-        configurations.put("contentType", "application/json");
-        configurations.put("statusCode", "200");
-        configurations.put("delayTime", "0");
+		// Create object for autocomplete element
+		InteractiveElement autocomplete = new InteractiveElement(
+				".//*[@id=\"autocomplete\"]");
 
-        // Set up the response using the configuration that was just created
-        MockAPI.setMockRespond("localhost", 8001, configurations);
+		// Set up the object that contains our response configuration
+		Map<String, Object> configurations = new HashMap<String, Object>();
+		configurations.put("requestPath", "/services/getlanguages");
+		configurations.put("responseText",
+				"[{\"label\":\"Java\"},{\"label\":\"Perl\"}]");
+		configurations.put("contentType", "application/json");
+		configurations.put("statusCode", "200");
+		configurations.put("delayTime", "0");
 
-        // Type into the autocomplete to trigger the event
-        autocomplete.type("J");
+		// Set up the response using the configuration that was just created
+		MockAPI.setMockRespond("localhost", 8001, configurations);
 
-        Element dropdown = new Element(".//ul[contains(@class, \"ui-autocomplete\")]");
-        dropdown.waitForVisible();
+		// Type into the autocomplete to trigger the event
+		autocomplete.type("J");
 
-        List<WebElement> elements = ewd.findElements(By
-                .xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
+		Element dropdown = new Element(
+				".//ul[contains(@class, \"ui-autocomplete\")]");
+		dropdown.waitForVisible();
 
-        autocomplete.getWebElement().clear();
+		List<WebElement> elements = ewd.findElements(By
+				.xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
 
-        // Verify the dropdown elements
-        Assert.assertEquals("Java", elements.get(0).getText());
-        Assert.assertEquals("Perl", elements.get(1).getText());
+		autocomplete.getWebElement().clear();
 
-        // Unregister this request so web-server.js no longer responds to it
-        MockAPI.unRegisterMock("localhost", 8001, "/services/getlanguages");
-        
-        InteractiveElement button = new InteractiveElement(".//*[@id=\"postRequest\"]");
-        button.click();
+		// Verify the dropdown elements
+		Assert.assertEquals("Java", elements.get(0).getText());
+		Assert.assertEquals("Perl", elements.get(1).getText());
 
-        autocomplete.getWebElement().clear();
-        // Trigger event again
-        autocomplete.type("J");
+		// Unregister this request so web-server.js no longer responds to it
+		MockAPI.unRegisterMock("localhost", 8001, "/services/getlanguages");
 
-        // Verify that the dropdown no longer appears now that there
-        // is no response
-        Assert.assertEquals(false, dropdown.isElementVisible());
+		// Trigger event again
+		autocomplete.type("J");
 
-    }
-    
+		// Verify that the dropdown no longer appears now that there
+		// is no response
+		Assert.assertEquals(false, !dropdown.isElementPresent());
 
-    @AfterClass
-    public static void tearDown() {
-        ewd.close();
-    }
+	}
+
+	@Test
+	public void testLongResponse() throws Exception {
+		String everything = null;
+		BufferedReader br = new BufferedReader(new FileReader(
+				System.getProperty("user.dir")
+						+ "/src/test/resources/sampleResponse"));
+		try {
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+
+			while (line != null) {
+				sb.append(line);
+				sb.append(System.lineSeparator());
+				line = br.readLine();
+			}
+			everything = sb.toString();
+
+		} finally {
+			br.close();
+		}
+		MockAPI.registerTemplate("localhost", 8001, everything,
+				"getBooks");
+
+		Map<String, Object> config = new HashMap<String, Object>();
+		config.put("requestPath", "/services/getBooks");
+		config.put("statusCode", 200);
+		config.put("contentType", "application/xml");
+		config.put("id", "getBooks");
+
+		MockAPI.setMockRespond("localhost", 8001, config);
+		
+		Element result = new Element("//span[@id=\"postResultLong\"]");
+		InteractiveElement button = new InteractiveElement(
+				".//*[@id=\"postLongRequest\"]");
+		button.click();
+		Thread.sleep(10000);
+		Assert.assertEquals("Midnight Rain", result.getText());
+		
+	}
+
+	@AfterClass
+	public static void tearDown() {
+		ewd.close();
+	}
+
 }
