@@ -39,7 +39,8 @@ var main = function(argv) {
   localApp.listen(port);
   record(["MSL launched from here: ", localAppDir].
   join(" "),1);
-  record(["MSL start on port:", port].join(" "),1)
+  record(["MSL start on port:", port].join(" "),1);
+  record(["Process ID: ", process.pid].join(" "),1);
 };
 
 
