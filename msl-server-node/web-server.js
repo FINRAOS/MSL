@@ -277,7 +277,7 @@ function unregisterMock(mapKey) {
 		delete mockReqRespMap[mapKey];
 	}
 	else {
-		mockReqRespMap = null;
+		mockReqRespMap = {};
 	}
 
 }
