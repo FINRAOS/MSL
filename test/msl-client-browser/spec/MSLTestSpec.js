@@ -13,6 +13,10 @@ describe('Example suite', function() {
         }, 100);
     });
 
+    afterEach(function() {
+      unRegisterMock('localhost', 8001, "");
+    });
+
     it('Test for register and get mock response', function(done) {
         // Use msl-client to set mock response
         var mockResponse = {};
