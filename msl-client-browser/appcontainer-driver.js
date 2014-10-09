@@ -1,6 +1,6 @@
 openApp = function(url) {
   if($('#mslappcontainer').length <= 0) {
-    document.body.innerHTML = '<div id="mslappcontainerdiv"><iframe id="mslappcontainer" name="mslappcontainer" style="width:100%; height:800px; border:0;" src=""></iframe></div>';
+    $("body").append('<div id="mslappcontainerdiv"><iframe id="mslappcontainer" name="mslappcontainer" style="width:100%; height:800px; border:0;" src=""></iframe></div>');
   }
   $('#mslappcontainer').attr('src', url);
 }
