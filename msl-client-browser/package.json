@@ -25,17 +25,6 @@
     "url": "git://github.com/FINRAOS/MSL.git"
   }],
   "bugs": "https://github.com/FINRAOS/MSL/issues",
-  "autoupdate": {
-    "source": "git",
-    "target": "git://github.com/FINRAOS/MSL.git",
-    "basePath": "/msl-client-browser/",
-    "files": [
-      "appcontainer-driver.js",
-      "appcontainer-driver.min.js",
-      "mockapi-browser.js",
-      "mockapi-browser.min.js"
-    ]
-  },
   "licenses": [
     {
       "type": "Apache 2.0",
