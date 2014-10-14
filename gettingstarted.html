@@ -704,10 +704,6 @@ public class MockAPITest {
 &lt;/head&gt;
 
 &lt;body&gt;
-	&lt;!-- Iframe for running the application--&gt;
-  &lt;div id="aut"&gt;
-	&lt;iframe id="app" style="width:100%; height:800px; border:0;" src=""&gt;&lt;/iframe&gt;
-  &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
@@ -728,6 +724,10 @@ public class MockAPITest {
         setTimeout(function() {
             done();
         }, 100);
+    });
+
+    afterEach(function() {
+      unRegisterMock('localhost', 8001, "");
     });
 
     it('Test for register and get mock response', function(done) {
@@ -865,13 +865,13 @@ public class MockAPITest {
             done();
         }, 500);
         setTimeout(function() {
-            // Retrieve intercepted XHR and validate correct GET request was made by the app
+            // Retrieve intercepted XHR and validate correct POST request was made by the app
             getInterceptedXHR('localhost', 8001, '/services/postservice', function(resp) {
                 var intrReq = JSON.parse(resp).xhr_1;
 				var regex = new RegExp('timestamp=\\d*&text=testPost');
 				expect(intrReq.xhr.url).toBe('/services/postservice');
-				expect(regex.test(body.post)).toBe(true);
-				expect(body.xhr.method).toBe('POST');
+				expect(regex.test(intrReq.post)).toBe(true);
+				expect(intrReq.xhr.method).toBe('POST');
             }, 500);
         });
     });
