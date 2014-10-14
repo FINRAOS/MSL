@@ -1,12 +1,7 @@
 describe('Example suite', function() {
 
-	var callbackFunc = function (req, responseText) {
-		return '[' + responseText + ']';
-	}
-	
     beforeEach(function(done) {
-        // Load app inside iframe
-        openApp('http://localhost:8001/msl-sample-app/index.html');
+	openApp('http://localhost:8001/msl-sample-app/index.html');
 
         setTimeout(function() {
             done();
@@ -14,7 +9,7 @@ describe('Example suite', function() {
     });
 
     afterEach(function() {
-      unRegisterMock('localhost', 8001, "");
+      unRegisterMock('localhost', 8001, '');
     });
 
     it('Test for register and get mock response', function(done) {
@@ -27,60 +22,26 @@ describe('Example suite', function() {
         setMockRespond('localhost', 8001, mockResponse);
 
         // Type into first input field which triggers a REST call to return a JSON response
-        getElemFromApp('#autocomplete').val('a');
-        triggerEventOnApp('#autocomplete', 'keydown');
+        getElement('#autocomplete').val('a');
+        getElement('#autocomplete').keydown();
 
         setTimeout(function() {
             // Validate the drop down is display correctly with mock response
-            expect(getTextFromApp('ul li:nth-of-type(1)')).toBe('apache');
-            expect(getTextFromApp('ul li:nth-of-type(2)')).toBe('apple');
+            expect(getElement('ul li:nth-of-type(1)').text()).toBe('apache');
+            expect(getElement('ul li:nth-of-type(2)').text()).toBe('apple');
 
             // Click on the Second item from the drop down
-            getElemFromApp('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
+            getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
 
             // Validate that correct item was selected
-            expect(getElemFromApp('#autocomplete').val()).toBe('apple');
+            expect(getElement('#autocomplete').val()).toBe('apple');
 
             setTimeout(function() {
                 done();
             }, 100);
-        }, 500);
+        }, 1000);
     });
-	
-	
-	it('Test for register and get mock response using function', function(done) {
-        // Use msl-client to set mock response
-        var mockResponse = {};
-        mockResponse.requestPath = '/services/getlanguages';
-        mockResponse.responseText = '{"label":"apache"},{"label":"apple"}';
-		mockResponse.eval = callbackFunc;
-        mockResponse.statusCode = 200;
-        mockResponse.delayTime = 0;
-        setMockRespond('localhost', 8001, mockResponse);
-
-        // Type into first input field which triggers a REST call to return a JSON response
-        getElemFromApp('#autocomplete').val('a');
-        triggerEventOnApp('#autocomplete', 'keydown');
-
-        setTimeout(function() {
-            // Validate the drop down is display correctly with mock response
-            expect(getTextFromApp('ul li:nth-of-type(1)')).toBe('apache');
-            expect(getTextFromApp('ul li:nth-of-type(2)')).toBe('apple');
-
-            // Click on the Second item from the drop down
-            getElemFromApp('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
-
-            // Validate that correct item was selected
-            expect(getElemFromApp('#autocomplete').val()).toBe('apple');
-
-            setTimeout(function() {
-                done();
-            }, 100);
-        }, 500);
-    });
-	
-	
-
+        
     it('Test setup mock response with template', function(done) {
 
         // Registering the template that will be used for the response
@@ -101,19 +62,19 @@ describe('Example suite', function() {
         setMockRespond('localhost', 8001, configurations);
 
         // Type into first input field which triggers a REST call to return a JSON response
-        getElemFromApp('#autocomplete').val('b');
-        triggerEventOnApp('#autocomplete', 'keydown');
+        getElement('#autocomplete').val('b');
+        getElement('#autocomplete').keydown();
 
         setTimeout(function() {
             // Validate the drop down is display correctly with mock response using template
-            expect(getTextFromApp('ul li:nth-of-type(1)')).toBe('Boat');
-            expect(getTextFromApp('ul li:nth-of-type(2)')).toBe('Cat');
+            expect(getElement('ul li:nth-of-type(1)').text()).toBe('Boat');
+            expect(getElement('ul li:nth-of-type(2)').text()).toBe('Cat');
 
             // Click on the first item from the drop down
-            getElemFromApp('.ui-autocomplete .ui-menu-item:nth-of-type(1)').click();
+            getElement('.ui-autocomplete .ui-menu-item:nth-of-type(1)').click();
 
             // Validate that correct item was selected
-            expect(getElemFromApp('#autocomplete').val()).toBe('Boat');
+            expect(getElement('#autocomplete').val()).toBe('Boat');
 
             setTimeout(function() {
                 done();
@@ -126,8 +87,8 @@ describe('Example suite', function() {
         setInterceptXHR('localhost', 8001, '/services/getservice');
 
         // Type into second input field and click GET button which triggers a GET request
-        getElemFromApp('#getInput').val('testGet');
-        getElemFromApp('#getRequest').click();
+        getElement('#getInput').val('testGet');
+        getElement('#getRequest').click();
         setTimeout(function() {
             done();
         }, 500);
@@ -146,8 +107,8 @@ describe('Example suite', function() {
         setInterceptXHR('localhost', 8001, '/services/postservice');
 
         // Type into second input field and click GET button which triggers a GET request
-        getElemFromApp('#output-box').val('testPost');
-        getElemFromApp('#postRequest').click();
+        getElement('#output-box').val('testPost');
+        getElement('#postRequest').click();
         setTimeout(function() {
             done();
         }, 500);
@@ -155,11 +116,10 @@ describe('Example suite', function() {
             // Retrieve intercepted XHR and validate correct GET request was made by the app
             getInterceptedXHR('localhost', 8001, '/services/postservice', function(resp) {
                 var intrReq = JSON.parse(resp).xhr_1;
-				var regex = new RegExp('timestamp=\\d*&text=testPost');
-				expect(intrReq.xhr.url).toBe('/services/postservice');
-				expect(regex.test(body.post)).toBe(true);
-				expect(body.xhr.method).toBe('POST');
-            }, 500);
+                expect(intrReq.xhr.url).toBe('/services/postservice');
+                expect(intrReq.xhr.method).toBe('POST');
+                expect(intrReq.post.indexOf('text=testPost') > -1).toBe(true);
+            }, 1000);
         });
     });
 
@@ -173,25 +133,25 @@ describe('Example suite', function() {
         setMockRespond('localhost', 8001, mockResponse);
 
         // Type into first input field which triggers a REST call to return a JSON response
-        getElemFromApp('#autocomplete').val('a');
-        triggerEventOnApp('#autocomplete', 'keydown');
+        getElement('#autocomplete').val('a');
+        getElement('#autocomplete').keydown();
 
         setTimeout(function() {
             // Validate that the response is delayed
-            expect(getElemFromApp('.ui-autocomplete .ui-menu-item:nth-of-type(1)').size()).toBe(0);
-            expect(getElemFromApp('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
+            expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(1)').size()).toBe(0);
+            expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
         }, 1000);
 
         setTimeout(function() {
             // Validate the drop down is display correctly with mock response
-            expect(getTextFromApp('ul li:nth-of-type(1)')).toBe('apache');
-            expect(getTextFromApp('ul li:nth-of-type(2)')).toBe('apple');
+            expect(getElement('ul li:nth-of-type(1)').text()).toBe('apache');
+            expect(getElement('ul li:nth-of-type(2)').text()).toBe('apple');
 
             // Click on the Second item from the drop down
-            getElemFromApp('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
+            getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
 
             // Validate that correct item was selected
-            expect(getElemFromApp('#autocomplete').val()).toBe('apple');
+            expect(getElement('#autocomplete').val()).toBe('apple');
 
             setTimeout(function() {
                 done();
@@ -209,18 +169,18 @@ describe('Example suite', function() {
         setMockRespond('localhost', 8001, mockResponse);
 
         // Type into first input field which triggers a REST call to return a JSON response
-        getElemFromApp('#autocomplete').val('I');
-        triggerEventOnApp('#autocomplete', 'keydown');
+        getElement('#autocomplete').val('I');
+        getElement('#autocomplete').keydown();
 
         setTimeout(function() {
             // Click on the first item from the drop down
-            expect(getTextFromApp('ul li:nth-of-type(1)')).toBe('Ice Cream');
-            expect(getTextFromApp('ul li:nth-of-type(2)')).toBe('Candy');
+            expect(getElement('ul li:nth-of-type(1)').text()).toBe('Ice Cream');
+            expect(getElement('ul li:nth-of-type(2)').text()).toBe('Candy');
 
-            getElemFromApp('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
+            getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
 
             // Validate that correct item was selected
-            expect(getElemFromApp('#autocomplete').val()).toBe('Candy');
+            expect(getElement('#autocomplete').val()).toBe('Candy');
 
             // Reload Page
             openApp('http://localhost:8001/msl-sample-app/index.html');
@@ -232,24 +192,23 @@ describe('Example suite', function() {
 
         setTimeout(function() {
             unRegisterMock('localhost', 8001, '/services/getlanguages');
-            getElemFromApp('#autocomplete').val('I');
-            expect(getElemFromApp('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
+            getElement('#autocomplete').val('I');
+            expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
         }, 1500);
     });
 
     it('Test mocking POST ajax success', function(done) {
       // Use msl-client to set mock response
-      setMockRespond('localhost', 8001, {"requestPath":"/services/postservice", "responseText":'{"outputBoxValue":"hello"}'});
+      setMockRespond('localhost', 8001, {'requestPath':'/services/postservice', 'responseText':'{"outputBoxValue":"hello"}'});
 
       // Type hellomsl on text area and click POST button
-      getElemFromApp('#output-box').val('hellomsl');
-      getElemFromApp('#postRequest').click();
+      getElement('#output-box').val('hellomsl');
+      getElement('#postRequest').click();
 
       setTimeout(function() {
         // Validate that postResult span is populated with the text 'hello' which was the success call from the ajax call
-        expect(getElemFromApp('#postResult').text()).toBe('hello');
+        expect(getElement('#postResult').text()).toBe('hello');
         done();
       }, 500);
     });
-
 });
