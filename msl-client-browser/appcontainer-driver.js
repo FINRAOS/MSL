@@ -47,36 +47,14 @@ getApp = function() {
  * Returns the element inside the iframe via locator string accepted by jquery
  *
  * @param elementLoc => locator string which can be interpreted by jquery
- * @return element
+ * @return Element object
  **/
-getElemFromApp = function(elementLoc) {
+getElement = function(elementLoc) {
   checkAppContainerReady();
-  return getApp().contents().find(elementLoc);
+  return new Element(elementLoc);
 }
 
-/**
- * Triggers an event on an element inside the iframe
- *
- * @param elementLoc => locator string which can be interpreted by jquery
- * @param event => event to trigger (event must match the exact method name from jquery without parameters. e.g. keydown()) 
- **/
-triggerEventOnApp = function(elementLoc, event) {
-  checkAppContainerReady();
-  window.frames['mslappcontainer'].eval('$("' + elementLoc + '").' + event + '()');
-}
-
-/**
- * Returns the text of an element inside the iframe
- * 
- * @param elementLoc => locator string which can be interpreted by jquery
- * @return text
- **/
-getTextFromApp = function(elementLoc) {
-  checkAppContainerReady();
-  return window.frames['mslappcontainer'].eval('$("' + elementLoc + '").text()');
-}
-
-/**
+/* 
  * Checks whether the iframe exists.  If not, it throws an error.
  *
  **/
@@ -92,7 +70,96 @@ checkAppContainerReady = function() {
  * @param eval => js to evaluate inside iframe
  * @return return value resulting from the execution of eval
  **/
-evalOnApp = function(eval) {
+doEval = function(eval) {
   checkAppContainerReady();
   return window.frames['mslappcontainer'].eval(eval);
+}
+
+function Element(locator) {
+  this.locator = locator;
+}
+
+/*****************/
+/** Text Events **/
+/*****************/
+Element.prototype.val = function(str) {
+  if(str != undefined) {
+    window.frames['mslappcontainer'].eval('$("' + this.locator + '").val("' + str + '")');
+  }else {
+    return window.frames['mslappcontainer'].eval('$("' + this.locator + '").val()');
+  }
+}
+
+Element.prototype.text = function() {
+  return window.frames['mslappcontainer'].eval('$("' + this.locator + '").text()');
+}
+
+/*********************/
+/** Keyboard Events **/
+/*********************/
+Element.prototype.keydown = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").keydown()');
+}
+
+Element.prototype.keypress = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").keypress()');
+}
+
+Element.prototype.keyup = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").keyup()');
+}
+
+/******************/
+/** Mouse Events **/
+/******************/
+Element.prototype.click = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").click()');
+}
+
+Element.prototype.dblclick = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").dblclick()');
+}
+
+Element.prototype.focusout = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").focusout()');
+}
+
+Element.prototype.hover = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").hover()');
+}
+
+Element.prototype.mousedown = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mousedown()');
+}
+
+Element.prototype.mouseenter = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseenter()');
+}
+
+Element.prototype.mouseleave = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseleave()');
+}
+
+Element.prototype.mousemove = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mousemove()');
+}
+
+Element.prototype.mouseout = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseout()');
+}
+
+Element.prototype.mouseover = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseover()');
+}
+
+Element.prototype.mouseup = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseup()');
+}
+
+Element.prototype.toggle = function() {
+  window.frames['mslappcontainer'].eval('$("' + this.locator + '").toggle()');
+}
+
+Element.prototype.size = function() {
+  return window.frames['mslappcontainer'].eval('$("' + this.locator + '").size()');
 }
