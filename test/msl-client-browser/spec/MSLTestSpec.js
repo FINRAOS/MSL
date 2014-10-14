@@ -152,13 +152,13 @@ describe('Example suite', function() {
             done();
         }, 500);
         setTimeout(function() {
-            // Retrieve intercepted XHR and validate correct GET request was made by the app
+            // Retrieve intercepted XHR and validate correct POST request was made by the app
             getInterceptedXHR('localhost', 8001, '/services/postservice', function(resp) {
                 var intrReq = JSON.parse(resp).xhr_1;
 				var regex = new RegExp('timestamp=\\d*&text=testPost');
 				expect(intrReq.xhr.url).toBe('/services/postservice');
-				expect(regex.test(body.post)).toBe(true);
-				expect(body.xhr.method).toBe('POST');
+				expect(regex.test(intrReq.post)).toBe(true);
+				expect(intrReq.xhr.method).toBe('POST');
             }, 500);
         });
     });
