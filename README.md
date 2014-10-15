@@ -71,6 +71,7 @@ Download [mockapi-browser.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-b
 Download [appcontainer-driver.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.3/appcontainer-driver.js) or reference directly from cdnjs.
 ```html
 <script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.3/mockapi-browser.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.3/appcontainer-driver.min.js"></script>
 ```
 
 **Java Client**
