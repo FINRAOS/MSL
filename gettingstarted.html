@@ -673,7 +673,7 @@ public class MockAPITest {
 			</div>
 			<div id="collapseTwo" class="panel-collapse collapse in">
 			  <div class="panel-body">
-				Browser client can be used when you want to execute your test script on the browser (for instance Mocha, Jasmine tests). To use this client, simply add <a href="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.1/mockapi-browser.min.js">mockapi-browser.min.js</a> to your HTML.
+				Browser client can be used when you want to execute your test script on the browser (for instance Mocha, Jasmine tests). To use this client, simply add <a href="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.3/mockapi-browser.min.js">mockapi-browser.min.js</a> to your HTML.
 				<br>
 				<br> Following is an example of using msl-client-browser on a Jasmine test script:
 				<br>
@@ -710,7 +710,8 @@ public class MockAPITest {
 				</div>
 				<br>
 				<div>
-					<b>MSLTestSpec.js</b>
+					To help you execute your scenarios with user interactions on the browser, please include <a href="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.3/appcontainer-driver.min.js">appcontainer-driver.min.js</a> to your HTML.  This library will drive the app running on the msl-server inside an iframe.
+					<br><b>MSLTestSpec.js</b>
       				<pre class="prettyprint"><code>describe('Example suite', function() {
 
 	var callbackFunc = function (req, responseText) {
@@ -858,7 +859,7 @@ public class MockAPITest {
         // Use msl-client to register intercept
         setInterceptXHR('localhost', 8001, '/services/postservice');
 
-        // Type into second input field and click GET button which triggers a GET request
+        // Type into second input field and click POST button which triggers a POST request
         getElement('#output-box').val('testPost');
         getElement('#postRequest').click();
         setTimeout(function() {
