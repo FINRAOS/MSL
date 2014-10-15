@@ -9,9 +9,7 @@ echo "Attempting deployment..."
 
 if [ $TRAVIS_PULL_REQUEST == 'false' ]; then
   echo "Not a pull request, executing E2E script and deploying..."
-  npm install msl-server-node
-  ./node_modules/msl-server/bin/msl --basedir=./msl-sample-app --port=8001 --debug=true &
-  cd msl-client-java
+  ./test/e2e-run.sh
   mvn clean deploy --settings target/CM/settings.xml
 else
   echo "Pull request, executing E2E script..."
