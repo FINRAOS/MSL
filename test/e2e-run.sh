@@ -1,8 +1,13 @@
 #!/bin/bash
 # This script needs to be executed from the root directory.
 
-ROOT=..
-TEST=.
+set -e
+
+MYDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT=$MYDIR/..
+TEST=$MYDIR
+
+pushd $TEST
 
 # Install server
 rm -rf node_modules
@@ -26,9 +31,9 @@ mv jquery.min.js $TEST/msl-client-browser/lib
 npm install karma --save-dev
 npm install karma-cli  --save-dev
 npm install karma-jasmine@2_0 --save-dev
-npm install karma-chrome-launcher --save-dev
+npm install karma-phantomjs-launcher --save-dev
+npm install phantomjs --save-dev
 npm install karma-junit-reporter --save-dev
-npm install karma-html2js-preprocessor --save-dev
 npm install karma-sauce-launcher --save-dev
 
 # Run browser client tests
@@ -46,3 +51,4 @@ mvn clean verify
 kill -9 $!
 popd
 kill -9 $pid
+popd

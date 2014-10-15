@@ -3,6 +3,7 @@ describe('Example suite', function() {
 	var callbackFunc = function (req, responseText) {
 		return '[' + responseText + ']';
 	}
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 	
     beforeEach(function(done) {
         // Load app inside iframe
@@ -14,7 +15,7 @@ describe('Example suite', function() {
     });
 
     afterEach(function() {
-      unRegisterMock('localhost', 8001, "");
+        unRegisterMock('localhost', 8001, "");
     });
 
     it('Test for register and get mock response', function(done) {
@@ -48,7 +49,7 @@ describe('Example suite', function() {
     });
 	
 	
-	it('Test for register and get mock response using function', function(done) {
+    it('Test for register and get mock response using function', function(done) {
         // Use msl-client to set mock response
         var mockResponse = {};
         mockResponse.requestPath = '/services/getlanguages';
@@ -79,8 +80,6 @@ describe('Example suite', function() {
         }, 500);
     });
 	
-	
-
     it('Test setup mock response with template', function(done) {
 
         // Registering the template that will be used for the response
@@ -125,44 +124,48 @@ describe('Example suite', function() {
         // Use msl-client to register intercept
         setInterceptXHR('localhost', 8001, '/services/getservice');
 
-        // Type into second input field and click GET button which triggers a GET request
-        getElement('#getInput').val('testGet');
-        expect(getElement('#getRequest').attr('type')).toBe('submit');
-        expect(getElement('#getRequest').getJQueryElement().attr('type')).toBe('submit');
-        getElement('#getRequest').click();
         setTimeout(function() {
-            done();
+          // Type into second input field and click GET button which triggers a GET request
+          getElement('#getInput').val('testGet');
+          getElement('#getRequest').click();
         }, 500);
-        setTimeout(function() {
+
+ 	setTimeout(function() {
             // Retrieve intercepted XHR and validate correct GET request was made by the app
             getInterceptedXHR('localhost', 8001, '/services/getservice', function(resp) {
                 var intrReq = JSON.parse(resp).xhr_1;
                 expect(intrReq.xhr.url).toBe('/services/getservice?term=testGet');
                 expect(intrReq.xhr.method).toBe('GET');
+            });
+            setTimeout(function() {
+              done();
             }, 500);
-        });
+        }, 500);
     });
-
+    
     it('Test XHR intercept, Post method', function(done) {
         // Use msl-client to register intercept
         setInterceptXHR('localhost', 8001, '/services/postservice');
 
-        // Type into second input field and click GET button which triggers a GET request
-        getElement('#output-box').val('testPost');
-        getElement('#postRequest').click();
         setTimeout(function() {
-            done();
+          // Type into second input field and click GET button which triggers a GET request
+          getElement('#output-box').val('testPost');
+          getElement('#postRequest').click();
         }, 500);
+
         setTimeout(function() {
             // Retrieve intercepted XHR and validate correct POST request was made by the app
             getInterceptedXHR('localhost', 8001, '/services/postservice', function(resp) {
                 var intrReq = JSON.parse(resp).xhr_1;
-				var regex = new RegExp('timestamp=\\d*&text=testPost');
-				expect(intrReq.xhr.url).toBe('/services/postservice');
-				expect(regex.test(intrReq.post)).toBe(true);
-				expect(intrReq.xhr.method).toBe('POST');
-            }, 500);
-        });
+		var regex = new RegExp('timestamp=\\d*&text=testPost');
+		expect(intrReq.xhr.url).toBe('/services/postservice');
+		expect(regex.test(intrReq.post)).toBe(true);
+		expect(intrReq.xhr.method).toBe('POST');
+            });
+	    setTimeout(function() {
+              done();
+	    }, 500);
+        }, 500);
     });
 
     it('Test for setting the delay time of returning a mock response', function(done) {
@@ -182,7 +185,7 @@ describe('Example suite', function() {
             // Validate that the response is delayed
             expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(1)').size()).toBe(0);
             expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
-        }, 1000);
+        }, 500);
 
         setTimeout(function() {
             // Validate the drop down is display correctly with mock response
