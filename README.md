@@ -10,7 +10,7 @@ Releases
 We will be having monthly scheduled releases.
 >[Release 1.0](https://github.com/FINRAOS/MSL/releases/tag/msl-client-java-1.0.0) has been released! - 07/29/2014
 
->Release 1.1 - Scheduled for August
+>Release 1.1 - Scheduled for October
 
 Contributing
 =============
