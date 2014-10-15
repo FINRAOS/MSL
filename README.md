@@ -67,11 +67,11 @@ var msl = require('msl-client');
 
 **Browser Client**
 
-Download [mockapi-browser.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.3/mockapi-browser.js) or reference directly from cdnjs.
-Download [appcontainer-driver.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.3/appcontainer-driver.js) or reference directly from cdnjs.
+Download [mockapi-browser.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.4/mockapi-browser.js) or reference directly from cdnjs.
+Download [appcontainer-driver.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.4/appcontainer-driver.js) or reference directly from cdnjs.
 ```html
-<script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.3/mockapi-browser.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.3/appcontainer-driver.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.4/mockapi-browser.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.4/appcontainer-driver.min.js"></script>
 ```
 
 **Java Client**
