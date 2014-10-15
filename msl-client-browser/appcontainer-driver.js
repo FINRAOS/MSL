@@ -79,9 +79,17 @@ function Element(locator) {
   this.locator = locator;
 }
 
-/*****************/
-/** Text Events **/
-/*****************/
+/**
+ * Returns the JQuery element object
+ *
+**/
+Element.prototype.getJQueryElement = function() {
+  return getApp().contents().find(this.locator);
+}
+
+/**************************************/
+/** Value, text, attributes, length ***/
+/**************************************/
 Element.prototype.val = function(str) {
   if(str != undefined) {
     window.frames['mslappcontainer'].eval('$("' + this.locator + '").val("' + str + '")');
@@ -92,6 +100,18 @@ Element.prototype.val = function(str) {
 
 Element.prototype.text = function() {
   return window.frames['mslappcontainer'].eval('$("' + this.locator + '").text()');
+}
+
+Element.prototype.attr = function(attributeName, value) {
+  if(value != undefined) {
+    window.frames['mslappcontainer'].eval('$("' + this.locator + '").attr("' + attributeName + '", "' + value  + '")');    
+  }else {
+    return window.frames['mslappcontainer'].eval('$("' + this.locator + '").attr("' + attributeName + '")'); 
+  }
+}
+
+Element.prototype.size = function() {
+  return window.frames['mslappcontainer'].eval('$("' + this.locator + '").size()');
 }
 
 /*********************/
@@ -158,8 +178,4 @@ Element.prototype.mouseup = function() {
 
 Element.prototype.toggle = function() {
   window.frames['mslappcontainer'].eval('$("' + this.locator + '").toggle()');
-}
-
-Element.prototype.size = function() {
-  return window.frames['mslappcontainer'].eval('$("' + this.locator + '").size()');
 }
