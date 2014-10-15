@@ -127,6 +127,8 @@ describe('Example suite', function() {
 
         // Type into second input field and click GET button which triggers a GET request
         getElement('#getInput').val('testGet');
+        expect(getElement('#getRequest').attr('type')).toBe('submit');
+        expect(getElement('#getRequest').getJQueryElement().attr('type')).toBe('submit');
         getElement('#getRequest').click();
         setTimeout(function() {
             done();
