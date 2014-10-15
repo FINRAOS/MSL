@@ -28,21 +28,21 @@
  *
  * @param server => url of web-server.js running on node
  * @param port => port number of web-server.js running on node
- * @param body => Json object that contains the requestPath, contentType, responseText, delayTime, headers, function.
+ * @param configurations => Json object that contains the requestPath, contentType, responseText, delayTime, headers, function.
  **/
-setMockRespond = function(server, port, body)
+setMockRespond = function(server, port, configurations)
 {
     var xmlHttp = null;
     xmlHttp = new XMLHttpRequest();
 	
-	if(body['eval'] !== undefined && typeof body['eval'] === 'function')
+	if(configurations['eval'] !== undefined && typeof configurations['eval'] === 'function')
 	{
-		body['eval'] = body['eval'].toString();
+		configurations['eval'] = configurations['eval'].toString();
 	}
 	
     xmlHttp.open( 'POST', 'http://' + server + ':' + port + '/mock/fakerespond', true );
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
-    xmlHttp.send(JSON.stringify(body));
+    xmlHttp.send(JSON.stringify(configurations));
 }
 
 
