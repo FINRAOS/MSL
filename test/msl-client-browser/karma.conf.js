@@ -54,13 +54,9 @@ module.exports = function(config) {
     autoWatch: false,
 
 
-    sauceLabs: {
-      testName: 'MSL Browser CI tests on OpenSauce'
-    },
-
     captureTimeout: 120000,
 
-	browsers: ['Chrome'],
+	browsers: ['PhantomJS'],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
