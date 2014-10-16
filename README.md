@@ -54,17 +54,6 @@ msl --basedir=./msl-sample-app --port=8001 --debug=true
 
 Using MSL Clients
 ==================
-**Node Client**
-
-Install Node client:
-```bash
-npm install msl-client
-```
-Use Node client in scripts
-```js
-var msl = require('msl-client');
-```
-
 **Browser Client**
 
 Download [mockapi-browser.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.4/mockapi-browser.js) or reference directly from cdnjs.
@@ -85,6 +74,16 @@ Include 'msl-client-java' as maven dependency
 </dependency>
 ```
 
+**Node Client**
+
+Install Node client:
+```bash
+npm install msl-client
+```
+Use Node client in scripts
+```js
+var msl = require('msl-client');
+```
 
 Building
 =========
