@@ -1,126 +1,134 @@
-<html lang="us">
-<head>
-    <meta charset="utf-8">
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/jquery-ui.js"></script>
-    <link href="css/start/jquery-ui-1.10.4.custom.css" rel="stylesheet">
-    <script>
-  $(function() {
-	$( "#autocomplete" ).autocomplete({
-		source: "http://localhost:8001/services/getlanguages"
-	});
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>MSL Sample App</title>
+
+		<link href="./css/bootstrap.min.css" rel="stylesheet">
+		<link href="./css/cover.css" rel="stylesheet">
+		<link rel="icon" href="./favicon.ico">
 	
-	$("#getRequest").click(function(){
-		$.ajax({
-			url: "http://localhost:8001/services/getservice",
-			type: 'GET',
-			data: {term: $("#getInput").val()},
-			dataType: 'json'
+		<link href="./css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+		<style id="holderjs-style" type="text/css"></style>
+	
+		<script src="./js/jquery-1.11.1.min.js"></script>
+		<script src="./js/jquery-ui.js"></script>
+  	</head>
+  	
+	<script>
+	  $(function() {
+		$( "#autocomplete" ).autocomplete({
+			source: "http://localhost:8001/services/getlanguages"
 		});
-	});
+	
+		$("#getRequest").click(function(){
+			$.ajax({
+				url: "http://localhost:8001/services/getservice",
+				type: 'GET',
+				data: {term: $("#getInput").val()},
+				dataType: 'json'
+			});
+		});
 		
-	$("#postRequest").click(function(){
-		$.ajax({
-			url: "http://localhost:8001/services/postservice",
-			type: 'POST',
-			data: {'timestamp': $.now(), 'text': $("#output-box").val()},
-			success: function(data) {
-                                $("#postResult").text(data.outputBoxValue);     
-                        },
-                        error: function (request, status, error) {
-                                console.log(error);
-                        }
+		$("#postRequest").click(function(){
+			$.ajax({
+				url: "http://localhost:8001/services/postservice",
+				type: 'POST',
+				data: {'timestamp': $.now(), 'text': $("#output-box").val()},
+				success: function(data) {
+									$("#postResult").text(data.outputBoxValue);     
+							},
+							error: function (request, status, error) {
+									console.log(error);
+							}
+			});
 		});
-	});
 	
-	$("#postLongRequest").click(function(){
-		$.ajax({
-			url: "http://localhost:8001/services/getBooks",
-			type: 'POST',
-			dataType: 'xml',
-			success: function(data) {
-						$("#postResultLong").text($(data).find("book[id='bk895']").find("title").text());
-						},
-						error: function (request, status, error) {
-								alert(error);
-						}
+		$("#postLongRequest").click(function(){
+			$.ajax({
+				url: "http://localhost:8001/services/getBooks",
+				type: 'POST',
+				dataType: 'xml',
+				success: function(data) {
+							$("#postResultLong").text($(data).find("book[id='bk895']").find("title").text());
+							},
+							error: function (request, status, error) {
+									alert(error);
+							}
+			});
 		});
-	});
 	
-  });
-  
-  
+	  });
+  </script>
 
+  <body>
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand"><span style="color: #F38D26">M</span><span style="color: #BFBFBF">S</span><span style="color: #F38D26">L</span></h3>
+              <ul class="nav masthead-nav">
+                <h5 class="active"><a href="./index.html">Home</a></h5>
+                <h5><a href="http://finraos.github.io/MSL/apidoc.html">Features</a></h5>
+                <h5><a href="http://finraos.github.io/MSL/about.html">Contact</a></h5>
+              </ul>
+            </div>
+          </div>
 
+          <div class="inner cover">
+            <h1 class="cover-heading">MSL Sample App!</h1>
+            <p class="lead">This is a <i>sample app</i> used for MSL testing.  Fire away your tests!</p>
+            <p class="lead">
+              <a href="http://finraos.github.com/MSL/gettingstarted.html" class="btn btn-lg btn-default">Learn more</a>
+            </p>
+            <hr>
+            <p>
+            	<br>
+            	<div>
+					<h3 class="demoHeaders">Mock Respond Example</h3>
+					<span><input id="autocomplete" title="type &quot;a&quot;" style="color: black;">
+				</div>
 
-    </script>
-    <style>
-        body{
-        font: 62.5% "Trebuchet MS", sans-serif;
-        margin: 50px;
-        }
-        .demoHeaders {
-        margin-top: 2em;
-        }
-        #dialog-link {
-        padding: .4em 1em .4em 20px;
-        text-decoration: none;
-        position: relative;
-        }
-        #dialog-link span.ui-icon {
-        margin: 0 5px 0 0;
-        position: absolute;
-        left: .2em;
-        top: 50%;
-        margin-top: -8px;
-        }
-        #icons {
-        margin: 0;
-        padding: 0;
-        }
-        #icons li {
-        margin: 2px;
-        position: relative;
-        padding: 4px 0;
-        cursor: pointer;
-        float: left;
-        list-style: none;
-        }
-        #icons span.ui-icon {
-        float: left;
-        margin: 0 4px;
-        }
-        .fakewindowcontain .ui-widget-overlay {
-        position: absolute;
-        }
-    </style>
-</head>
+				<div id="get-div" class="functions">
+					<h3 class="demoHeaders">GET Intercept Example</h3>
+					<input type="text" id="getInput" style="color: black;"></input>
+					<input type="submit" value="GET" id="getRequest" style="color: black;">
+				</div>
+			
+				<div id="post-div" class="functions">
+					<h3 class="demoHeaders">POST Intercept Example</h3>
+					<textarea id="output-box" type="text" style="color: black;"></textarea>
+					<br>
+					<input type="submit" value="POST" id="postRequest" style="color: black;">
+					<span id="postResult"></span>
+				</div>
+				<div id="post-long-div" class="functions">
+					<h3 class="demoHeaders">Long Response Example</h3>
+					<input type="submit" value="POST" id="postLongRequest" style="color: black;">
+					<span id="postResultLong"></span>
+				</div>
+            </p>
+          </div>
 
-<body>
-<h1>THIS IS THE <span style="color:green">MSL</span> SAMPLE TESTING APP</h1>
-<div>
-	<h2 class="demoHeaders">Mock Respond Example</h2>
-    <span><input id="autocomplete" title="type &quot;a&quot;">
-</div>
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Copyright <a href="http://finraos.github.com/MSL">MSL</a></p>
+            </div>
+          </div>
 
-<div id="get-div" class="functions">
-	<h2 class="demoHeaders">GET Intercept Example</h2>
-	<input type="text" id="getInput"></input>
-	<input type="submit" value="GET" id="getRequest">
-</div>
+        </div>
 
-<div id="post-div" class="functions">
-	<h2 class="demoHeaders">POST Intercept Example</h2>
-    <textarea id="output-box" type="text"></textarea>
-    <br/>
-    <input type="submit" value="POST" id="postRequest">
-    <span id="postResult"></span>
-</div>
-<div id="post-long-div" class="functions">
-	<h2 class="demoHeaders">Long Response Example</h2>
-	<input type="submit" value="POST" id="postLongRequest">
-    <span id="postResultLong"></span>
-</div>
+      </div>
 
-</body>
+    </div>
+
+    <script src="./js/bootstrap.min.js"></script>
+  </body>
 </html>
