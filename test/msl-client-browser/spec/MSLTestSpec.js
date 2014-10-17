@@ -42,9 +42,7 @@ describe('Example suite', function() {
             // Validate that correct item was selected
             expect(getElement('#autocomplete').val()).toBe('apple');
 
-            setTimeout(function() {
-                done();
-            }, 100);
+            done();
         }, 500);
     });
 	
@@ -74,9 +72,7 @@ describe('Example suite', function() {
             // Validate that correct item was selected
             expect(getElement('#autocomplete').val()).toBe('apple');
 
-            setTimeout(function() {
-                done();
-            }, 100);
+            done();
         }, 500);
     });
 	
@@ -114,9 +110,7 @@ describe('Example suite', function() {
             // Validate that correct item was selected
             expect(getElement('#autocomplete').val()).toBe('Boat');
 
-            setTimeout(function() {
-                done();
-            }, 100);
+            done();
         }, 500);
     });
 
@@ -128,7 +122,7 @@ describe('Example suite', function() {
           // Type into second input field and click GET button which triggers a GET request
           getElement('#getInput').val('testGet');
           getElement('#getRequest').click();
-        }, 500);
+        }, 1000);
 
  	setTimeout(function() {
             // Retrieve intercepted XHR and validate correct GET request was made by the app
@@ -137,10 +131,8 @@ describe('Example suite', function() {
                 expect(intrReq.xhr.url).toBe('/services/getservice?term=testGet');
                 expect(intrReq.xhr.method).toBe('GET');
             });
-            setTimeout(function() {
-              done();
-            }, 500);
-        }, 500);
+            done();
+        }, 1200);
     });
     
     it('Test XHR intercept, Post method', function(done) {
@@ -151,7 +143,7 @@ describe('Example suite', function() {
           // Type into second input field and click GET button which triggers a GET request
           getElement('#output-box').val('testPost');
           getElement('#postRequest').click();
-        }, 500);
+        }, 1000);
 
         setTimeout(function() {
             // Retrieve intercepted XHR and validate correct POST request was made by the app
@@ -162,10 +154,9 @@ describe('Example suite', function() {
 		expect(regex.test(intrReq.post)).toBe(true);
 		expect(intrReq.xhr.method).toBe('POST');
             });
-	    setTimeout(function() {
-              done();
-	    }, 500);
-        }, 500);
+            
+	    done();
+        }, 1200);
     });
 
     it('Test for setting the delay time of returning a mock response', function(done) {
@@ -198,9 +189,7 @@ describe('Example suite', function() {
             // Validate that correct item was selected
             expect(getElement('#autocomplete').val()).toBe('apple');
 
-            setTimeout(function() {
-                done();
-            }, 100);
+            done();
         }, 3500);
     });
 
@@ -230,16 +219,14 @@ describe('Example suite', function() {
             // Reload Page
             openApp('http://localhost:8001/msl-sample-app/index.html');
 
-            setTimeout(function() {
-                done();
-            }, 1500);
+            done();
         }, 500);
 
         setTimeout(function() {
             unRegisterMock('localhost', 8001, '/services/getlanguages');
             getElement('#autocomplete').val('I');
             expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
-        }, 1500);
+        }, 1000);
     });
 
     it('Test mocking POST ajax success', function(done) {
