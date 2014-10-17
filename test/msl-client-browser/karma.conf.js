@@ -29,7 +29,7 @@ module.exports = function(config) {
 
 
     // test results reporter to use
-    reporters: ['progress','junit', 'saucelabs'],
+    reporters: ['progress','junit'],
 
     // the default configuration
     junitReporter: {
