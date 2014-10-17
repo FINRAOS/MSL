@@ -11,7 +11,7 @@ describe('Example suite', function() {
 
         setTimeout(function() {
             done();
-        }, 100);
+        }, 200);
     });
 
     afterEach(function() {
@@ -219,29 +219,32 @@ describe('Example suite', function() {
             // Reload Page
             openApp('http://localhost:8001/msl-sample-app/index.html');
 
-            done();
-        }, 500);
+            unRegisterMock('localhost', 8001, '/services/getlanguages');
+	}, 500);
 
         setTimeout(function() {
-            unRegisterMock('localhost', 8001, '/services/getlanguages');
             getElement('#autocomplete').val('I');
             expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
-        }, 1000);
+            
+	    done();
+	}, 1000);
     });
 
     it('Test mocking POST ajax success', function(done) {
       // Use msl-client to set mock response
       setMockRespond('localhost', 8001, {"requestPath":"/services/postservice", "responseText":'{"outputBoxValue":"hello"}'});
 
-      // Type hellomsl on text area and click POST button
-      getElement('#output-box').val('hellomsl');
-      getElement('#postRequest').click();
-
+      setTimeout(function() {
+        // Type hellomsl on text area and click POST button
+        getElement('#output-box').val('hellomsl');
+        getElement('#postRequest').click();
+      }, 500);
+      
       setTimeout(function() {
         // Validate that postResult span is populated with the text 'hello' which was the success call from the ajax call
         expect(getElement('#postResult').text()).toBe('hello');
         done();
-      }, 500);
+      }, 1000);
     });
 
 });
