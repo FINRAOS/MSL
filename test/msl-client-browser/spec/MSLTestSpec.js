@@ -11,7 +11,7 @@ describe('Example suite', function() {
 
         setTimeout(function() {
             done();
-        }, 100);
+        }, 200);
     });
 
     afterEach(function() {
