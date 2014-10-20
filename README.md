@@ -85,6 +85,10 @@ Use Node client in scripts
 var msl = require('msl-client');
 ```
 
+Executing using Karma
+======================
+If you want to run your tests using [Karma](http://karma-runner.github.io/0.12/index.html), you can easily integrate MSL by using our [karma plugin](https://www.npmjs.org/package/karma-msl).  Simply add 'msl' as one of your karma frameworks in your karma config and specify the MSL configurations.
+
 Building
 =========
 Our project is built automatically on [Travis-CI](https://travis-ci.org/FINRAOS/MSL) for all pull requests and merge requests.
