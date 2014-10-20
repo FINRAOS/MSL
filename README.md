@@ -89,6 +89,55 @@ Executing using Karma
 ======================
 If you want to run your tests using [Karma](http://karma-runner.github.io/0.12/index.html), you can easily integrate MSL by using our [karma plugin](https://www.npmjs.org/package/karma-msl).  Simply add 'msl' as one of your karma frameworks in your karma config and specify the MSL configurations.  MSL Server will start automatically and your tests will run through Karma.
 
+**Installation**
+
+The easiest way is to keep `karma-msl` as a devDependency in your `package.json`.
+
+```json
+{
+  "devDependencies": {
+    "karma": "~0.12.0",
+    "karma-msl": "~0.0.5"
+  }
+}
+```
+
+You can simple do it by:
+```bash
+npm install karma-msl --save-dev
+```
+
+**Configuration**
+
+Integrating MSL with Jasmine tests (you can also integrate with your favorite testing framework)
+```js
+// karma.conf.js
+module.exports = function(config) {
+  config.set({
+    frameworks: ['jasmine, msl'],
+
+    files: [
+      'spec/*.js'
+    ],
+    
+    // configuration for msl plugin
+    msl: {
+      port: '8002', //port to start msl server.  8000 by default.
+      basedir: '../src/', // directory containing the app code (front-end code under test).  current dir by default.
+      debug: 'true' // true to turn on debugging. false by default.
+    },
+    
+    // this port should match the msl port specified in msl plugin config
+    proxies: {
+      '/' : 'http://localhost:8002/'
+    },
+    
+    // this port should match the msl port used within the tests
+    port: 8001,
+  });
+};
+```
+
 Building
 =========
 Our project is built automatically on [Travis-CI](https://travis-ci.org/FINRAOS/MSL) for all pull requests and merge requests.
