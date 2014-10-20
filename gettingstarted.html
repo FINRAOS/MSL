@@ -88,10 +88,17 @@
 			<h1>Getting Started</h1>
 		</div>
 		
+		<ul class="nav nav-pills">
+		  <li class="active"><a href="#">Intro Video</a></li>
+		  <li><a href="#mslserver">MSL Server</a></li>
+		  <li><a href="#mslclient">MSL Clients</a></li>
+		  <li><a href="#karma">Run Using Karma</a></li>
+		</ul>
+		<br>
 		<div class="embed-responsive embed-responsive-16by9">
                   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/M3ThKNvqdhM" allowfullscreen></iframe>
                 </div>
-		
+		<a style="display: block; position: relative; top: -100px; visibility: hidden;" name="mslserver"></a>
 		<h3>Starting MSL Server</h3>
 		<p>First you need to have Node.JS installed, go to <a href="http://nodejs.org" target="_blank">nodejs.org</a> for more about Node.JS
 		<br>Once you have Node installed, you can install <a href="https://www.npmjs.org/package/msl-server">MSL Server</a> from npm to start launching your app locally!
@@ -148,6 +155,8 @@
 		<br>
 		</p>
 		<br>
+		
+		<a style="display: block; position: relative; top: -100px; visibility: hidden;" name="mslclient"></a>
 		<h3>Choosing Client</h3>
 		<p>Next, you can install the client that will be used to interact with the server. The client is used to set up the mock responses for the requests that will be made by your application running locally on the server.  The client is also used to tell the server which requests to intercept for validation.  MSL currently supports 3 clients with more language bindings coming soon.</p>
 	  	
@@ -977,6 +986,84 @@ describe('Running Selenium tests', function () {
 			  </div>
 			</div>
 		  </div>
+		  
+		  <br>
+		  <a style="display: block; position: relative; top: -100px; visibility: hidden;" name="karma"></a>
+		  <h3>Running Your Tests Using Karma</h3>
+		<p>If you are using the browser client to write your tests, we recommend you to use the <a href="https://www.npmjs.org/package/karma-msl" target="_blank"> Karma Plugin</a> to run your tests.  The karma plugin will allow automatic starting of MSL Server and execution of tests using the MSL Browser Client.</p>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			<h3 class="panel-title">Installation</h3>
+			</div>
+			<div class="panel-body">
+					<b>The easiest way is to keep karma-msl as a devDependency in your package.json.</b>
+		<div>
+      		<pre class="prettyprint"><code>{
+  "devDependencies": {
+    "karma": "~0.12.0",
+    "karma-msl": "~0.0.5"
+  }
+}</code></pre>
+		</div>
+		<br><b>You can simple do it by:</b>
+		<div>
+      		<pre class="prettyprint"><code>npm install karma-msl --save-dev</code></pre>
+		</div>
+		</div>
+		</div>
+
+		<br>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			<h3 class="panel-title">Configuration</h3>
+			</div>
+			<div class="panel-body">
+					<b>Including the following in your karma configuration file</b>
+		<div>
+      		<pre class="prettyprint"><code>// karma.conf.js
+module.exports = function(config) {
+  config.set({
+    frameworks: ['jasmine, msl'],
+
+    files: [
+      'spec/*.js'
+    ],
+
+    // configuration for msl plugin
+    msl: {
+      port: '8002', //port to start msl server.  8000 by default.
+      basedir: '../src/', // directory containing the app code (front-end code under test).  current dir by default.
+      debug: 'true' // true to turn on debugging. false by default.
+    },
+
+    // this port should match the msl port specified in msl plugin config
+    proxies: {
+      '/' : 'http://localhost:8002/'
+    },
+
+    // this port should match the msl port used within the tests
+    port: 8001,
+  });
+};</code></pre>
+		</div>
+		</div>
+		</div>
+		
+		<br>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			<h3 class="panel-title">Execution</h3>
+			</div>
+			<div class="panel-body">
+					<b>Run your tests by executing the following</b>
+		<div>
+      		<pre class="prettyprint"><code>karma start karma.conf.js</code></pre>
+		</div>
+		</div>
+		</div>
 
 		</div>
 	  	
