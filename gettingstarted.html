@@ -213,9 +213,10 @@
 					<br><br><b>MSLTestSpec.js</b>
       				<pre class="prettyprint"><code>describe('Example suite', function() {
 
-	var callbackFunc = function (req, responseText) {
-		return '[' + responseText + ']';
-	}
+    var callbackFunc = function (req, responseText) {
+	return '[' + responseText + ']';
+    }
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 	
     beforeEach(function(done) {
         // Load app inside iframe
@@ -223,11 +224,11 @@
 
         setTimeout(function() {
             done();
-        }, 100);
+        }, 200);
     });
 
     afterEach(function() {
-      unRegisterMock('localhost', 8001, "");
+        unRegisterMock('localhost', 8001, "");
     });
 
     it('Test for register and get mock response', function(done) {
@@ -254,19 +255,17 @@
             // Validate that correct item was selected
             expect(getElement('#autocomplete').val()).toBe('apple');
 
-            setTimeout(function() {
-                done();
-            }, 100);
+            done();
         }, 500);
     });
 	
 	
-	it('Test for register and get mock response using function', function(done) {
+    it('Test for register and get mock response using function', function(done) {
         // Use msl-client to set mock response
         var mockResponse = {};
         mockResponse.requestPath = '/services/getlanguages';
         mockResponse.responseText = '{"label":"apache"},{"label":"apple"}';
-		mockResponse.eval = callbackFunc;
+	mockResponse.eval = callbackFunc;
         mockResponse.statusCode = 200;
         mockResponse.delayTime = 0;
         setMockRespond('localhost', 8001, mockResponse);
@@ -286,14 +285,10 @@
             // Validate that correct item was selected
             expect(getElement('#autocomplete').val()).toBe('apple');
 
-            setTimeout(function() {
-                done();
-            }, 100);
+            done();
         }, 500);
     });
 	
-	
-
     it('Test setup mock response with template', function(done) {
 
         // Registering the template that will be used for the response
@@ -328,9 +323,7 @@
             // Validate that correct item was selected
             expect(getElement('#autocomplete').val()).toBe('Boat');
 
-            setTimeout(function() {
-                done();
-            }, 100);
+            done();
         }, 500);
     });
 
@@ -340,22 +333,17 @@
 
         // Type into second input field and click GET button which triggers a GET request
         getElement('#getInput').val('testGet');
-        expect(getElement('#getRequest').attr('type')).toBe('submit');
-        expect(getElement('#getRequest').getJQueryElement().attr('type')).toBe('submit');
         getElement('#getRequest').click();
-        setTimeout(function() {
-            done();
-        }, 500);
-        setTimeout(function() {
-            // Retrieve intercepted XHR and validate correct GET request was made by the app
-            getInterceptedXHR('localhost', 8001, '/services/getservice', function(resp) {
-                var intrReq = JSON.parse(resp).xhr_1;
-                expect(intrReq.xhr.url).toBe('/services/getservice?term=testGet');
-                expect(intrReq.xhr.method).toBe('GET');
-            }, 500);
-        });
-    });
 
+        // Retrieve intercepted XHR and validate correct GET request was made by the app
+        getInterceptedXHR('localhost', 8001, '/services/getservice', function(resp) {
+            var intrReq = JSON.parse(resp).xhr_1;
+            expect(intrReq.xhr.url).toBe('/services/getservice?term=testGet');
+            expect(intrReq.xhr.method).toBe('GET');
+        });
+        done();
+    });
+    
     it('Test XHR intercept, Post method', function(done) {
         // Use msl-client to register intercept
         setInterceptXHR('localhost', 8001, '/services/postservice');
@@ -363,19 +351,19 @@
         // Type into second input field and click GET button which triggers a GET request
         getElement('#output-box').val('testPost');
         getElement('#postRequest').click();
-        setTimeout(function() {
-            done();
-        }, 500);
+
         setTimeout(function() {
             // Retrieve intercepted XHR and validate correct POST request was made by the app
             getInterceptedXHR('localhost', 8001, '/services/postservice', function(resp) {
                 var intrReq = JSON.parse(resp).xhr_1;
-				var regex = new RegExp('timestamp=\\d*&text=testPost');
-				expect(intrReq.xhr.url).toBe('/services/postservice');
-				expect(regex.test(intrReq.post)).toBe(true);
-				expect(intrReq.xhr.method).toBe('POST');
-            }, 500);
-        });
+		var regex = new RegExp('timestamp=\\d*&text=testPost');
+		expect(intrReq.xhr.url).toBe('/services/postservice');
+		expect(regex.test(intrReq.post)).toBe(true);
+		expect(intrReq.xhr.method).toBe('POST');
+            });
+            
+	    done();
+        }, 500);
     });
 
     it('Test for setting the delay time of returning a mock response', function(done) {
@@ -395,7 +383,7 @@
             // Validate that the response is delayed
             expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(1)').size()).toBe(0);
             expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
-        }, 1000);
+        }, 500);
 
         setTimeout(function() {
             // Validate the drop down is display correctly with mock response
@@ -408,9 +396,7 @@
             // Validate that correct item was selected
             expect(getElement('#autocomplete').val()).toBe('apple');
 
-            setTimeout(function() {
-                done();
-            }, 100);
+            done();
         }, 3500);
     });
 
@@ -434,22 +420,19 @@
 
             getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
 
-            // Validate that correct item was selected
-            expect(getElement('#autocomplete').val()).toBe('Candy');
-
-            // Reload Page
-            openApp('http://localhost:8001/msl-sample-app/index.html');
-
-            setTimeout(function() {
-                done();
-            }, 1500);
-        }, 500);
-
-        setTimeout(function() {
-            unRegisterMock('localhost', 8001, '/services/getlanguages');
-            getElement('#autocomplete').val('I');
-            expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
-        }, 1500);
+	    setTimeout(function() {
+              // Validate that correct item was selected
+              expect(getElement('#autocomplete').val()).toBe('Candy');
+	      // Reload Page
+              openApp('http://localhost:8001/msl-sample-app/index.html');
+	      setTimeout(function() {
+                unRegisterMock('localhost', 8001, '/services/getlanguages');
+              	getElement('#autocomplete').val('I');
+                expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
+		done();
+	      }, 200);
+	    }, 500);
+	}, 500);
     });
 
     it('Test mocking POST ajax success', function(done) {
@@ -459,14 +442,13 @@
       // Type hellomsl on text area and click POST button
       getElement('#output-box').val('hellomsl');
       getElement('#postRequest').click();
-
+      
       setTimeout(function() {
         // Validate that postResult span is populated with the text 'hello' which was the success call from the ajax call
         expect(getElement('#postResult').text()).toBe('hello');
         done();
       }, 500);
     });
-
 });
 </code></pre>
 				</div>
