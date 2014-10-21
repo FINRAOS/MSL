@@ -102,7 +102,7 @@ The easiest way is to keep `karma-msl` as a devDependency in your `package.json`
 }
 ```
 
-You can simple do it by:
+You can simply do it by:
 ```bash
 npm install karma-msl --save-dev
 ```
