@@ -97,7 +97,7 @@ The easiest way is to keep `karma-msl` as a devDependency in your `package.json`
 {
   "devDependencies": {
     "karma": "~0.12.0",
-    "karma-msl": "~0.0.5"
+    "karma-msl": "~0.0.7"
   }
 }
 ```
