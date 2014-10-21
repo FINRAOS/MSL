@@ -87,7 +87,7 @@ var msl = require('msl-client');
 
 Executing using Karma
 ======================
-If you want to run your tests using [Karma](http://karma-runner.github.io/0.12/index.html), you can easily integrate MSL by using our [karma plugin](https://www.npmjs.org/package/karma-msl).  Simply add 'msl' as one of your karma frameworks in your karma config and specify the MSL configurations.  MSL Server will start automatically and your tests will run through Karma.  When the tests are finished, MSL Server will shutdown automatically. 
+If you want to run your tests using [Karma](http://karma-runner.github.io/0.12/index.html), you can easily integrate MSL by using our [Karma Plugin](https://www.npmjs.org/package/karma-msl).  Simply add 'msl' as one of your karma frameworks in your karma config and specify the MSL configurations.  MSL Server will start automatically and your tests will run through Karma.  When the tests are finished, MSL Server will shutdown automatically. 
 
 **Installation**
 
