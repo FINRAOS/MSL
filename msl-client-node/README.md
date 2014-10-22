@@ -37,7 +37,7 @@ Our project is built automatically on [Travis-CI](https://travis-ci.org/FINRAOS/
 
 Running Tests
 ==============
-After you checkout the code, execute E2E tests by running [scripts/e2e-run.sh](https://github.com/FINRAOS/MSL/blob/master/scripts/e2e-run.sh) from the root folder.  This script will:
+After you checkout the code, execute E2E tests by running [test/e2e-run.sh](https://github.com/FINRAOS/MSL/blob/master/test/e2e-run.sh) from the root folder.  This script will:
 
 1. Install msl-server
 2. Start sample app using msl-server
