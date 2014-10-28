@@ -49,11 +49,11 @@ end
 def registerTemplate(server, port, template, id)
 	uri = URI('http://' + server +  ':' + port.to_s + '/mock/template')
 	req = Net::HTTP::Post.new uri.path
-	configuration = {}
-    configuration['Content-Type'] = 'application/json'
-    configuration['template'] = template
-    configuration['id'] = id
-	req.body = configuration.to_json
+	configurations = {}
+    configurations['Content-Type'] = 'application/json'
+    configurations['template'] = template
+    configurations['id'] = id
+	req.body = configurations.to_json
 	res = Net::HTTP.start(uri.host, uri.port) do |http|
 	  http.request req
 	end
@@ -70,9 +70,9 @@ end
 def setInterceptXHR(server, port, requestPath)
 	uri = URI('http://' + server +  ':' + port.to_s + '/mock/interceptxhr')
 	req = Net::HTTP::Post.new uri.path
-	configuration = {}
-    configuration['Content-Type'] = 'application/json'
-    configuration['requestPath'] = requestPath
+	configurations = {}
+    configurations['Content-Type'] = 'application/json'
+    configurations['requestPath'] = requestPath
 	req.body = configuration.to_json
 
 	res = Net::HTTP.start(uri.host, uri.port) do |http|
@@ -89,10 +89,10 @@ end
 def getInterceptedXHR(server, port, requestPath)
 	uri = URI('http://' + server +  ':' + port.to_s + '/mock/getinterceptedxhr')
 	req = Net::HTTP::Post.new uri.path
-	configuration = {}
-    configuration['Content-Type'] = 'application/json'
-    configuration['requestPath'] = requestPath
-	req.body = configuration.to_json
+	configurations = {}
+    configurations['Content-Type'] = 'application/json'
+    configurations['requestPath'] = requestPath
+	req.body = configurations.to_json
 
 	res = Net::HTTP.start(uri.host, uri.port) do |http|
 	  http.request req
@@ -109,10 +109,10 @@ end
 def setParamIgnored(server, port, params)
 	uri = URI('http://' + server +  ':' + port.to_s + '/setIgnoreFlag')
 	req = Net::HTTP::Post.new uri.path
-	configuration = {}
-    configuration['Content-Type'] = 'application/json'
-    configuration['requestPath'] = requestPath
-	req.body = configuration.to_json
+	configurations = {}
+    configurations['Content-Type'] = 'application/json'
+    configurations['requestPath'] = requestPath
+	req.body = configurations.to_json
 
 	res = Net::HTTP.start(uri.host, uri.port) do |http|
 	  http.request req
@@ -128,10 +128,10 @@ end
 def unRegisterMock(server, port, requestPath)
 	uri = URI('http://' + server +  ':' + port.to_s + '/unregisterMock')
 	req = Net::HTTP::Post.new uri.path
-	configuration = {}
-    configuration['Content-Type'] = 'application/json'
-    configuration['requestPath'] = requestPath
-	req.body = configuration.to_json
+	configurations = {}
+    configurations['Content-Type'] = 'application/json'
+    configurations['requestPath'] = requestPath
+	req.body = configurations.to_json
 
 	res = Net::HTTP.start(uri.host, uri.port) do |http|
 	  http.request req
