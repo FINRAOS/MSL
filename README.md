@@ -56,11 +56,11 @@ Using MSL Clients
 ==================
 **Browser Client**
 
-Download [mockapi-browser.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.4/mockapi-browser.js) or reference directly from cdnjs.
-Download [appcontainer-driver.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.4/appcontainer-driver.js) or reference directly from cdnjs.
+Download [mockapi-browser.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.5/mockapi-browser.js) or reference directly from cdnjs.
+Download [appcontainer-driver.js](http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.5/appcontainer-driver.js) or reference directly from cdnjs.
 ```html
-<script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.4/mockapi-browser.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.4/appcontainer-driver.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.5/mockapi-browser.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/msl-client-browser/1.0.5/appcontainer-driver.min.js"></script>
 ```
 
 **Java Client**
@@ -97,7 +97,7 @@ The easiest way is to keep `karma-msl` as a devDependency in your `package.json`
 {
   "devDependencies": {
     "karma": "~0.12.0",
-    "karma-msl": "~0.0.8"
+    "karma-msl": "~0.0.9"
   }
 }
 ```
