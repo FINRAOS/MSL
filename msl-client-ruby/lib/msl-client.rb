@@ -73,7 +73,7 @@ def setInterceptXHR(server, port, requestPath)
 	configurations = {}
     configurations['Content-Type'] = 'application/json'
     configurations['requestPath'] = requestPath
-	req.body = configuration.to_json
+	req.body = configurations.to_json
 
 	res = Net::HTTP.start(uri.host, uri.port) do |http|
 	  http.request req
@@ -111,7 +111,7 @@ def setParamIgnored(server, port, params)
 	req = Net::HTTP::Post.new uri.path
 	configurations = {}
     configurations['Content-Type'] = 'application/json'
-    configurations['requestPath'] = requestPath
+    configurations['requestPath'] = params
 	req.body = configurations.to_json
 
 	res = Net::HTTP.start(uri.host, uri.port) do |http|
