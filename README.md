@@ -5,6 +5,8 @@ MSL [![Build Status](https://secure.travis-ci.org/FINRAOS/MSL.png?branch=master)
 
 Here is the link to [getting started](http://finraos.github.io/MSL/gettingstarted.html)
 
+Check out our talk at **[GTAC 2014](http://www.youtube.com/watch?v=RAEunk0zWB0) (Google Test Automation Conference @ Google Kirkland)**
+
 Releases
 ========
 >[Release 1.0](https://github.com/FINRAOS/MSL/releases/tag/msl-client-java-1.0.0) has been released! - 07/29/2014
