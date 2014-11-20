@@ -3,9 +3,9 @@ MSL [![Build Status](https://secure.travis-ci.org/FINRAOS/MSL.png?branch=master)
 
 [MSL](http://finraos.github.io/MSL/) (pronounced 'Missile') stands for Mock Service Layer. Our tools enable quick local deployment of your UI code on Node and mocking of your service layer for fast, targeted testing.
 
-Here is the link to [getting started](http://finraos.github.io/MSL/gettingstarted.html)
-
 Check out our talk at **[GTAC 2014](http://www.youtube.com/watch?v=RAEunk0zWB0) (Google Test Automation Conference @ Google Kirkland)**
+
+Here is the link to [getting started](http://finraos.github.io/MSL/gettingstarted.html)
 
 Releases
 ========
@@ -165,5 +165,4 @@ After you checkout the code, execute E2E tests by running [test/e2e-run.sh](http
 License Type
 =============
 MSL project is licensed under [Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
 
