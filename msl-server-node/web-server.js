@@ -172,11 +172,12 @@ var localAppMockAPI = function(req, res, next) {
       var mockReqRespMapKey = req._parsedUrl.pathname
       var responseObj = mockReqRespMap[mockReqRespMapKey];
       if(responseObj == undefined) {
-	mockReqRespMapKey = req.url;
-	responseObj = mockReqRespMap[req.url];
+	  mockReqRespMapKey = req.url;
+	  if (mockReqRespMapKey.indexOf("?")>=0)
+          mockReqRespMapKey = reparsePath(mockReqRespMapKey);
+          responseObj = mockReqRespMap[req.url];
       }
-      if (mockReqRespMapKey.indexOf("?")>=0)
-      mockReqRespMapKey = reparsePath(mockReqRespMapKey);
+      
 	  if(responseObj["id"] !== undefined)
 		{
 			var template = templateMap[responseObj["id"] ];
