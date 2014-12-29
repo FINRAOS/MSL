@@ -20,35 +20,27 @@
 var express = require('express');
 var mustache = require('mustache');
 var minimist = require('minimist');
-var bodyParser = require('body-parser');
-var multer = require('multer');
-var fs = require('fs');
-var path = require('path');
-var util = require('util');
 
-var conf = {};
-if (process.argv.slice(2).toString().search('conf.js')>0)
-    conf = require(path.join(process.cwd(),process.argv.slice(2)[0].toString()));
+var fs = require('fs');
+var url = require('url');
+var util = require('util');
+var argv1 = minimist(process.argv.slice(2));
 
 var localApp = express();
 var DEFAULT_PORT = 8000;
+var localAppDir = argv1.basedir||process.cwd();
 var filePath = 'test/mock/';
 var ignoredParams = '';
 var debug= false;
-var argv1 = minimist(process.argv.slice(2));
-var localAppDir = conf.basedir||argv1.basedir||process.cwd();
-var getextensions = conf.extensions||argv1.extensions||'';
-var extensions = require(path.join(localAppDir,getextensions));
 
 var main = function(argv) {
-  var port = conf.port||Number(argv1.port) || DEFAULT_PORT;
-  debug = (conf.debug||argv1.debug === 'true');
+  var port = Number(argv1.port) || DEFAULT_PORT;
+  debug = (argv1.debug === 'true');
   localApp.listen(port);
   record(["MSL launched from here: ", localAppDir].
   join(" "),1);
   record(["MSL start on port:", port].join(" "),1);
   record(["Process ID: ", process.pid].join(" "),1);
-  record(["Debug Mode: ", debug].join(" "),1);
 };
 
 
@@ -58,7 +50,7 @@ var record=function(message, severity){
 	}else if(severity>0 && !debug){
 		util.puts(message);
 	}
-};
+}
 
 
 var localAppMockAPI = function(req, res, next) {
@@ -77,15 +69,15 @@ var localAppMockAPI = function(req, res, next) {
 	            record("Mock body registered for: " + body.requestPath,0);
 				res.writeHead(200, {'Content-Type': 'application/json'});
 				res.write('{"status":"success","message":"mock body registered"}');
-//				return res.end();
+				return res.end();
 			}else{
 				record("Provided both template ID and response text",1);
 				res.writeHead(500, {'Content-Type': 'application/json'});
 				res.write('{"status":"failed","message":"Provided both template ID and response text"}');
-//				return res.end();
+				return res.end();
 			}
-        });
-
+        });	 
+	  
   }else if(req.path == '/mock/interceptxhr') {
 	  var body = {};
       req.on('data', function (data) {
@@ -98,10 +90,10 @@ var localAppMockAPI = function(req, res, next) {
 		  record("Intercept registered for: " + body.requestPath,0);
           res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
           res.write('{"status":"success","message":"intercept XHR registered"}');
-
-//          return res.end();
+      
+          return res.end();
       });
-
+     
   }else if(req.path == '/mock/getinterceptedxhr') {
       var body = {};
       req.on('data', function (data) {
@@ -113,12 +105,12 @@ var localAppMockAPI = function(req, res, next) {
         res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
 		res.write(JSON.stringify(getInterceptedXHR(post)));
 		delete interceptXHRMap[post.requestPath];
-
+      
 		record("Sent intercepted XHR for: " + post.requestPath,0);
-//        return res.end();
+        return res.end();
       });
-
-
+	  
+		
   }else if(req.path == '/setIgnoreFlag') {
 	  var body = {};
       req.on('data', function (data) {
@@ -131,8 +123,8 @@ var localAppMockAPI = function(req, res, next) {
           record("Set ignored flag for: " + body.requestPath,0);
 
       });
-
-//      return res.end();
+  
+      return res.end();
   }else if(req.path == '/unregisterMock') {
       var body = {};
       req.on('data', function (data) {
@@ -145,9 +137,9 @@ var localAppMockAPI = function(req, res, next) {
           record("Unregisters path for: " + post.requestPath,0);
 
       });
-//      return res.end();
-  }else if(req.path == '/mock/template') {
-
+      return res.end();
+  }else if(req.path == '/mock/template') {	  
+	  
 	  var str = '';
       req.on('data', function (data) {
 		  str+=data;
@@ -161,10 +153,10 @@ var localAppMockAPI = function(req, res, next) {
           res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
           res.write('{"status":"success","message":"template registered"}');
 
-//          return res.end();
+          return res.end();
       });
-
-
+	  
+      
   }else if(isFakeRespond(req)) {
       var post;
       if(req.method === 'POST') {
@@ -185,7 +177,7 @@ var localAppMockAPI = function(req, res, next) {
           mockReqRespMapKey = reparsePath(mockReqRespMapKey);
           responseObj = mockReqRespMap[req.url];
       }
-
+      
 	  if(responseObj["id"] !== undefined)
 		{
 			var template = templateMap[responseObj["id"] ];
@@ -193,16 +185,16 @@ var localAppMockAPI = function(req, res, next) {
 			{
 				res.writeHead(500, {'Content-Type': 'application/json'});
 				res.write('{"status":"failed","message":"There is no template for the provided ID"}');
-//				return res.end();
+				return res.end();
 			}
 			var pairs = responseObj["keyValues"];
 			if(typeof pairs ===  'string')
 			{
 				pairs = JSON.parse(pairs);
-			}
+			}  
 			var output=mustache.render(template,pairs);
 			res.writeHead(responseObj["statusCode"], {'Content-Type': responseObj["contentType"],'Access-Control-Allow-Origin':'*'});
-
+			
 			if(responseObj["eval"] !== undefined) {
 				var f = eval("(" + responseObj["eval"] + ")");
 			res.write(f(req, output), post);
@@ -213,7 +205,7 @@ var localAppMockAPI = function(req, res, next) {
 		  record("Responded with mock for: " + mockReqRespMapKey,0);
 
 		}else{
-
+	 
 		  res.writeHead(responseObj["statusCode"], responseObj["header"]);
 
 		  if (responseObj["delayTime"]>0)
@@ -224,15 +216,15 @@ var localAppMockAPI = function(req, res, next) {
 		  }else {
 			res.write(responseObj["responseText"]);
 		  }
-
-
+		  
+		  
 
 		  record("Responded with mock for: " + mockReqRespMapKey,0);
 	  }
-//      return res.end();
+      return res.end();
   }else if(isInterceptXHR(req)) {
       if(req.method === 'POST') {
-
+	  
         var body = "";
          req.on('data', function (data) {
            body += data;
@@ -247,27 +239,14 @@ var localAppMockAPI = function(req, res, next) {
 
       res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
       res.write('{"status":"success","message":"XHR intercepted"}');
-
+      
       record("Intercepted XHR for: " + req.url,0);
-//      return res.end();
+      return res.end();
    }else {
-     if(extensions){
-       var options = {
-         req: req,
-         res: res,
-         fs: fs,
-         localAppDir: localAppDir,
-         filePath: filePath
-       };
-       extensions.customUrlParsing(options);
-
-     } else {
-       res.writeHead(500, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
-       res.write('{"status":"error","message":"no parser found"}');
-     }
-      // customUrlParsing(req,res);
+      console.log('looking for files?   ', req.url);
+      localApp.use(express.static(localAppDir+filePath));
+      return next();
   }
-    return res.end();
 };
 
 /**
@@ -328,7 +307,7 @@ function registerMock(post) {
 
 /**
  * Registers the mock into mockReqRespMap
- *
+ * 
  * @param req =>
  *            contains the mock api call (request query string contains request
  *            path, fake status code, fake content type)
@@ -436,7 +415,7 @@ function isInterceptXHR(req) {
  * set up the root for the mock response using file system.
  * comment out by KCH due to not fully functional, will be implemented for next release.
  * @param mockPath => root of the mock files.
- *
+ * 
  */
 // function setMockFilePathFunc(mockPath) {
 //  	filePath = mockPath;
@@ -445,7 +424,7 @@ function isInterceptXHR(req) {
 /**
  * set up the parameter that should be ignored when retrieving mock responses, for example, a random generated cache buster.
  * @param params => parameters in the url that needs to be ignored.
- *
+ * 
  */
 function setIgnore(params) {
 	ignoredParams += params;
@@ -454,7 +433,7 @@ function setIgnore(params) {
 /**
  * set up delay time of a certain response. Not exposed to the client.
  * @param time => time to be delayed, represented in millisecond.
- *
+ * 
  */
 function sleep(time) {
     var stop = new Date().getTime();
@@ -465,7 +444,7 @@ function sleep(time) {
 
 /**
  * Supporting function to parse the the URL to ignore the parameters that user don't need. Not exposed to the client.
- *
+ * 
  */
 function reparsePath(oldpath) {
   if (oldpath.indexOf("?")>=0) {
@@ -491,14 +470,7 @@ function reparsePath(oldpath) {
   }
 }
 
-function getWindowsPath() {
-
-}
-
 localApp.use(express.static(localAppDir));
-localApp.use(bodyParser.json()); // for parsing application/json
-localApp.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-localApp.use(multer()); // for parsing multipart/form-data
 localApp.use(localAppMockAPI);
 
 main();
