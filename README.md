@@ -44,6 +44,7 @@ Options for MSL Server:
 * --port => specify the port that server will be listening on local host, default is 8000.
 * --basedir => specify the root directory(absolute path) of the app you want to launch locally, default is the directory where you run the command.
 * --debug => specify whether to output log in console or not, default is false.
+* --extensions => specify extension files you want to plugin to MSL to parse URL differently.
 
 Example:
 ```bash
