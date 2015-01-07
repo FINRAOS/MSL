@@ -40,7 +40,24 @@ An example of how the options work
 msl --basedir=/approot --port=8001 --debug=true
 ```
 
-Template of how the extension file works
+You can also use config file to include options for launching MSL server
+An example of how the config file works
+```bash
+msl msl.conf.js(*.conf.js)
+```
+Here is the template for config file
+```javascript
+#!/usr/bin/env node
+
+module.exports = {
+    port: 8001,
+    basedir: '.'
+    debug: false,
+    extensions: 'test/e2e/parseUrl.js'
+};
+```
+
+Template of the extension file
 ```javascript
 exports.customUrlParsing = function (options) {
       if (options.req.url.search('origURL')>0){
