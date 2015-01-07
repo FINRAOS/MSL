@@ -36,6 +36,11 @@ Available options for MSL server
 * --extensions => specify extension files you want to plugin to MSL to parse URL differently.
 
 An example of how the options work
+```bash
+msl --basedir=/approot --port=8001 --debug=true
+```
+
+Template of how the extension file works
 ```javascript
 exports.customUrlParsing = function (options) {
       if (options.req.url.search('origURL')>0){
@@ -50,11 +55,6 @@ exports.customUrlParsing = function (options) {
       }
 };
 
-```
-
-An template of how the extension file works
-```bash
-msl --basedir=/approot --port=8001 --debug=true
 ```
 
 Contributing
