@@ -33,10 +33,45 @@ Available options for MSL server
 * --port => specify the port that server will be listening on local host, default is 8000. 
 * --basedir => specify the root directory(absolute path) of the app you want to launch locally, default is the directory where you run the command. 
 * --debug => specify whether to output log in console or not, default is false. 
+* --extensions => specify extension files you want to plugin to MSL to parse URL differently.
 
 An example of how the options work
 ```bash
 msl --basedir=/approot --port=8001 --debug=true
+```
+
+You can also use config file to include options for launching MSL server
+An example of how the config file works
+```bash
+msl msl.conf.js(*.conf.js)
+```
+Here is the template for config file
+```javascript
+#!/usr/bin/env node
+
+module.exports = {
+    port: 8001,
+    basedir: '.'
+    debug: false,
+    extensions: 'test/e2e/parseUrl.js'
+};
+```
+
+And here is the template of the extension file
+```javascript
+exports.customUrlParsing = function (options) {
+      if (options.req.url.search('origURL')>0){
+          var str = options.req.url
+          var newUrl = str.replace('origURL','newUrl');
+          options.res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
+          options.res.write('{"status":"url changed","message":"find the response with different url now"}');
+      }
+      else {
+          options.res.writeHead(500, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
+          options.res.write('{"status":"error","message":"can not find response"}');
+      }
+};
+
 ```
 
 Contributing
@@ -51,7 +86,7 @@ Our project is built automatically on [Travis-CI](https://travis-ci.org/FINRAOS/
 
 Running Tests
 ==============
-After you checkout the code, execute E2E tests by running [test/e2e-run.sh](https://github.com/FINRAOS/MSL/blob/master/test/e2e-run.sh) from the root folder.  This script will:
+After you checkout the code, execute E2E tests by running [scripts/e2e-run.sh](https://github.com/FINRAOS/MSL/blob/master/scripts/e2e-run.sh) from the root folder.  This script will:
 
 1. Install msl-server
 2. Start sample app using msl-server
