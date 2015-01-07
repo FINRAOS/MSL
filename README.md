@@ -47,7 +47,8 @@ Options for MSL Server:
 * --port => specify the port that server will be listening on local host, default is 8000.
 * --basedir => specify the root directory(absolute path) of the app you want to launch locally, default is the directory where you run the command.
 * --debug => specify whether to output log in console or not, default is false.
-
+* --extensions => specify extension files you want to plugin to MSL to parse URL differently.
+* 
 Example:
 ```bash
 msl --basedir=./msl-sample-app --port=8001 --debug=true
@@ -98,7 +99,7 @@ The easiest way is to keep `karma-msl` as a devDependency in your `package.json`
 {
   "devDependencies": {
     "karma": "~0.12.0",
-    "karma-msl": "~0.0.9"
+    "karma-msl": "~0.0.13"
   }
 }
 ```
@@ -125,7 +126,8 @@ module.exports = function(config) {
     msl: {
       port: '8002', //port to start msl server.  8000 by default.
       basedir: '../src/', // directory containing the app code (front-end code under test).  current dir by default.
-      debug: 'true' // true to turn on debugging. false by default.
+      debug: 'true', // true to turn on debugging. false by default.
+      extensions: 'parseUrl.js' // specify extension files you want to plugin to MSL to parse URL differently.
     },
     
     // this port should match the msl port specified in msl plugin config
