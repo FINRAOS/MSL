@@ -38,6 +38,7 @@ var debug= false;
 var argv1 = minimist(process.argv.slice(2));
 var localAppDir = conf.basedir||argv1.basedir||process.cwd();
 var getextensions = conf.extensions||argv1.extensions||'';
+var extensions = {};
 if (getextensions != '')
     extensions = require(path.join(localAppDir,getextensions));
 
