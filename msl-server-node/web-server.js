@@ -38,7 +38,8 @@ var debug= false;
 var argv1 = minimist(process.argv.slice(2));
 var localAppDir = conf.basedir||argv1.basedir||process.cwd();
 var getextensions = conf.extensions||argv1.extensions||'';
-var extensions = require(path.join(localAppDir,getextensions));
+if (getextensions != '')
+    extensions = require(path.join(localAppDir,getextensions));
 
 var main = function(argv) {
   var port = conf.port||Number(argv1.port) || DEFAULT_PORT;
