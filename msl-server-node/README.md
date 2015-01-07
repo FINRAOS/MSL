@@ -53,7 +53,7 @@ module.exports = {
     port: 8001,
     basedir: '.'
     debug: false,
-    extensions: 'test/e2e/parseUrl.js'
+    extensions: 'parseUrl.js'
 };
 ```
 
