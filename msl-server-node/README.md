@@ -46,7 +46,7 @@ An example of how the config file works
 msl msl.conf.js(*.conf.js)
 ```
 Here is the template for config file
-```javascript
+```js
 #!/usr/bin/env node
 
 module.exports = {
@@ -58,7 +58,7 @@ module.exports = {
 ```
 
 And here is the template of the extension file
-```javascript
+```js
 exports.customUrlParsing = function (options) {
       if (options.req.url.search('origURL')>0){
           var str = options.req.url
