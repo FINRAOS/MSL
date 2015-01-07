@@ -57,7 +57,7 @@ module.exports = {
 };
 ```
 
-Template of the extension file
+And here is the template of the extension file
 ```javascript
 exports.customUrlParsing = function (options) {
       if (options.req.url.search('origURL')>0){
