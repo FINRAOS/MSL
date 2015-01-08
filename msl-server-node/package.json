@@ -10,7 +10,9 @@
     "express": "~4.5.1",
 	"mustache": "~0.8.2",
 	"minimist": "~0.2.0",
-	"resolve": "~0.5.1"
+	"resolve": "~0.5.1",
+        "body-parser": "~1.10.0",
+        "multer": "~0.1.6"
 	},
   "author": [
   "Daniel Koo <danieljamin.koo@gmail.com>",
@@ -22,7 +24,7 @@
   "engines": {
     "node": "~0.10"
   },
-  "version": "1.0.6",
+  "version": "1.0.8",
   "readmeFilename": "README.md",
   "license": "Apache 2.0"
 }
