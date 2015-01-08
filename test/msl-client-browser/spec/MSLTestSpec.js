@@ -11,7 +11,7 @@ describe('Example suite', function() {
 
         setTimeout(function() {
             done();
-        }, 200);
+        }, 1000);
     });
 
     afterEach(function() {
@@ -43,7 +43,7 @@ describe('Example suite', function() {
             expect(getElement('#autocomplete').val()).toBe('apple');
 
             done();
-        }, 500);
+        }, 1000);
     });
 	
 	
@@ -73,7 +73,7 @@ describe('Example suite', function() {
             expect(getElement('#autocomplete').val()).toBe('apple');
 
             done();
-        }, 500);
+        }, 1000);
     });
 	
     it('Test setup mock response with template', function(done) {
@@ -111,7 +111,7 @@ describe('Example suite', function() {
             expect(getElement('#autocomplete').val()).toBe('Boat');
 
             done();
-        }, 500);
+        }, 1000);
     });
 
     it('Test XHR intercept, Get method', function(done) {
@@ -132,59 +132,61 @@ describe('Example suite', function() {
     });
     
     it('Test XHR intercept, Post method', function(done) {
-        // Use msl-client to register intercept
-        setInterceptXHR('localhost', 8001, '/services/postservice');
+		// Use msl-client to register intercept
+		setInterceptXHR('localhost', 8001, '/services/postservice');
 
-        // Type into second input field and click GET button which triggers a GET request
-        getElement('#output-box').val('testPost');
-        getElement('#postRequest').click();
+		// Type into second input field and click GET button which triggers a GET request
+		getElement('#output-box').val('testPost');
+		getElement('#postRequest').click();
 
-        setTimeout(function() {
-            // Retrieve intercepted XHR and validate correct POST request was made by the app
-            getInterceptedXHR('localhost', 8001, '/services/postservice', function(resp) {
-                var intrReq = JSON.parse(resp).xhr_1;
-		var regex = new RegExp('timestamp=\\d*&text=testPost');
-		expect(intrReq.xhr.url).toBe('/services/postservice');
-		expect(regex.test(intrReq.post)).toBe(true);
-		expect(intrReq.xhr.method).toBe('POST');
-            });
-            
-	    done();
-        }, 500);
+		setTimeout(function () {
+			// Retrieve intercepted XHR and validate correct POST request was made by the app
+			getInterceptedXHR('localhost', 8001, '/services/postservice', function (resp) {
+				var intrReq = JSON.parse(resp).xhr_1;
+				var regex = new RegExp('\\d*');
+				expect(intrReq.xhr.url).toBe('/services/postservice');
+				
+				expect(regex.test(intrReq.post['timestamp'])).toBe(true);
+				expect(intrReq.post['text']).toBe('testPost');
+				expect(intrReq.xhr.method).toBe('POST');
+
+			});
+
+			done();
+		}, 1000);
     });
 
     it('Test for setting the delay time of returning a mock response', function(done) {
-        // Use msl-client to set mock response
-        var mockResponse = {};
-        mockResponse.requestPath = '/services/getlanguages';
-        mockResponse.responseText = '[{"label":"apache"},{"label":"apple"}]';
-        mockResponse.statusCode = 200;
-        mockResponse.delayTime = 3000;
-        setMockRespond('localhost', 8001, mockResponse);
+		// Use msl-client to set mock response
+		var mockResponse = {};
+		mockResponse.requestPath = '/services/getlanguages?term=abc';
+		mockResponse.responseText = '[{"label":"apache"},{"label":"apple"}]';
+		mockResponse.statusCode = 200;
+		mockResponse.delayTime = 3000;
+		setMockRespond('localhost', 8001, mockResponse);
 
-        // Type into first input field which triggers a REST call to return a JSON response
-        getElement('#autocomplete').val('a');
-        getElement('#autocomplete').keydown();
+		// Type into first input field which triggers a REST call to return a JSON response
+		getElement('#autocomplete').val('abc');
+		getElement('#autocomplete').keydown();
 
-        setTimeout(function() {
-            // Validate that the response is delayed
-            expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(1)').size()).toBe(0);
-            expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
-        }, 500);
+		// Validate that the response is delayed
+		expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(1)').size()).toBe(0);
+		expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
 
-        setTimeout(function() {
-            // Validate the drop down is display correctly with mock response
-            expect(getElement('ul li:nth-of-type(1)').text()).toBe('apache');
-            expect(getElement('ul li:nth-of-type(2)').text()).toBe('apple');
+		setTimeout(function () {
+			// Validate the drop down is display correctly with mock response
+			expect(getElement('ul li:nth-of-type(1)').text()).toBe('apache');
+			expect(getElement('ul li:nth-of-type(2)').text()).toBe('apple');
 
-            // Click on the Second item from the drop down
-            getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
+			// Click on the Second item from the drop down
+			getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').click();
+			setTimeout(function () {
+				// Validate that correct item was selected
+				expect(getElement('#autocomplete').val()).toBe('apple');
+				done();
+			}, 500);
 
-            // Validate that correct item was selected
-            expect(getElement('#autocomplete').val()).toBe('apple');
-
-            done();
-        }, 3500);
+		}, 3500);
     });
 
     it('Test unRegisterMock function', function(done) {
@@ -217,9 +219,9 @@ describe('Example suite', function() {
               	getElement('#autocomplete').val('I');
                 expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
 		done();
-	      }, 200);
-	    }, 500);
-	}, 500);
+	      }, 1000);
+	    }, 1000);
+	}, 1000);
     });
 
     it('Test mocking POST ajax success', function(done) {
@@ -234,6 +236,6 @@ describe('Example suite', function() {
         // Validate that postResult span is populated with the text 'hello' which was the success call from the ajax call
         expect(getElement('#postResult').text()).toBe('hello');
         done();
-      }, 500);
+      }, 1000);
     });
 });
