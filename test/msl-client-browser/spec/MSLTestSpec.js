@@ -11,7 +11,7 @@ describe('Example suite', function() {
 
         setTimeout(function() {
             done();
-        }, 1000);
+        }, 200);
     });
 
     afterEach(function() {
@@ -43,7 +43,7 @@ describe('Example suite', function() {
             expect(getElement('#autocomplete').val()).toBe('apple');
 
             done();
-        }, 1000);
+        }, 500);
     });
 	
 	
@@ -73,7 +73,7 @@ describe('Example suite', function() {
             expect(getElement('#autocomplete').val()).toBe('apple');
 
             done();
-        }, 1000);
+        }, 500);
     });
 	
     it('Test setup mock response with template', function(done) {
@@ -111,7 +111,7 @@ describe('Example suite', function() {
             expect(getElement('#autocomplete').val()).toBe('Boat');
 
             done();
-        }, 1000);
+        }, 500);
     });
 
     it('Test XHR intercept, Get method', function(done) {
@@ -153,7 +153,7 @@ describe('Example suite', function() {
 			});
 
 			done();
-		}, 1000);
+		}, 500);
     });
 
     it('Test for setting the delay time of returning a mock response', function(done) {
@@ -219,9 +219,9 @@ describe('Example suite', function() {
               	getElement('#autocomplete').val('I');
                 expect(getElement('.ui-autocomplete .ui-menu-item:nth-of-type(2)').size()).toBe(0);
 		done();
-	      }, 1000);
-	    }, 1000);
-	}, 1000);
+	      }, 200);
+	    }, 500);
+	}, 500);
     });
 
     it('Test mocking POST ajax success', function(done) {
@@ -236,6 +236,6 @@ describe('Example suite', function() {
         // Validate that postResult span is populated with the text 'hello' which was the success call from the ajax call
         expect(getElement('#postResult').text()).toBe('hello');
         done();
-      }, 1000);
+      }, 500);
     });
 });
