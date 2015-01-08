@@ -13,240 +13,226 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 
 var express = require('express');
 var mustache = require('mustache');
 var minimist = require('minimist');
-
+var bodyParser = require('body-parser');
+var multer = require('multer');
 var fs = require('fs');
-var url = require('url');
+var path = require('path');
 var util = require('util');
-var argv1 = minimist(process.argv.slice(2));
+console.log(process.argv.toString());
+var conf = {};
+if (process.argv.slice(2).toString().search('conf.js')>0)
+    conf = require(path.join(process.cwd(),process.argv.slice(2)[0].toString()));
 
 var localApp = express();
 var DEFAULT_PORT = 8000;
-var localAppDir = argv1.basedir||process.cwd();
 var filePath = 'test/mock/';
 var ignoredParams = '';
 var debug= false;
+var argv1 = minimist(process.argv.slice(2));
+var localAppDir = conf.basedir||argv1.basedir||process.cwd();
+var getextensions = conf.extensions||argv1.extensions||'';
+var extensions = {};
+if (getextensions != '')
+    extensions = require(path.join(localAppDir,getextensions));
+else
+    extensions = null;
 
 var main = function(argv) {
-  var port = Number(argv1.port) || DEFAULT_PORT;
-  debug = (argv1.debug === 'true');
-  localApp.listen(port);
-  record(["MSL launched from here: ", localAppDir].
-  join(" "),1);
-  record(["MSL start on port:", port].join(" "),1);
-  record(["Process ID: ", process.pid].join(" "),1);
+    var port = conf.port||Number(argv1.port) || DEFAULT_PORT;
+    debug = (conf.debug||argv1.debug === 'true');
+    localApp.listen(port);
+    record(["MSL launched from here: ", localAppDir].
+        join(" "),1);
+    record(["MSL start on port:", port].join(" "),1);
+    record(["Process ID: ", process.pid].join(" "),1);
+    record(["Debug Mode: ", debug].join(" "),1);
 };
 
 
 var record=function(message, severity){
-	if(debug){
-		util.puts(message);
-	}else if(severity>0 && !debug){
-		util.puts(message);
-	}
-}
+    if(debug){
+        util.puts(message);
+    }else if(severity>0 && !debug){
+        util.puts(message);
+    }
+};
 
 
 var localAppMockAPI = function(req, res, next) {
 
-  if(req.path == '/mock/fakerespond') {
-      var body = {};
-        req.on('data', function (data) {
-            body = JSON.parse(String(data));
-        });
-		var message;
-        req.on('end', function () {
-            var post = body;
-			if(post.id == undefined || post.responseText == undefined)
-			{
-				registerMock(post);
-	            record("Mock body registered for: " + body.requestPath,0);
-				res.writeHead(200, {'Content-Type': 'application/json'});
-				res.write('{"status":"success","message":"mock body registered"}');
-				return res.end();
-			}else{
-				record("Provided both template ID and response text",1);
-				res.writeHead(500, {'Content-Type': 'application/json'});
-				res.write('{"status":"failed","message":"Provided both template ID and response text"}');
-				return res.end();
-			}
-        });	 
-	  
-  }else if(req.path == '/mock/interceptxhr') {
-	  var body = {};
-      req.on('data', function (data) {
-          body = JSON.parse(String(data));
+    if (req.path == '/mock/fakerespond') {
 
-      });
-      req.on('end', function () {
-          var post = body;
-		  registerInterceptXHR(post);
-		  record("Intercept registered for: " + body.requestPath,0);
-          res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
-          res.write('{"status":"success","message":"intercept XHR registered"}');
-      
-          return res.end();
-      });
-     
-  }else if(req.path == '/mock/getinterceptedxhr') {
-      var body = {};
-      req.on('data', function (data) {
-	      body = JSON.parse(String(data));
-      });
-	  var post ={};
-      req.on('end', function () {
-        post = body;
-        res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
-		res.write(JSON.stringify(getInterceptedXHR(post)));
-		delete interceptXHRMap[post.requestPath];
-      
-		record("Sent intercepted XHR for: " + post.requestPath,0);
-        return res.end();
-      });
-	  
+		if (req.body.id == undefined || req.body.responseText == undefined) {
+			registerMock(req.body);
+			record("Mock body registered for: " + req.body.requestPath, 0);
+			res.writeHead(200, {
+				'Content-Type' : 'application/json'
+			});
+			res.write('{"status":"success","message":"mock body registered"}');
+			return res.end();
+		} else {
+			record("Provided both template ID and response text", 1);
+			res.writeHead(500, {
+				'Content-Type' : 'application/json'
+			});
+			res.write('{"status":"failed","message":"Provided both template ID and response text"}');
+			return res.end();
+		}
+
+	} else if (req.path == '/mock/interceptxhr') {
+
+		registerInterceptXHR(req.body);
+		record("Intercept registered for: " + req.body.requestPath, 0);
+		res.writeHead(200, {
+			'Content-Type' : 'application/json',
+			'Access-Control-Allow-Origin' : '*'
+		});
+		res.write('{"status":"success","message":"intercept XHR registered"}');
+
+		return res.end();
+
+	} else if (req.path == '/mock/getinterceptedxhr') {
+
+		res.writeHead(200, {
+			'Content-Type' : 'application/json',
+			'Access-Control-Allow-Origin' : '*'
+		});
+
+		res.write(JSON.stringify(getInterceptedXHR(req.body)));
+		delete interceptXHRMap[req.body.requestPath];
+
+		record("Sent intercepted XHR for: " + req.body.requestPath, 0);
+		return res.end();
+
+	} else if (req.path == '/setIgnoreFlag') {
+
+		setIgnore(req.body.requestPath)
+		record("Set ignored flag for: " + body.requestPath, 0);
+
+		return res.end();
+	} else if (req.path == '/unregisterMock') {
+
+		unregisterMock(req.body.requestPath);
+		record("Unregisters path for: " + req.body.requestPath, 0);
+
+		return res.end();
+	} else if (req.path == '/mock/template') {
+
+		record("Registered template for: " + req.body.id, 0);
+
+		registerTemplate(req.body);
+		res.writeHead(200, {
+			'Content-Type' : 'application/json',
+			'Access-Control-Allow-Origin' : '*'
+		});
+		res.write('{"status":"success","message":"template registered"}');
+
+		return res.end();
+
+	} else if (isFakeRespond(req)) {
+		var post;
+		if (req.method === 'POST') {
+			var body = {};
+			req.on('data', function (data) {
+				body += data;
+			});
+			req.on('end', function () {
+				post = body;
+			});
+		}
+
+		var mockReqRespMapKey = req._parsedUrl.pathname
+			var responseObj = mockReqRespMap[mockReqRespMapKey];
+		if (responseObj == undefined) {
+			mockReqRespMapKey = req.url;
+			if (mockReqRespMapKey.indexOf("?") >= 0)
+				mockReqRespMapKey = reparsePath(mockReqRespMapKey);
+			responseObj = mockReqRespMap[req.url];
+		}
 		
-  }else if(req.path == '/setIgnoreFlag') {
-	  var body = {};
-      req.on('data', function (data) {
-	      body = JSON.parse(String(data));
-
-      });
-      req.on('end', function () {
-          var post = body;
-	      setIgnore(post.requestPath)
-          record("Set ignored flag for: " + body.requestPath,0);
-
-      });
-  
-      return res.end();
-  }else if(req.path == '/unregisterMock') {
-      var body = {};
-      req.on('data', function (data) {
-          body = JSON.parse(String(data));
-
-      });
-      req.on('end', function () {
-          var post = body;
-          unregisterMock(post.requestPath)
-          record("Unregisters path for: " + post.requestPath,0);
-
-      });
-      return res.end();
-  }else if(req.path == '/mock/template') {	  
-	  
-	  var str = '';
-      req.on('data', function (data) {
-		  str+=data;
-      });
-      req.on('end', function () {
-		  var body = {};
-		  body = JSON.parse(String(str));
-		  record("Registered template for: " + body.id,0);
-          var post = body;
-    	  registerTemplate(post);
-          res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
-          res.write('{"status":"success","message":"template registered"}');
-
-          return res.end();
-      });
-	  
-      
-  }else if(isFakeRespond(req)) {
-      var post;
-      if(req.method === 'POST') {
-        var body = {};
-        req.on('data', function (data) {
-            body += data;
-        });
-        req.on('end', function () {
-            post = body;
-        });
-      }
-
-      var mockReqRespMapKey = req._parsedUrl.pathname
-      var responseObj = mockReqRespMap[mockReqRespMapKey];
-      if(responseObj == undefined) {
-	  mockReqRespMapKey = req.url;
-	  if (mockReqRespMapKey.indexOf("?")>=0)
-          mockReqRespMapKey = reparsePath(mockReqRespMapKey);
-          responseObj = mockReqRespMap[req.url];
-      }
-      
-	  if(responseObj["id"] !== undefined)
-		{
-			var template = templateMap[responseObj["id"] ];
-			if(template == undefined)
-			{
-				res.writeHead(500, {'Content-Type': 'application/json'});
+		if (responseObj["id"] !== undefined) {
+			var template = templateMap[responseObj["id"]];
+			if (template == undefined) {
+				res.writeHead(500, {
+					'Content-Type' : 'application/json'
+				});
 				res.write('{"status":"failed","message":"There is no template for the provided ID"}');
 				return res.end();
 			}
 			var pairs = responseObj["keyValues"];
-			if(typeof pairs ===  'string')
-			{
+			if (typeof pairs === 'string') {
 				pairs = JSON.parse(pairs);
-			}  
-			var output=mustache.render(template,pairs);
-			res.writeHead(responseObj["statusCode"], {'Content-Type': responseObj["contentType"],'Access-Control-Allow-Origin':'*'});
-			
-			if(responseObj["eval"] !== undefined) {
+			}
+			var output = mustache.render(template, pairs);
+			res.writeHead(responseObj["statusCode"], {
+				'Content-Type' : responseObj["contentType"],
+				'Access-Control-Allow-Origin' : '*'
+			});
+
+			if (responseObj["eval"] !== undefined) {
 				var f = eval("(" + responseObj["eval"] + ")");
-			res.write(f(req, output), post);
-			}else {
+				res.write(f(req, output), post);
+			} else {
 				res.write(output);
 			}
 
-		  record("Responded with mock for: " + mockReqRespMapKey,0);
+			record("Responded with mock for: " + mockReqRespMapKey, 0);
 
-		}else{
-	 
-		  res.writeHead(responseObj["statusCode"], responseObj["header"]);
+		} else {
+			res.writeHead(responseObj["statusCode"], responseObj["header"]);
+			if (responseObj["delayTime"] > 0)
+				sleep(responseObj["delayTime"]);
+			if (responseObj["eval"] !== undefined) {
+				var f = eval("(" + responseObj["eval"] + ")");
+				res.write(f(req, responseObj["responseText"]), post);
+			} else {
+				res.write(responseObj["responseText"]);
+			}
 
-		  if (responseObj["delayTime"]>0)
-			 sleep(responseObj["delayTime"]);
-		  if(responseObj["eval"] !== undefined) {
-			var f = eval("(" + responseObj["eval"] + ")");
-			res.write(f(req, responseObj["responseText"]), post);
-		  }else {
-			res.write(responseObj["responseText"]);
-		  }
-		  
-		  
+			record("Responded with mock for: " + mockReqRespMapKey, 0);
+		}
+		return res.end();
+	} else if (isInterceptXHR(req)) {
+		if (req.method === 'POST') {
+			addInterceptedXHR(req, req.body);
+		} else {
+			addInterceptedXHR(req, null);
+		}
 
-		  record("Responded with mock for: " + mockReqRespMapKey,0);
-	  }
-      return res.end();
-  }else if(isInterceptXHR(req)) {
-      if(req.method === 'POST') {
-	  
-        var body = "";
-         req.on('data', function (data) {
-           body += data;
-         });
-         req.on('end', function () {
-           var post = body;
-           addInterceptedXHR(req, post);
-         });
-      }else {
-         addInterceptedXHR(req, null);
-      }
+		res.writeHead(200, {
+			'Content-Type' : 'application/json',
+			'Access-Control-Allow-Origin' : '*'
+		});
+		res.write('{"status":"success","message":"XHR intercepted"}');
 
-      res.writeHead(200, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
-      res.write('{"status":"success","message":"XHR intercepted"}');
-      
-      record("Intercepted XHR for: " + req.url,0);
-      return res.end();
-   }else {
-      console.log('looking for files?   ', req.url);
-      localApp.use(express.static(localAppDir+filePath));
-      return next();
-  }
+		record("Intercepted XHR for: " + req.url, 0);
+		return res.end();
+	} else {
+        if(extensions){
+            var options = {
+                req: req,
+                res: res,
+                fs: fs,
+                localAppDir: localAppDir,
+                filePath: filePath
+            };
+            extensions.customUrlParsing(options);
+
+        } else {
+            localApp.use(express.static(localAppDir+filePath));
+            return next();
+            // res.writeHead(500, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
+            // res.write('{"status":"error","message":"no parser found"}');
+        }        
+    }
+    // return res.end();
 };
 
 /**
@@ -273,12 +259,12 @@ var templateMap = {};
  * @param mapKey => URL that will be deleted from the memory, if empty will wipe out all the registered mock response.
  */
 function unregisterMock(mapKey) {
-	if (mapKey !== "") {
-		delete mockReqRespMap[mapKey];
-	}
-	else {
-		mockReqRespMap = {};
-	}
+    if (mapKey !== "") {
+        delete mockReqRespMap[mapKey];
+    }
+    else {
+        mockReqRespMap = {};
+    }
 
 }
 
@@ -289,25 +275,34 @@ function unregisterMock(mapKey) {
  */
 function registerMock(post) {
 
-    var responseObj = {};
-    responseObj["statusCode"] = parseInt(post.statusCode)||200;
-    responseObj["header"] = post.header||{'Content-Type': post.contentType||'application/json','Access-Control-Allow-Origin':'*'};
-	responseObj["contentType"] = post.contentType||"application/json";
-    responseObj["responseText"] = post.responseText||"This is a fake response";
-	responseObj["id"] = post.id;
-	responseObj["keyValues"] = post.keyValues||{};
-    responseObj["eval"] = post.eval;
-    responseObj["delayTime"] = parseInt(post.delayTime)||0;
+	var responseObj = {};
+	responseObj["statusCode"] = parseInt(post.statusCode) || 200;
+	responseObj["header"] = post.header || {
+		'Content-Type' : post.contentType || 'application/json',
+		'Access-Control-Allow-Origin' : '*'
+	};
+	responseObj["contentType"] = post.contentType || "application/json";
+	if (typeof post.responseText == 'object') {
 
-    var requestPath = post.requestPath;
-    mockReqRespMap[requestPath] = responseObj;
+		responseObj["responseText"] = JSON.stringify(post.responseText);
+
+	} else {
+		responseObj["responseText"] = post.responseText || "This is a fake response";
+	}
+	responseObj["id"] = post.id;
+	responseObj["keyValues"] = post.keyValues || {};
+	responseObj["eval"] = post.eval;
+	responseObj["delayTime"] = parseInt(post.delayTime) || 0;
+
+	var requestPath = post.requestPath;
+	mockReqRespMap[requestPath] = responseObj;
 }
 
 
 
 /**
  * Registers the mock into mockReqRespMap
- * 
+ *
  * @param req =>
  *            contains the mock api call (request query string contains request
  *            path, fake status code, fake content type)
@@ -387,7 +382,7 @@ function getInterceptedXHR(req) {
 function isFakeRespond(req) {
     var temp = req.url.toString();
     if (temp.indexOf("?")>=0)
-    	req.url = reparsePath(temp);
+        req.url = reparsePath(temp);
     if( ((req.url in mockReqRespMap) && (mockReqRespMap[req.url] !== undefined)) ||
         ((req._parsedUrl.pathname in mockReqRespMap) && (mockReqRespMap[req._parsedUrl.pathname] !== undefined)) ) {
         return true;
@@ -404,7 +399,7 @@ function isFakeRespond(req) {
  */
 function isInterceptXHR(req) {
     if( ((req.url in interceptXHRMap) && (interceptXHRMap[req.url] !== undefined)) ||
-            ((req._parsedUrl.pathname in interceptXHRMap) && (interceptXHRMap[req._parsedUrl.pathname] !== undefined)) ) {
+        ((req._parsedUrl.pathname in interceptXHRMap) && (interceptXHRMap[req._parsedUrl.pathname] !== undefined)) ) {
         return true;
     }else {
         return false;
@@ -415,7 +410,7 @@ function isInterceptXHR(req) {
  * set up the root for the mock response using file system.
  * comment out by KCH due to not fully functional, will be implemented for next release.
  * @param mockPath => root of the mock files.
- * 
+ *
  */
 // function setMockFilePathFunc(mockPath) {
 //  	filePath = mockPath;
@@ -424,16 +419,16 @@ function isInterceptXHR(req) {
 /**
  * set up the parameter that should be ignored when retrieving mock responses, for example, a random generated cache buster.
  * @param params => parameters in the url that needs to be ignored.
- * 
+ *
  */
 function setIgnore(params) {
-	ignoredParams += params;
+    ignoredParams += params;
 }
 
 /**
  * set up delay time of a certain response. Not exposed to the client.
  * @param time => time to be delayed, represented in millisecond.
- * 
+ *
  */
 function sleep(time) {
     var stop = new Date().getTime();
@@ -444,33 +439,37 @@ function sleep(time) {
 
 /**
  * Supporting function to parse the the URL to ignore the parameters that user don't need. Not exposed to the client.
- * 
+ *
  */
 function reparsePath(oldpath) {
-  if (oldpath.indexOf("?")>=0) {
-      var vars = oldpath.split("?")[1].split("&");
-      var result = oldpath.split("?")[0]+'?';
-      var firstFlag = 0;
-      for (var i=0;i<vars.length;i++) {
-          var pair = vars[i].split("=");
-          if (ignoredParams.search(pair[0])<0) {
-              if (firstFlag === 0) {
-                  result = result + pair[0] + '=' + pair[1];
-                  firstFlag = 1;
-              }
-              else {
-                  result = result + '&' + pair[0] + '=' + pair[1];
-              }
-          }
-      }
-      return result;
-  }
-  else {
-      return oldpath;
-  }
+    if (oldpath.indexOf("?")>=0) {
+        var vars = oldpath.split("?")[1].split("&");
+        var result = oldpath.split("?")[0]+'?';
+        var firstFlag = 0;
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (ignoredParams.search(pair[0])<0) {
+                if (firstFlag === 0) {
+                    result = result + pair[0] + '=' + pair[1];
+                    firstFlag = 1;
+                }
+                else {
+                    result = result + '&' + pair[0] + '=' + pair[1];
+                }
+            }
+        }
+        return result;
+    }
+    else {
+        return oldpath;
+    }
 }
 
+
 localApp.use(express.static(localAppDir));
+localApp.use(bodyParser.json()); // for parsing application/json
+localApp.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+localApp.use(multer()); // for parsing multipart/form-data
 localApp.use(localAppMockAPI);
 
 main();
