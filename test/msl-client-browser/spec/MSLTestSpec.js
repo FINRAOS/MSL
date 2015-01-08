@@ -3,7 +3,7 @@ describe('Example suite', function() {
     var callbackFunc = function (req, responseText) {
 	return '[' + responseText + ']';
     }
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
 	
     beforeEach(function(done) {
         // Load app inside iframe
