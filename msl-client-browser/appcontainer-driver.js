@@ -92,90 +92,117 @@ Element.prototype.getJQueryElement = function() {
 /**************************************/
 Element.prototype.val = function(str) {
   if(str != undefined) {
-    window.frames['mslappcontainer'].eval('$("' + this.locator + '").val("' + str + '")');
+    window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").val("' + escapeString(str) + '")');
   }else {
-    return window.frames['mslappcontainer'].eval('$("' + this.locator + '").val()');
+    return window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").val()');
   }
 }
 
 Element.prototype.text = function() {
-  return window.frames['mslappcontainer'].eval('$("' + this.locator + '").text()');
+  return window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").text()');
 }
 
 Element.prototype.attr = function(attributeName, value) {
   if(value != undefined) {
-    window.frames['mslappcontainer'].eval('$("' + this.locator + '").attr("' + attributeName + '", "' + value  + '")');    
+    window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").attr("' + escapeString(attributeName) + '", "' + escapeString(value)  + '")');    
   }else {
-    return window.frames['mslappcontainer'].eval('$("' + this.locator + '").attr("' + attributeName + '")'); 
+    return window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").attr("' + escapeString(attributeName) + '")'); 
   }
 }
 
 Element.prototype.size = function() {
-  return window.frames['mslappcontainer'].eval('$("' + this.locator + '").size()');
+  return window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").size()');
 }
 
 /*********************/
 /** Keyboard Events **/
 /*********************/
 Element.prototype.keydown = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").keydown()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").keydown()');
 }
 
 Element.prototype.keypress = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").keypress()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").keypress()');
 }
 
 Element.prototype.keyup = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").keyup()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").keyup()');
 }
 
 /******************/
 /** Mouse Events **/
 /******************/
 Element.prototype.click = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").click()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").click()');
 }
 
 Element.prototype.dblclick = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").dblclick()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").dblclick()');
 }
 
 Element.prototype.focusout = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").focusout()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").focusout()');
 }
 
 Element.prototype.hover = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").hover()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").hover()');
 }
 
 Element.prototype.mousedown = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mousedown()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").mousedown()');
 }
 
 Element.prototype.mouseenter = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseenter()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").mouseenter()');
 }
 
 Element.prototype.mouseleave = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseleave()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").mouseleave()');
 }
 
 Element.prototype.mousemove = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mousemove()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").mousemove()');
 }
 
 Element.prototype.mouseout = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseout()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").mouseout()');
 }
 
 Element.prototype.mouseover = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseover()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").mouseover()');
 }
 
 Element.prototype.mouseup = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").mouseup()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").mouseup()');
 }
 
 Element.prototype.toggle = function() {
-  window.frames['mslappcontainer'].eval('$("' + this.locator + '").toggle()');
+  window.frames['mslappcontainer'].eval('$("' + escapeString(this.locator) + '").toggle()');
+}
+
+/**
+ * Escapes single and double quotes of the given string.
+ * @name escapeString
+ * @param {string} str - string to escape
+ * @returns {string} the escaped string
+ */
+function escapeString(str) {
+
+    if(str === undefined) {
+        throw new Error('\'str\' is required');
+    }
+
+    if(str === null) {
+        throw new Error('\'str\' must not be null');
+    }
+
+    if(typeof str !== 'string') {
+        throw new Error('\'str\' must be a string');
+    }
+
+    // regex replace all occurrance ' and " to escaped \' and \"
+    var escaped_str = str.replace(/'/g, '\\\'').replace(/"/g, '\\"');
+
+    return escaped_str;
+
 }
