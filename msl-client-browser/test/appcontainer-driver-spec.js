@@ -12,7 +12,17 @@ describe('appcontainer-driver', function() {
             expect(escaped).toEqual('MSL stands for \\"Mock Service Layer\\"');
         });
 
-        it('does nothing if the string does not contain quotes', function() {
+        it('escapes backslashes', function() {
+            var escaped = escapeString('MSL now uses \\ to escape quotes');
+            expect(escaped).toEqual('MSL now uses \\\\ to escape quotes');
+        });
+
+        it('escapes backslashes and quotes', function() {
+            var escaped = escapeString('MSL now uses \\ to escape quotes, "this quote should be escaped"');
+            expect(escaped).toEqual('MSL now uses \\\\ to escape quotes, \\"this quote should be escaped\\"');
+        });
+
+        it('does nothing if the string does not contain quotes or backslashes', function() {
             var escaped = escapeString('MSL is cool!');
             expect(escaped).toEqual('MSL is cool!');
         });
