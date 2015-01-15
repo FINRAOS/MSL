@@ -181,7 +181,7 @@ Element.prototype.toggle = function() {
 }
 
 /**
- * Escapes single and double quotes of the given string.
+ * Escapes single, double quotes, and backslashes of the given string.
  * @name escapeString
  * @param {string} str - string to escape
  * @returns {string} the escaped string
@@ -200,8 +200,17 @@ function escapeString(str) {
         throw new Error('\'str\' must be a string');
     }
 
-    // regex replace all occurrance ' and " to escaped \' and \"
-    var escaped_str = str.replace(/'/g, '\\\'').replace(/"/g, '\\"');
+    /*
+     * Need to escape backslashes (\) first because escaping ' and " will also 
+     * add a \, which interferes with \ escaping.
+     */
+    var escaped_str = str;
+    // regex replace all \ to \\
+    escaped_str = escaped_str.replace(/\\/g, '\\\\');
+    // regex replace all ' to \'
+    escaped_str = escaped_str.replace(/'/g, '\\\'');
+    // regex replace all " to \"
+    escaped_str = escaped_str.replace(/"/g, '\\"');
 
     return escaped_str;
 
