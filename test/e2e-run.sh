@@ -36,14 +36,17 @@ npm install phantomjs --save-dev
 npm install karma-junit-reporter --save-dev
 npm install karma-sauce-launcher --save-dev
 
-# Run browser client tests
+# Run browser client unit tests
+node_modules/karma-cli/bin/karma start $TEST/msl-client-browser/karma.conf.unit.js
+
+# Run browser client e2e tests
 node_modules/msl-server/bin/msl --basedir=$ROOT --port=8002 --debug=true &
 pid=`ps -ef | grep "msl" | head -n 1 | awk '{print $2}'`
 echo "MSL has pid $pid"
 node_modules/karma-cli/bin/karma start $TEST/msl-client-browser/karma.conf.js
 kill -9 $pid
 
-# Run Java tests
+# Run Java e2e tests
 node_modules/msl-server/bin/msl --basedir=$ROOT/msl-sample-app --port=8001 --debug=true &
 pid=`ps -ef | grep "msl" | head -n 1 | awk '{print $2}'`
 pushd $ROOT/msl-client-java
