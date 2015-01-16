@@ -18,7 +18,7 @@ module.exports = function(config) {
       'lib/*.js',
       '../../msl-client-browser/mockapi-browser.js',
       '../../msl-client-browser/appcontainer-driver.js',
-      'spec/MSLTestSpec.js'
+      'spec/appcontainerDriverSpec.js'
     ],
 
 
@@ -38,7 +38,7 @@ module.exports = function(config) {
     },
 
     // web server port
-    port: 8001,
+    port: 9876,
 
 
     // enable / disable colors in the output (reporters and logs)
@@ -61,12 +61,5 @@ module.exports = function(config) {
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
     singleRun: true,
-
-    proxies: {
-      '/' : 'http://localhost:8002'
-    },
-
-    urlRoot: '/root',
-
   });
 };
