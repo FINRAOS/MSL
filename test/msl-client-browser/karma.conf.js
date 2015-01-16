@@ -18,6 +18,7 @@ module.exports = function(config) {
       'lib/*.js',
       '../../msl-client-browser/mockapi-browser.js',
       '../../msl-client-browser/appcontainer-driver.js',
+      'spec/appcontainerDriverSpec.js',
       'spec/MSLTestSpec.js'
     ],
 
