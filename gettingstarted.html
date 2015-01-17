@@ -1474,7 +1474,7 @@ end
       		<pre class="prettyprint"><code>{
   "devDependencies": {
     "karma": "~0.12.0",
-    "karma-msl": "~0.0.9"
+    "karma-msl": "~0.0.14"
   }
 }</code></pre>
 		</div>
@@ -1507,7 +1507,8 @@ module.exports = function(config) {
     msl: {
       port: '8002', //port to start msl server.  8000 by default.
       basedir: '../src/', // directory containing the app code (front-end code under test).  current dir by default.
-      debug: 'true' // true to turn on debugging. false by default.
+      debug: 'true', // true to turn on debugging. false by default.
+      extensions: 'parseUrl.js' // specify extension files you want to plugin to MSL to parse URL differently.
     },
 
     // this port should match the msl port specified in msl plugin config
