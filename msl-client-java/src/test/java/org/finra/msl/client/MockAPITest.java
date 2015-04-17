@@ -259,7 +259,7 @@ public class MockAPITest {
         // Set up the object that contains our response configuration
         Map<String, Object> configurations = new HashMap<String, Object>();
         configurations.put("requestPath", "/services/getlanguages");
-        configurations.put("responseFile", "C:/Users/sheppjak/Desktop/MSLFork/myFork/msl-client-java/src/test/resources/javaResponse.txt");
+        configurations.put("responseFile", "../msl-client-java/src/test/resources/javaResponse.txt");
         configurations.put("contentType", "application/json");
         configurations.put("eval",
                 "function (req,responseText) { return '[' + responseText + ']'; }");
