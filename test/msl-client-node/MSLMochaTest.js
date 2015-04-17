@@ -194,9 +194,10 @@ describe('Running Selenium tests', function() {
         var postValidation = function(responseText) {
             var response = JSON.parse(responseText);
             var body = response.xhr_1;
-            var regex = new RegExp('timestamp=\\d*&text=POST\\+Example');
+            var regex = new RegExp('\\d+');
             assert.equal(body.xhr.url, '/services/postservice');
-            assert.equal(true, regex.test(body.post));
+            assert.equal(regex.test(body.post['timestamp']), true);
+            assert.equal(body.post['text'], 'POST Example');
             assert.equal(body.xhr.method, 'POST');
 
             done();
@@ -212,7 +213,7 @@ describe('Running Selenium tests', function() {
         // Pausing and then retrieving all of the intercepted http requests before validating
         setTimeout(function() {
             msl.getInterceptedXHR('localhost', 8001, '/services/postservice', postValidation);
-        }, 500);
+        }, 1000);
 
     });
 
@@ -264,6 +265,47 @@ describe('Running Selenium tests', function() {
             });
 
         });
+
+    });
+	
+	
+	
+	
+	
+	
+	it('Testing response using the contents of a specified file', function(done) {
+
+        // Set up the object that contains our response configuration
+        var configurations = {};
+        configurations.requestPath = '/services/getlanguages';
+        configurations.responseFile = './test/msl-client-node/nodeResponse.txt';
+        configurations.contentType = 'application/json';
+        configurations.statusCode = 200;
+        configurations.delayTime = 0;
+
+        // Setting up the mock response using the configuration
+        msl.setMockRespond('localhost', 8001, configurations);
+
+        // Triggering the event
+        var autocomplete = client.findElement(webdriver.By.xpath('.//*[@id="autocomplete"]'));
+        client.executeScript('$("#autocomplete").val("JA")');
+        client.executeScript('$("#autocomplete").keydown()');
+
+        // Wait for the dropdown to appear
+        client.wait(function() {
+            return client.isElementPresent(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[1]'));
+        }, 5000);
+
+        // Getting the first element from the list
+        var optionOne = client.findElement(webdriver.By.xpath('.//ul[contains(@class, "ui-autocomplete")]/li[1]'));
+
+        // Verify that the options are from the mocked response and then unregistering that mock
+        optionOne.getText().then(function(title) {
+            assert.equal('French', title);
+            done();
+
+        });
+
 
     });
 });
