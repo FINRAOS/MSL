@@ -278,7 +278,7 @@ describe('Running Selenium tests', function() {
         // Set up the object that contains our response configuration
         var configurations = {};
         configurations.requestPath = '/services/getlanguages';
-        configurations.responseFile = './test/msl-client-node/nodeResponse.txt';
+        configurations.responseFile = './msl-client-node/nodeResponse.txt';
         configurations.contentType = 'application/json';
         configurations.statusCode = 200;
         configurations.delayTime = 0;
