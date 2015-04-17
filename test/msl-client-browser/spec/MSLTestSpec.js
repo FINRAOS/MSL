@@ -245,7 +245,7 @@ describe('Example suite', function() {
 	
 	 it('Test mocking a response using the contents of a specified file', function(done) {
       // Use msl-client to set mock response
-      setMockRespond('localhost', 8001, {"requestPath":"/services/postservice", "responseFile":'./test/msl-client-browser/browserResponse.txt'});
+      setMockRespond('localhost', 8001, {"requestPath":"/services/postservice", "responseFile":'./msl-client-browser/browserResponse.txt'});
 
       // Type hellomsl on text area and click POST button
       getElement('#output-box').val('hellomsl');
