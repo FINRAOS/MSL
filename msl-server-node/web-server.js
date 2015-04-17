@@ -187,13 +187,22 @@ var localAppMockAPI = function(req, res, next) {
 
 		} else {
 			res.writeHead(responseObj["statusCode"], responseObj["header"]);
+			var responseText="";
+			if(responseObj["responseFile"] !== undefined){
+				responseText = fs.readFileSync(responseObj["responseFile"]);
+				
+			}else
+			{
+				responseText= responseObj["responseText"];
+			}
+			
 			if (responseObj["delayTime"] > 0)
 				sleep(responseObj["delayTime"]);
 			if (responseObj["eval"] !== undefined) {
 				var f = eval("(" + responseObj["eval"] + ")");
-				res.write(f(req, responseObj["responseText"]), post);
+				res.write(f(req, responseText), post);
 			} else {
-				res.write(responseObj["responseText"]);
+				res.write(responseText);
 			}
 
 			record("Responded with mock for: " + mockReqRespMapKey, 0);
@@ -228,11 +237,9 @@ var localAppMockAPI = function(req, res, next) {
         } else {
             localApp.use(express.static(localAppDir+filePath));
             return next();
-            // res.writeHead(500, {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'});
-            // res.write('{"status":"error","message":"no parser found"}');
+            
         }        
     }
-    // return res.end();
 };
 
 /**
@@ -289,6 +296,10 @@ function registerMock(post) {
 	} else {
 		responseObj["responseText"] = post.responseText || "This is a fake response";
 	}
+	
+	
+	responseObj["responseFile"] = post.responseFile;
+
 	responseObj["id"] = post.id;
 	responseObj["keyValues"] = post.keyValues || {};
 	responseObj["eval"] = post.eval;
