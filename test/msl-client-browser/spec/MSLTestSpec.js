@@ -238,4 +238,23 @@ describe('Example suite', function() {
         done();
       }, 500);
     });
+	
+	
+	
+	
+	
+	 it('Test mocking a response using the contents of a specified file', function(done) {
+      // Use msl-client to set mock response
+      setMockRespond('localhost', 8001, {"requestPath":"/services/postservice", "responseFile":'./msl-client-browser/browserResponse.txt'});
+
+      // Type hellomsl on text area and click POST button
+      getElement('#output-box').val('hellomsl');
+      getElement('#postRequest').click();
+      
+      setTimeout(function() {
+        // Validate that postResult span is populated with the text 'hello' which was the success call from the ajax call
+        expect(getElement('#postResult').text()).toBe('hello');
+        done();
+      }, 500);
+    });
 });

@@ -39,6 +39,7 @@ public class MockAPITest {
     @Before
     public void openApp() {
         // Open the test application
+       
         ewd.open("http://localhost:8001/index.html");
     }
 
@@ -245,6 +246,42 @@ public class MockAPITest {
         button.click();
         Thread.sleep(10000);
         Assert.assertEquals("Midnight Rain", result.getText());
+
+    }
+    
+    
+    
+    @Test
+    public void testFileMock() throws Exception {
+        // Create object for autocomplete element
+        InteractiveElement autocomplete = new InteractiveElement(".//*[@id=\"autocomplete\"]");
+
+        // Set up the object that contains our response configuration
+        Map<String, Object> configurations = new HashMap<String, Object>();
+        configurations.put("requestPath", "/services/getlanguages");
+        configurations.put("responseFile", "../msl-client-java/src/test/resources/javaResponse.txt");
+        configurations.put("contentType", "application/json");
+        configurations.put("eval",
+                "function (req,responseText) { return '[' + responseText + ']'; }");
+        configurations.put("statusCode", "200");
+        configurations.put("delayTime", "0");
+
+        // Setting up the mock response using the configuration
+        MockAPI.setMockRespond("localhost", 8001, configurations);
+
+        // Triggering the event
+        autocomplete.type("J");
+
+        Element dropdown = new Element(".//ul[contains(@class, \"ui-autocomplete\")]");
+        dropdown.waitForVisible();
+
+        // Getting all of the options from the dropdown menu to be validated
+        List<WebElement> elements = ewd.findElements(By
+                .xpath(".//ul[contains(@class, \"ui-autocomplete\")]/li"));
+
+        // Verify that the options are from the mocked response
+        Assert.assertEquals("Java", elements.get(0).getText());
+        Assert.assertEquals("RoR", elements.get(1).getText());
 
     }
 
