@@ -17,7 +17,7 @@ npm install $ROOT/msl-server-node
 rm -rf jasmine
 mkdir jasmine
 pushd jasmine
-wget -O jasmine.zip https://github.com/pivotal/jasmine/blob/master/dist/jasmine-standalone-2.0.0.zip?raw=true
+wget -O jasmine.zip https://github.com/jasmine/jasmine/releases/download/v2.0.0/jasmine-standalone-2.0.0.zip?raw=true
 unzip jasmine.zip
 popd
 
