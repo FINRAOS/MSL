@@ -114,7 +114,7 @@ var localAppMockAPI = function(req, res, next) {
 	} else if (req.path == '/setIgnoreFlag') {
 
 		setIgnore(req.body.requestPath)
-		record("Set ignored flag for: " + body.requestPath, 0);
+		record("Set ignored flag for: " + req.body.requestPath, 0);
 
 		return res.end();
 	} else if (req.path == '/unregisterMock') {
