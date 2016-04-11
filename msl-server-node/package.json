@@ -14,6 +14,7 @@
         "body-parser": "~1.10.0",
         "multer": "~0.1.6"
 	},
+  "main": "webs-server.js",
   "author": [
   "Daniel Koo <danieljamin.koo@gmail.com>",
   "Bryan Robbins <bryantrobbins@gmail.com>",
