@@ -36,12 +36,6 @@ module.exports = function(argv, callback) {
 	var ignoredParams = '';
 	var debug = false;
 	var argv1 = minimist(process.argv.slice(2));
-	var getextensions = conf.extensions||argv1.extensions||'';
-	var extensions = {};
-	if (getextensions != '')
-	    extensions = require(path.join(localAppDir,getextensions));
-	else
-	    extensions = null;
 
 	//Used to register mocks for mock API calls
 	this.mockReqRespMap = {};
@@ -59,6 +53,12 @@ module.exports = function(argv, callback) {
     var port = conf.port||Number(argv1.port) || DEFAULT_PORT;
     var debug = (conf.debug||argv1.debug === 'true');
 	var localAppDir = conf.basedir||argv1.basedir||process.cwd();
+	var getextensions = conf.extensions||argv1.extensions||'';
+	var extensions = {};
+	if (getextensions != '')
+	    extensions = require(path.join(localAppDir,getextensions));
+	else
+	    extensions = null;
 
 	var record = function(message, severity){
 	    if(debug){
