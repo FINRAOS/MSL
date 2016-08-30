@@ -51,7 +51,5 @@ node_modules/msl-server/bin/msl --basedir=$ROOT/msl-sample-app --port=8001 --deb
 pid=`ps -ef | grep "msl" | head -n 1 | awk '{print $2}'`
 pushd $ROOT/msl-client-java
 mvn clean verify
-kill -9 $!
-popd
 kill -9 $pid
 popd
