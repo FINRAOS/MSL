@@ -9,9 +9,10 @@ Here is the link to [getting started](http://finraos.github.io/MSL/gettingstarte
 
 Releases
 ========
->[Release 1.0](https://github.com/FINRAOS/MSL/releases/tag/msl-client-java-1.0.0) has been released! - 07/29/2014
+>[Release 1.1](https://github.com/FINRAOS/MSL/releases/tag/v1.1.0) - The latest version as been released! - 05/17/2017
 
->Release 1.1 - Coming soon!
+>[Release 1.0](https://github.com/FINRAOS/MSL/releases/tag/msl-client-java-1.0.0)  - 07/29/2014
+
 
 Contributing
 =============
@@ -31,7 +32,7 @@ Global install
 npm install -g msl-server
 ```
 
-Starting MSL Server
+Starting MSL Server As a Standalone Server
 =====================
 If you installed it locally:
 ```bash
@@ -53,6 +54,25 @@ Example:
 ```bash
 msl --basedir=./msl-sample-app --port=8001 --debug=true
 ```
+Starting MSL Server As a Module From an Express Server
+=====================
+You need require mslMiddleware module from msl-server:
+```bash
+var msl = require('./node_modules/msl-server/mslMiddleware.js');
+```
+Then pass options to the msl instance, and use it as an express router:
+```bash
+var options = {
+    express: [express instance],
+    debug: [],
+    extensions: [],
+    localAppDir: [__dirname]
+};
+var mslRouter = msl(options);
+router.use(mslRouter);
+```
+
+
 
 Using MSL Clients
 ==================
