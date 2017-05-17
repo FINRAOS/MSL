@@ -49,6 +49,29 @@ exports.setMockRespond = function(server, port, configurations)
 
 
 /**
+ * Method to register mock POST response. Once you register, whenever server receives a request matching
+ * the registered requestPath, it will respond with a fake response
+ *
+ * @param server => url of web-server.js running on node
+ * @param port => port number of web-server.js running on node
+ * @param configurations => Json object that contains the requestPath, requestJSONBody, contentType, responseText, delayTime, headers, function.
+ **/
+exports.setMockPOSTRespond = function(server, port, configurations)
+{
+    var xmlHttp = null;
+    xmlHttp = new XMLHttpRequest();
+    if(configurations['eval'] !== undefined && typeof configurations['eval'] === 'function')
+    {
+        configurations['eval'] = configurations['eval'].toString();
+    }
+
+    xmlHttp.open( 'POST', 'http://' + server + ':' + port + '/mock/fakePOSTrespond', true );
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
+    xmlHttp.send(JSON.stringify(configurations));
+};
+
+
+/**
  * Method to register a template to be used when mocking responses. Once registered, pass the same id 
  * used to register the template along with a map containing the key-value pairs that are to be replaced.
  *
