@@ -10,7 +10,7 @@
 	"xhr2":"0.0.7"
 	},
   "devDependencies": {
-	"msl-server": "~1.0.2"
+	"msl-server": "~1.1"
 	},
   "author": [
   "Daniel Koo <danieljamin.koo@gmail.com>",
@@ -24,7 +24,7 @@
   "engines": {
     "node": "~0.10"
   },
-  "version": "1.0.6",
+  "version": "1.1",
   "readmeFilename": "README.md",
   "license": "Apache 2.0"
 }
