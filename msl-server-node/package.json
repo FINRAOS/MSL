@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "express": "~4.5.1",
+    "md5": "^2.1.0",
     "mustache": "~0.8.2",
     "minimist": "~0.2.0",
     "resolve": "~0.5.1",
