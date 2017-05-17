@@ -19,13 +19,14 @@
   "Daniel Koo <danieljamin.koo@gmail.com>",
   "Bryan Robbins <bryantrobbins@gmail.com>",
   "Chien-Hung Kuo <kaidanransha@gmail.com>",
-  "Jake Sheppard <jshep409@gmail.com>"
+  "Jake Sheppard <jshep409@gmail.com>",
+  "Liusongsen Yang <ylss0110@gmail.com>"
   ],
   "bin": {"msl" : "./bin/msl"},
   "engines": {
     "node": "~0.10"
   },
-  "version": "1.0.11",
+  "version": "1.0.2",
   "readmeFilename": "README.md",
   "license": "Apache 2.0"
 }
