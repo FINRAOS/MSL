@@ -42,9 +42,9 @@ exports = module.exports = function (argv, callback) {
 
     var record = function (message, severity) {
         if (debug) {
-            util.puts(message);
+            console.log(message);
         } else if (severity > 0 && !debug) {
-            util.puts(message);
+            console.log(message);
         }
     };
     console.log('the process argv are' + process.argv[0] + '\n' + process.argv[1] + '\n' + process.argv[2]);
@@ -60,6 +60,7 @@ exports = module.exports = function (argv, callback) {
         argv1 = argv;
     }
     localAppDir = conf.basedir || argv1.basedir || process.cwd() || '';
+    console.log(localAppDir);
 
     //get extension files
     getextensions = conf.extensions || argv1.extensions || '';
@@ -67,7 +68,11 @@ exports = module.exports = function (argv, callback) {
     console.log(getextensions);
     port = conf.port || Number(argv1.port) || DEFAULT_PORT;
     debug = (conf.debug || argv1.debug === 'true');
+    if (getextensions != ''&&getextensions!= undefined)
 
+        getextensions = require(path.join(localAppDir.toString(),getextensions.toString()));
+    else
+        getextensions = '';
     var options = {
         localApp: localApp,
         DEFAULT_PORT: DEFAULT_PORT,
@@ -79,7 +84,6 @@ exports = module.exports = function (argv, callback) {
         extensions: getextensions,
         port: port
     };
-
     var localAppMockAPI = mslMiddleware(options);
     mslRouter.use(localAppMockAPI);
 

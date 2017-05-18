@@ -16,16 +16,21 @@ module.exports = function (argv, callback) {
     var ignoredParams = '';
     var debug = argv.debug || true;
     var localAppDir = argv.localAppDir || __dirname;
-    var extensions = argv.extensions || null;
+    var extensions = argv.extensions||'';
+
     var record = function (message, severity) {
         if (debug) {
-            util.puts(message);
+            console.log(message);
         } else if (severity > 0 && !debug) {
-            util.puts(message);
+            console.log(message);
         }
     };
 
-    if ((extensions != '' || extensions != null) && ( localAppDir != '' && localAppDir != null)) extensions = require(path.join(localAppDir, extensions));
+    if (extensions != '') {
+        extensions = require(path.join(localAppDir, extensions));
+    } else {
+        extensions= null;
+    }
 
     var localAppMockAPI = function (req, res, next) {
         debugger;
