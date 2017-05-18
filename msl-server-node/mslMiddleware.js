@@ -153,7 +153,7 @@ module.exports = function (argv, callback) {
                 }
             }
 
-            if (responseObj["id"] !== undefined) {
+            if (responseObj!== undefined && responseObj["id"] !== undefined) {
                 var template = templateMap[responseObj["id"]];
                 if (template === undefined) {
                     res.writeHead(500, {
