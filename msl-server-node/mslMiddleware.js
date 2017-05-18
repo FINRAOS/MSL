@@ -136,7 +136,7 @@ module.exports = function (argv, callback) {
             if (req.method === 'POST') {
                 var mockReqRespMapKey = req._parsedUrl.pathname + md5(JSON.stringify(req.body));
                 var responseObj = mockReqRespMap[mockReqRespMapKey];
-                if (responseObj == undefined) {
+                if (responseObj === undefined) {
                     mockReqRespMapKey = req.url + md5(JSON.stringify(req.body));
                     if (mockReqRespMapKey.indexOf("?") >= 0)
                         mockReqRespMapKey = reparsePath(mockReqRespMapKey);
@@ -145,7 +145,7 @@ module.exports = function (argv, callback) {
             } else {
                 mockReqRespMapKey = req._parsedUrl.pathname;
                 responseObj = mockReqRespMap[mockReqRespMapKey];
-                if (responseObj == undefined) {
+                if (responseObj === undefined) {
                     mockReqRespMapKey = req.url;
                     if (mockReqRespMapKey.indexOf("?") >= 0)
                         mockReqRespMapKey = reparsePath(mockReqRespMapKey);
@@ -155,7 +155,7 @@ module.exports = function (argv, callback) {
 
             if (responseObj["id"] !== undefined) {
                 var template = templateMap[responseObj["id"]];
-                if (template == undefined) {
+                if (template === undefined) {
                     res.writeHead(500, {
                         'Content-Type': 'application/json'
                     });
