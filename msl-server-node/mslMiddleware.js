@@ -17,6 +17,7 @@ module.exports = function (argv, callback) {
     var debug = argv.debug || true;
     var localAppDir = argv.localAppDir || __dirname;
     var extensions = argv.extensions||'';
+    var responseObj = {};
 
     var record = function (message, severity) {
         if (debug) {
@@ -135,7 +136,7 @@ module.exports = function (argv, callback) {
             }
             if (req.method === 'POST') {
                 var mockReqRespMapKey = req._parsedUrl.pathname + md5(JSON.stringify(req.body));
-                var responseObj = mockReqRespMap[mockReqRespMapKey];
+                responseObj = mockReqRespMap[mockReqRespMapKey];
                 if (responseObj === undefined) {
                     mockReqRespMapKey = req.url + md5(JSON.stringify(req.body));
                     if (mockReqRespMapKey.indexOf("?") >= 0)
