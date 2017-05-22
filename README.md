@@ -23,6 +23,7 @@ If you have any questions or discussion topics, please post them on [Google Grou
 Installing MSL Server
 ======================
 Local install
+
 ```bash
 npm install msl-server
 ```
