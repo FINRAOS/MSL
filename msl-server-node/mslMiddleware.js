@@ -1,12 +1,11 @@
 /**
- * Created by k25450 on 1/17/2017.
+ * Created by Liusongsen Yang on 1/17/2017.
  */
 var md5 = require('md5');
 var path = require('path');
 var util = require('util');
 var mustache = require('mustache');
 var minimist = require('minimist');
-var bodyParser = require('body-parser');
 var multer = require('multer');
 var fs = require('fs');
 
