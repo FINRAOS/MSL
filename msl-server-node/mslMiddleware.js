@@ -137,13 +137,17 @@ module.exports = function (argv, callback) {
             if (req.method === 'POST') {
                 var mockReqRespMapKey = req._parsedUrl.pathname + md5(JSON.stringify(req.body));
                 responseObj = mockReqRespMap[mockReqRespMapKey];
+
                 if (responseObj === undefined) {
                     mockReqRespMapKey = req.url + md5(JSON.stringify(req.body));
                     if (mockReqRespMapKey.indexOf("?") >= 0)
                         mockReqRespMapKey = reparsePath(mockReqRespMapKey);
                     responseObj = mockReqRespMap[req.url + md5(JSON.stringify(req.body))];
+
                 }
+
             } else {
+
                 mockReqRespMapKey = req._parsedUrl.pathname;
                 responseObj = mockReqRespMap[mockReqRespMapKey];
                 if (responseObj === undefined) {
@@ -151,6 +155,7 @@ module.exports = function (argv, callback) {
                     if (mockReqRespMapKey.indexOf("?") >= 0)
                         mockReqRespMapKey = reparsePath(mockReqRespMapKey);
                     responseObj = mockReqRespMap[req.url];
+
                 }
             }
 
@@ -305,6 +310,7 @@ module.exports = function (argv, callback) {
         if (post.requestJSONBody == '' || post.requestJSONBody == null) {
 
             mockReqRespMap[requestPath] = responseObj;
+
         } else {
             responseObj["requestJSONBody"] = post.requestJSONBody;
             var uniqueID = md5(JSON.stringify(post.requestJSONBody));
@@ -396,6 +402,12 @@ module.exports = function (argv, callback) {
         var uniqueID = md5(JSON.stringify(req.body));
         if (temp.indexOf("?") >= 0)
             req.url = reparsePath(temp);
+        if (req.method === 'POST' && ((req.url in mockReqRespMap) && (mockReqRespMap[req.url] !== undefined)) &&
+            ((!((req.url + uniqueID) in mockReqRespMap)) && (mockReqRespMap[req.url + uniqueID] === undefined))) {
+            mockReqRespMap[req.url + uniqueID] = mockReqRespMap[req.url];
+            delete mockReqRespMap[req.url];
+            console.log('This is POST call, but we are mocking it as a GET method, please use setMockPOSTRespond function to mock the data!!');
+        }
         if (((req.url in mockReqRespMap) && (mockReqRespMap[req.url] !== undefined)) ||
             ((req._parsedUrl.pathname in mockReqRespMap) && (mockReqRespMap[req._parsedUrl.pathname] !== undefined)) ||
             (((req.url + uniqueID) in mockReqRespMap) && (mockReqRespMap[req.url + uniqueID] !== undefined))) {
