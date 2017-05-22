@@ -6,7 +6,6 @@ var path = require('path');
 var util = require('util');
 var mustache = require('mustache');
 var minimist = require('minimist');
-var bodyParser = require('body-parser');
 var multer = require('multer');
 var fs = require('fs');
 
