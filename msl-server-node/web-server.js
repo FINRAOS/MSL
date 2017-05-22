@@ -99,8 +99,8 @@ exports = module.exports = function (argv, callback) {
     record(["MSL start on port:", port].join(" "), 1);
 
     function endOfTheLine(req, res) {
-        winston.error('!! MSL is unable to fulfill request !!', req.method, '-', req.originalUrl);
-        winston.info('Is the request Url invalid or request body invalid?');
+        console.log('!! MSL is unable to fulfill request !!', req.method, '-', req.originalUrl);
+        console.log('Is the request Url invalid or request body invalid?');
         res.status(404).end();
     }
 
