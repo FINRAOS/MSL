@@ -1,5 +1,5 @@
 /**
- * Created by Warmachine64 on 1/17/2017.
+ * Created by Liusongsen Yang on 1/17/2017.
  */
 var md5 = require('md5');
 var path = require('path');
@@ -16,7 +16,7 @@ module.exports = function (argv, callback) {
     var ignoredParams = '';
     var debug = argv.debug || true;
     var localAppDir = argv.localAppDir || __dirname;
-    var extensions = argv.extensions || '';
+    var extensions = argv.extensions||'';
     var responseObj = {};
 
     var record = function (message, severity) {
@@ -27,17 +27,17 @@ module.exports = function (argv, callback) {
         }
     };
 
-    if (extensions !== '') {
+    if (extensions != '') {
         extensions = require(path.join(localAppDir, extensions));
     } else {
-        extensions = null;
+        extensions= null;
     }
 
     var localAppMockAPI = function (req, res, next) {
         debugger;
-        if (req.path === '/mock/fakerespond') {
+        if (req.path == '/mock/fakerespond') {
 
-            if (req.body.id === undefined || req.body.responseText === undefined) {
+            if (req.body.id == undefined || req.body.responseText == undefined) {
                 registerMock(req.body);
                 record("Mock body registered for: " + req.body.requestPath, 0);
                 res.writeHead(200, {
@@ -54,8 +54,8 @@ module.exports = function (argv, callback) {
                 return res.end();
             }
 
-        } else if (req.path === '/mock/fakePOSTrespond') {
-            if (req.body.id === undefined || req.body.responseText === undefined) {
+        } else if (req.path == '/mock/fakePOSTrespond') {
+            if (req.body.id == undefined || req.body.responseText == undefined) {
                 registerMock(req.body);
                 record("Mock body and Unique ID for POST request registered for: " + req.body.requestPath, 0);
                 res.writeHead(200, {
@@ -73,7 +73,7 @@ module.exports = function (argv, callback) {
             }
 
 
-        } else if (req.path === '/mock/interceptxhr') {
+        } else if (req.path == '/mock/interceptxhr') {
 
             registerInterceptXHR(req.body);
             record("Intercept registered for: " + req.body.requestPath, 0);
@@ -85,7 +85,7 @@ module.exports = function (argv, callback) {
 
             return res.end();
 
-        } else if (req.path === '/mock/getinterceptedxhr') {
+        } else if (req.path == '/mock/getinterceptedxhr') {
 
             res.writeHead(200, {
                 'Content-Type': 'application/json',
@@ -98,19 +98,19 @@ module.exports = function (argv, callback) {
             record("Sent intercepted XHR for: " + req.body.requestPath, 0);
             return res.end();
 
-        } else if (req.path === '/setIgnoreFlag') {
+        } else if (req.path == '/setIgnoreFlag') {
 
             setIgnore(req.body.requestPath)
             record("Set ignored flag for: " + req.body.requestPath, 0);
 
             return res.end();
-        } else if (req.path === '/unregisterMock') {
+        } else if (req.path == '/unregisterMock') {
 
             unregisterMock(req.body.requestPath);
             record("Unregisters path for: " + req.body.requestPath, 0);
 
             return res.end();
-        } else if (req.path === '/mock/template') {
+        } else if (req.path == '/mock/template') {
 
             record("Registered template for: " + req.body.id, 0);
 
@@ -159,7 +159,7 @@ module.exports = function (argv, callback) {
                 }
             }
 
-            if (responseObj !== undefined && responseObj["id"] !== undefined) {
+            if (responseObj!== undefined && responseObj["id"] !== undefined) {
                 var template = templateMap[responseObj["id"]];
                 if (template === undefined) {
                     res.writeHead(500, {
@@ -188,7 +188,7 @@ module.exports = function (argv, callback) {
                 record("Responded with mock for: " + mockReqRespMapKey, 0);
 
             } else {
-                res.writeHead(responseObj["statusCode"] || 200, responseObj["header"]);
+                res.writeHead(responseObj["statusCode"]||200, responseObj["header"]);
                 var responseText = "";
                 if (responseObj["responseFile"] !== undefined) {
                     responseText = fs.readFileSync(responseObj["responseFile"]);
@@ -200,7 +200,7 @@ module.exports = function (argv, callback) {
                 if (responseObj["delayTime"] > 0)
                     sleep(responseObj["delayTime"]);
                 if (responseObj["eval"] !== undefined) {
-                    f = eval("(" + responseObj["eval"] + ")");
+                    var f = eval("(" + responseObj["eval"] + ")");
                     res.write(f(req, responseText), post);
                 } else {
                     res.write(responseText);
@@ -236,6 +236,8 @@ module.exports = function (argv, callback) {
                 extensions.customUrlParsing(options);
 
             } else {
+                //looks like it is not needed anymore
+                //localApp.use(express.static(localAppDir + filePath));
                 return next();
 
             }
@@ -288,7 +290,7 @@ module.exports = function (argv, callback) {
                 'Access-Control-Allow-Origin': '*'
             };
         responseObj["contentType"] = post.contentType || "application/json";
-        if (typeof post.responseText === 'object') {
+        if (typeof post.responseText == 'object') {
 
             responseObj["responseText"] = JSON.stringify(post.responseText);
 
@@ -305,7 +307,7 @@ module.exports = function (argv, callback) {
         responseObj["delayTime"] = parseInt(post.delayTime) || 0;
 
         var requestPath = post.requestPath;
-        if (post.requestJSONBody === '' || post.requestJSONBody === null) {
+        if (post.requestJSONBody == '' || post.requestJSONBody == null) {
 
             mockReqRespMap[requestPath] = responseObj;
 
@@ -359,7 +361,7 @@ module.exports = function (argv, callback) {
         xhrObj["xhr"] = lightXHR;
         xhrObj["post"] = post;
 
-        if (interceptXHRMap[req.url] !== undefined) {
+        if (interceptXHRMap[req.url] != undefined) {
             interceptXHRMap[req.url].push(xhrObj);
         } else {
             interceptXHRMap[req._parsedUrl.pathname].push(xhrObj);
@@ -378,7 +380,7 @@ module.exports = function (argv, callback) {
 
         var interceptedXHRsObj = {};
         var counter = 1;
-        if (interceptedXHRs !== undefined) {
+        if (interceptedXHRs != undefined) {
             for (var i = 0; i < interceptedXHRs.length; i++) {
                 interceptedXHRsObj["xhr_" + counter] = interceptedXHRs[i];
                 counter++;
@@ -488,7 +490,6 @@ module.exports = function (argv, callback) {
             return oldpath;
         }
     }
-
     record(["MSL launched from here: ", localAppDir].join(" "), 1);
     record(["Process ID: ", process.pid].join(" "), 1);
     record(["Debug Mode: ", debug].join(" "), 1);

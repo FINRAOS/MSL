@@ -93,16 +93,10 @@ exports = module.exports = function (argv, callback) {
     localApp.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
     localApp.use(multer()); // for parsing multipart/form-data
     localApp.use(mslRouter);
-    localApp.use(endOfTheLine);
     localApp.listen(port);
 
     record(["MSL start on port:", port].join(" "), 1);
 
-    function endOfTheLine(req, res) {
-        console.log('!! MSL is unable to fulfill request !!', req.method, '-', req.originalUrl);
-        console.log('Is the request Url invalid or request body invalid?');
-        res.status(404).end();
-    }
 
     //Get the callback
     if (callback != null) return callback(localApp);
