@@ -9,7 +9,6 @@ var minimist = require('minimist');
 var multer = require('multer');
 var fs = require('fs');
 
-
 module.exports = function (argv, callback) {
     var filePath = 'test/mock/';
     var ignoredParams = '';
