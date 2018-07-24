@@ -47,7 +47,8 @@ node_modules/karma-cli/bin/karma start $TEST/msl-client-browser/karma.conf.js
 kill -9 $pid
 
 # Run Java e2e tests
-node_modules/msl-server/bin/msl --basedir=./msl-sample-app --port=8001 --debug=true &
+$"./msl-sample-app"
+node_modules/msl-server/bin/msl  --port=8001 --debug=true &
 pid=`ps -ef | grep "msl" | head -n 1 | awk '{print $2}'`
 pushd $ROOT/msl-client-java
 mvn clean verify
