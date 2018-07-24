@@ -11,7 +11,7 @@ if [ $TRAVIS_PULL_REQUEST == 'false' ]; then
   echo "Not a pull request, executing E2E script and deploying..."
   ./test/e2e-run.sh
   cd msl-client-java
-  mvn clean deploy --settings ./settings.xml
+  mvn clean deploy --settings ../target/CM/settings.xml
 else
   echo "Pull request, executing E2E script..."
   ./test/e2e-run.sh
