@@ -94,7 +94,16 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+			<plugin>
+  				<groupId>org.jacoco</groupId> 
+  				<artifactId>jacoco-maven-plugin</artifactId>
+  				<version>0.8.1</version>
+  				<configuration>
+  				<excludes>
+    				<exclude>**com.steadystate*</exclude>
+  				</excludes>
+  				</configuration>
+  			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -106,7 +115,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.6.3.201306030806</version>
+				<version>0.8.1</version>
 				<executions>
 					<!-- The Executions required by unit tests are omitted. -->
 					<!-- Prepares the property pointing to the JaCoCo runtime agent which is passed as VM argument when Maven the Failsafe plugin is executed. -->
@@ -238,11 +247,6 @@
 			<groupId>net.minidev</groupId>
 			<artifactId>json-smart</artifactId>
 			<version>1.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jacoco</groupId>
-			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.8.1</version>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
