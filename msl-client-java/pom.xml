@@ -243,11 +243,9 @@
 			<groupId>org.jacoco</groupId>
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>0.8.1</version>
-			<configuration>
 				<excludes>
 					<exclude>**com.steadystate*</exclude>
 				</excludes>
-			</configuration>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
