@@ -94,16 +94,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-  				<groupId>org.jacoco</groupId> 
-  				<artifactId>jacoco-maven-plugin</artifactId>
-  				<version>0.8.1</version>
-  				<configuration>
-  				<excludes>
-    				<exclude>**com.steadystate*</exclude>
-  				</excludes>
-  				</configuration>
-  			</plugin>
 			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -248,6 +238,16 @@
 			<groupId>net.minidev</groupId>
 			<artifactId>json-smart</artifactId>
 			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.1</version>
+			<configuration>
+				<excludes>
+					<exclude>**com.steadystate*</exclude>
+				</excludes>
+			</configuration>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
