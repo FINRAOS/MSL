@@ -41,13 +41,15 @@ node_modules/karma-cli/bin/karma start $TEST/msl-client-browser/karma.conf.unit.
 
 # Run browser client e2e tests
 node_modules/msl-server/bin/msl --basedir=$ROOT --port=8002 --debug=true &
+echo "Running browser client e2e tests"
+echo "Root is $ROOT"
 pid=`ps -ef | grep "msl" | head -n 1 | awk '{print $2}'`
 echo "MSL has pid $pid"
 node_modules/karma-cli/bin/karma start $TEST/msl-client-browser/karma.conf.js
 kill -9 $pid
 
 # Run Java e2e tests
- node_modules/msl-server/bin/msl --basedir=$ROOT/../msl-sample-app --port=8001 --debug=true &
+ node_modules/msl-server/bin/msl --basedir=$ROOT/msl-sample-app --port=8001 --debug=true &
  echo "Running JAVA e2e tests"
  echo "Root is $ROOT"
  pid=`ps -ef | grep "msl" | head -n 1 | awk '{print $2}'`
