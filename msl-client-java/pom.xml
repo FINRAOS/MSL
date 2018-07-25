@@ -15,11 +15,11 @@
 		</license>
 	</licenses>
 	<scm>
-    	<connection>scm:git:https://github.com/FINRAOS/MSL.git</connection>
-    	<developerConnection>scm:git:https://github.com/FINRAOS/MSL.git</developerConnection>
-    	<url>https://github.com/FINRAOS/MSL.git</url>
-  	 	<tag>HEAD</tag>
-  	</scm>
+		<connection>scm:git:https://github.com/FINRAOS/MSL.git</connection>
+		<developerConnection>scm:git:https://github.com/FINRAOS/MSL.git</developerConnection>
+		<url>https://github.com/FINRAOS/MSL.git</url>
+		<tag>HEAD</tag>
+	</scm>
 	<developers>
 		<developer>
 			<id>kood1</id>
@@ -64,8 +64,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -95,16 +95,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-  				<groupId>org.jacoco</groupId> 
-  				<artifactId>jacoco-maven-plugin</artifactId>
-  				<version>0.8.1</version>
-  				<configuration>
-  				<excludes>
-    				<exclude>**com.steadystate*</exclude>
-  				</excludes>
-  				</configuration>
-  			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.16</version>
@@ -115,7 +105,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.1</version>
+				<version>0.6.3.201306030806</version>
 				<executions>
 					<!-- The Executions required by unit tests are omitted. -->
 					<!-- Prepares the property pointing to the JaCoCo runtime agent which is passed as VM argument when Maven the Failsafe plugin is executed. -->
@@ -179,7 +169,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.3</version>
+				<version>2.4.1</version>
 				<configuration>
 					<mavenExecutorId>forked-path</mavenExecutorId>
 					<useReleaseProfile>false</useReleaseProfile>
@@ -215,15 +205,6 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile>
-		<profile>
-			<id>disable-java8-doclint</id>
-			<activation>
-				<jdk>[1.8,)</jdk>
-			</activation>
-			<properties>
-				<additionalparam>-Xdoclint:none</additionalparam>
-			</properties>
 		</profile>
 	</profiles>
 	<dependencies>
