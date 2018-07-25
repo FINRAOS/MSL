@@ -52,4 +52,4 @@ kill -9 $pid
 # pushd $ROOT/msl-client-java
 # mvn clean verify
 # kill -9 $pid
-popd
+# popd
