@@ -8,6 +8,7 @@ var mustache = require('mustache');
 var minimist = require('minimist');
 var multer = require('multer');
 var fs = require('fs');
+var cors = require('cors');
 
 module.exports = function (argv, callback) {
     var filePath = 'test/mock/';

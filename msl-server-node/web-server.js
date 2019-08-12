@@ -28,6 +28,7 @@ var util = require('util');
 var md5 = require('md5');
 var mslMiddleware = require('./mslMiddleware.js');
 var mslRouter = express.Router();
+var cors = require('cors');
 
 exports = module.exports = function (argv, callback) {
     var localApp;
@@ -88,6 +89,7 @@ exports = module.exports = function (argv, callback) {
     mslRouter.use(localAppMockAPI);
 
     console.log('MSL is launched as an independent server');
+    localApp.use(cors());
     localApp.use(express.static(localAppDir));
     localApp.use(bodyParser.json()); // for parsing application/json
     localApp.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
