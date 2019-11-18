@@ -37,23 +37,23 @@ import java.util.Map;
 public class MockAPI {
 
     
-    /**
-     * Register a template that is passed to the web-server where the it is
-     * stored using the ID as the key. This is used later when setting up a mock
-     * response.
-     * 
-     * @param server
-     *            => url of web-server.js running on node
-     * @param port
-     *            => port number of web-server.js running on node
-     * @param template
-     *            => the template that is to be registered for later use
-     * @param id
-     *            => key used to indicate which template is to be used when
-     *            mocking a response
-     * @return => returns the response
-     * @throws Exception
-     */
+//    /**
+//     * Register a template that is passed to the web-server where the it is
+//     * stored using the ID as the key. This is used later when setting up a mock
+//     * response.
+//     *
+//     * @param server
+//     *            => url of web-server.js running on node
+//     * @param port
+//     *            => port number of web-server.js running on node
+//     * @param template
+//     *            => the template that is to be registered for later use
+//     * @param id
+//     *            => key used to indicate which template is to be used when
+//     *            mocking a response
+//     * @return => returns the response
+//     * @throws Exception
+//     */
     public static String registerTemplate(String server, int port, String template, String id)
             throws Exception {
         HttpPost post = null;
@@ -81,21 +81,21 @@ public class MockAPI {
     }
     
 
-    /**
-     * Method to register mock response. Once you register, whenever
-     * server receives a request matching the registered requestPath, it will
-     * respond with a fake response using the provided JSONObject's information.
-     * 
-     * @param server
-     *            => url of web-server.js running on node
-     * @param port
-     *            => port number of web-server.js running on node
-     * @param configurations
-     *            => the JSONObject that contains all of the options (content
-     *            type, requestPath, etc)
-     * @return
-     * @throws Exception
-     */
+//    /**
+//     * Method to register mock response. Once you register, whenever
+//     * server receives a request matching the registered requestPath, it will
+//     * respond with a fake response using the provided JSONObject's information.
+//     *
+//     * @param server
+//     *            => url of web-server.js running on node
+//     * @param port
+//     *            => port number of web-server.js running on node
+//     * @param configurations
+//     *            => the JSONObject that contains all of the options (content
+//     *            type, requestPath, etc)
+//     * @return
+//     * @throws Exception
+//     */
     @SuppressWarnings("unchecked")
     public static String setMockRespond(String server, int port, Map<String, Object> configurations)
             throws Exception {
@@ -134,20 +134,20 @@ public class MockAPI {
   
   
 
-    /**
-     * Method to register intercept XHR. Once you register, whenever
-     * server receives a request matching the registered requestPath, it will
-     * intercept and store for later retrieval
-     * 
-     * @param server
-     *            => url of web-server.js running on node
-     * @param port
-     *            => port number of web-server.js running on node
-     * @param requestPath
-     *            => path which you want to mock a fake response with
-     * 
-     * @return String response
-     **/
+//    /**
+//     * Method to register intercept XHR. Once you register, whenever
+//     * server receives a request matching the registered requestPath, it will
+//     * intercept and store for later retrieval
+//     *
+//     * @param server
+//     *            => url of web-server.js running on node
+//     * @param port
+//     *            => port number of web-server.js running on node
+//     * @param requestPath
+//     *            => path which you want to mock a fake response with
+//     *
+//     * @return String response
+//     **/
     public static String setInterceptXHR(String server, int port, String requestPath)
             throws Exception {
         URIBuilder builder = new URIBuilder();
@@ -170,19 +170,19 @@ public class MockAPI {
     }
 
     
-    /**
-     * Method to retrieve intercepted XHRs. Use in conjunction with
-     * setInterceptXHR()
-     * 
-     * @param server
-     *            => url of web-server.js running on node
-     * @param port
-     *            => port number of web-server.js running on node
-     * @param requestPath
-     *            => path which you want to mock a fake response with
-     * 
-     * @return list of intercepted XHR objects
-     */
+//    /**
+//     * Method to retrieve intercepted XHRs. Use in conjunction with
+//     * setInterceptXHR()
+//     *
+//     * @param server
+//     *            => url of web-server.js running on node
+//     * @param port
+//     *            => port number of web-server.js running on node
+//     * @param requestPath
+//     *            => path which you want to mock a fake response with
+//     *
+//     * @return list of intercepted XHR objects
+//     */
     public static XHR[] getInterceptedXHR(String server, int port, String requestPath)
             throws Exception {
         URIBuilder builder = new URIBuilder();
@@ -229,18 +229,18 @@ public class MockAPI {
         return interceptedXHRs;
     }
 
-    /**
-     * Method to set up parameters that will be ignored in the URL.
-     * 
-     * @param server
-     *            => url of web-server.js running on node
-     * @param port
-     *            => port number of web-server.js running on node
-     * @param params => parameters that will be ignored in the app URL, type is string. 
-     *                  For example,if we set ignore paramB, URL http://aa.bb.com/result?paramA=123&paramB=456 will be treated as http://aa.bb.com/result?paramA=123
-     * 
-     * @return String response
-     **/
+//    /**
+//     * Method to set up parameters that will be ignored in the URL.
+//     *
+//     * @param server
+//     *            => url of web-server.js running on node
+//     * @param port
+//     *            => port number of web-server.js running on node
+//     * @param params => parameters that will be ignored in the app URL, type is string.
+//     *                  For example,if we set ignore paramB, URL http://aa.bb.com/result?paramA=123&paramB=456 will be treated as http://aa.bb.com/result?paramA=123
+//     *
+//     * @return String response
+//     **/
     public static String setParamIgnored(String server, int port, String params)
             throws Exception {
 
@@ -265,18 +265,18 @@ public class MockAPI {
     }
 
     
-    /**
-     * This allows for the removal of all registered mocks once they are no longer in
-     * use.
-     * 
-     * 
-     * @param server
-     *            => url of web-server.js running on node
-     * @param port
-     *            => port number of web-server.js running on node
-     * @return
-     * @throws Exception
-     */
+//    /**
+//     * This allows for the removal of all registered mocks once they are no longer in
+//     * use.
+//     *
+//     *
+//     * @param server
+//     *            => url of web-server.js running on node
+//     * @param port
+//     *            => port number of web-server.js running on node
+//     * @return
+//     * @throws Exception
+//     */
     public static String unRegisterMock(String server, int port)
             throws Exception {
 
@@ -305,19 +305,19 @@ public class MockAPI {
     
     
     
-    /**
-     * This allows for the removal of a registered mock once it is no longer in
-     * use.
-     * 
-     * 
-     * @param server
-     *            => url of web-server.js running on node
-     * @param port
-     *            => port number of web-server.js running on node
-     * @param requestPath
-     *            => path which you want to mock a fake response with * @return
-     * @throws Exception
-     */
+//    /**
+//     * This allows for the removal of a registered mock once it is no longer in
+//     * use.
+//     *
+//     *
+//     * @param server
+//     *            => url of web-server.js running on node
+//     * @param port
+//     *            => port number of web-server.js running on node
+//     * @param requestPath
+//     *            => path which you want to mock a fake response with * @return
+//     * @throws Exception
+//     */
     public static String unRegisterMock(String server, int port, String requestPath)
             throws Exception {
 
@@ -345,10 +345,10 @@ public class MockAPI {
 
     
 
-    /**
-     * Encapsulates XMLHttpRequest object
-     * 
-     */
+//    /**
+//     * Encapsulates XMLHttpRequest object
+//     *
+//     */
     public static class XHR {
         private String url;
         private String methodType;
@@ -360,21 +360,21 @@ public class MockAPI {
             this.body = body;
         }
 
-        /**
-         * Returns URL path of the XHR
-         * 
-         * @return full URL path
-         */
-        public String getUrl() {
-
-            return url;
-        }
-
-        /**
-         * Returns the query string of the XHR in a map
-         * 
-         * @return key-value pair of all of the queries
-         */
+//        /**
+//         * Returns URL path of the XHR
+//         *
+//         * @return full URL path
+//         */
+//        public String getUrl() {
+//
+//            return url;
+//        }
+//
+//        /**
+//         * Returns the query string of the XHR in a map
+//         *
+//         * @return key-value pair of all of the queries
+//         */
         public Map<String, String> getQueryString() throws Exception {
             // Parse query string
             Map<String, String> queryStringParams = new HashMap<String, String>();
@@ -386,20 +386,20 @@ public class MockAPI {
             return queryStringParams;
         }
 
-        /**
-         * Returns the method type of the XHR (e.g. GET, POST)
-         * 
-         * @return method type
-         */
+//        /**
+//         * Returns the method type of the XHR (e.g. GET, POST)
+//         *
+//         * @return method type
+//         */
         public String getMethodType() {
             return methodType;
         }
 
-        /**
-         * Returns the body of the XHR request (if any)
-         * 
-         * @return body of the request
-         */
+//        /**
+//         * Returns the body of the XHR request (if any)
+//         *
+//         * @return body of the request
+//         */
         public String getBody() {
             return body;
         }
