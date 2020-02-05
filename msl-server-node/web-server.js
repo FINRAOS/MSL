@@ -70,7 +70,6 @@ exports = module.exports = function (argv, callback) {
     port = conf.port || Number(argv1.port) || DEFAULT_PORT;
     debug = (conf.debug || argv1.debug === 'true');
     if (getextensions != ''&&getextensions!= undefined)
-
         getextensions = require(path.join(localAppDir.toString(),getextensions.toString()));
     else
         getextensions = '';

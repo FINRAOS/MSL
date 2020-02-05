@@ -27,7 +27,8 @@ module.exports = function (argv, callback) {
     };
 
     if (extensions != '') {
-        extensions = require(path.join(localAppDir, extensions));
+        record('extension file exits');
+        // extensions = require(path.join(localAppDir, extensions.toString()));
     } else {
         extensions= null;
     }
@@ -232,15 +233,31 @@ module.exports = function (argv, callback) {
                     localAppDir: localAppDir,
                     filePath: filePath
                 };
+
                 extensions.customUrlParsing(options);
 
             } else {
                 //looks like it is not needed anymore
                 //localApp.use(express.static(localAppDir + filePath));
+
                 return next();
 
             }
         }
+
+        // if (extensions) {
+        //     var options = {
+        //         req: req,
+        //         res: res,
+        //         fs: fs,
+        //         localAppDir: localAppDir,
+        //         filePath: filePath
+        //     };
+        //     record('extension loaded');
+        //
+        //     extensions.customUrlParsing(options);
+        //
+        // }
     };
 
     /**
@@ -285,9 +302,9 @@ module.exports = function (argv, callback) {
         var responseObj = {};
         responseObj["statusCode"] = parseInt(post.statusCode) || 200;
         responseObj["header"] = post.header || {
-                'Content-Type': post.contentType || 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            };
+            'Content-Type': post.contentType || 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        };
         responseObj["contentType"] = post.contentType || "application/json";
         if (typeof post.responseText == 'object') {
 
